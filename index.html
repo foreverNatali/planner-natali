@@ -103,10 +103,30 @@
   .mood-day { text-align: center; padding: 12px 4px; border: 1px solid var(--line); border-radius: 14px; background: var(--bg); }
   .mood-day.today { border-color: var(--rose-deep); border-width: 1.5px; }
   .mood-day.empty { opacity: 0.4; }
-  .mood-day .emoji { font-size: 26px; line-height: 1; height: 30px; display: flex; align-items: center; justify-content: center; }
-  .mood-day .emoji.placeholder { font-size: 18px; opacity: 0.3; }
-  .mood-day .lbl { font-size: 9px; font-weight: 600; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 6px; }
+  .mood-day .emoji { font-size: 22px; line-height: 1; height: 26px; display: flex; align-items: center; justify-content: center; }
+  .mood-day .emoji.placeholder { font-size: 14px; opacity: 0.3; }
+  .mood-day .lbl { font-size: 9px; font-weight: 600; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 4px; }
   .mood-day.today .lbl { color: var(--rose-deep); }
+
+  /* 3-slot mood display in week strip */
+  .mood-day-slots { display: flex; flex-direction: column; align-items: center; gap: 0px; min-height: 60px; justify-content: center; }
+  .mood-slot-pip { font-size: 16px; line-height: 1.3; }
+  @media (max-width: 400px) { .mood-slot-pip { font-size: 13px; } }
+
+  /* Mood modal slot picker */
+  .mood-slots-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
+  .mood-slot-btn { padding: 10px 6px; border: 1.5px solid var(--line); border-radius: 14px; background: var(--bg); cursor: pointer; text-align: center; font-family: inherit; transition: all 0.2s; }
+  .mood-slot-btn:hover { border-color: var(--ink-muted); }
+  .mood-slot-btn.active { background: var(--cream-soft); border-color: var(--clay); box-shadow: 0 2px 8px rgba(200,149,128,0.18); }
+  .mood-slot-btn .s-icon { font-size: 18px; line-height: 1; }
+  .mood-slot-btn .s-name { font-size: 10px; font-weight: 700; color: var(--ink-soft); margin-top: 2px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .mood-slot-btn .s-emoji { font-size: 18px; line-height: 1; margin-top: 4px; min-height: 22px; display: flex; align-items: center; justify-content: center; }
+
+  /* Monthly avg mood badge */
+  .month-mood-avg { display: flex; align-items: center; gap: 8px; margin-top: 12px; padding: 10px 14px; background: var(--cream-soft); border: 1px solid var(--cream); border-radius: 12px; }
+  .month-mood-avg .avg-label { font-size: 11px; font-weight: 600; color: var(--ink-soft); flex: 1; }
+  .month-mood-avg .avg-val { font-family: 'Fraunces', serif; font-weight: 700; font-size: 15px; color: var(--ink); }
+  .month-mood-avg .avg-emoji { font-size: 22px; }
 
   .week-chart { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 22px 24px; box-shadow: var(--shadow-soft); margin-bottom: 24px; }
   .week-chart h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 16px; margin-bottom: 16px; letter-spacing: -0.01em; }
@@ -771,6 +791,11 @@
     <div class="mood-strip">
       <h3>Настроение месяца <em>календарь</em></h3>
       <div class="month-grid" id="month-mood-grid"></div>
+      <div class="month-mood-avg" id="month-mood-avg" style="display:none">
+        <div class="avg-label">Среднее настроение за месяц</div>
+        <div class="avg-val" id="month-avg-score">—</div>
+        <div class="avg-emoji" id="month-avg-emoji">—</div>
+      </div>
       <div class="mood-counters" id="mood-counters"></div>
     </div>
   </div>
@@ -865,6 +890,23 @@
 <div class="modal-overlay" id="mood-modal">
   <div class="modal">
     <h3>Как <em>настроение</em>?</h3>
+    <div class="mood-slots-row" id="mood-slots-row">
+      <button class="mood-slot-btn" data-slot="morning">
+        <div class="s-icon">🌅</div>
+        <div class="s-name">Утро</div>
+        <div class="s-emoji" id="slot-morning-show">—</div>
+      </button>
+      <button class="mood-slot-btn" data-slot="afternoon">
+        <div class="s-icon">☀️</div>
+        <div class="s-name">День</div>
+        <div class="s-emoji" id="slot-afternoon-show">—</div>
+      </button>
+      <button class="mood-slot-btn" data-slot="evening">
+        <div class="s-icon">🌙</div>
+        <div class="s-name">Вечер</div>
+        <div class="s-emoji" id="slot-evening-show">—</div>
+      </button>
+    </div>
     <div class="mood-grid">
       <div class="mood-opt" data-m="🥰">🥰</div>
       <div class="mood-opt" data-m="😊">😊</div>
@@ -1220,9 +1262,14 @@ function renderWeekView() {
   const todayKey = fmt(today);
 
   document.getElementById('mood-days').innerHTML = days.map(d => {
-    const k = fmt(d); const m = state.moods[k]; const isToday = k === todayKey;
-    return `<div class="mood-day ${isToday?'today':''} ${!m?'empty':''}">
-      <div class="emoji ${!m?'placeholder':''}">${m || '○'}</div>
+    const k = fmt(d); const md = getMoodDay(k); const isToday = k === todayKey;
+    const hasAny = md.morning || md.afternoon || md.evening;
+    return `<div class="mood-day ${isToday?'today':''} ${!hasAny?'empty':''}">
+      <div class="mood-day-slots">
+        <span class="mood-slot-pip" title="Утро">${md.morning || '<span style="opacity:0.2;font-size:10px">○</span>'}</span>
+        <span class="mood-slot-pip" title="День">${md.afternoon || '<span style="opacity:0.2;font-size:10px">○</span>'}</span>
+        <span class="mood-slot-pip" title="Вечер">${md.evening || '<span style="opacity:0.2;font-size:10px">○</span>'}</span>
+      </div>
       <div class="lbl">${DOW[((d.getDay()+6)%7)]} ${d.getDate()}</div>
     </div>`;
   }).join('');
@@ -1324,9 +1371,12 @@ function renderWeekView() {
   }
 
   document.getElementById('notes-area').value = state.notes[key] || '';
-  const m = state.moods[todayKey];
-  document.getElementById('mood-emoji').textContent = m || '😊';
-  document.getElementById('mood-hint').textContent = m ? 'можно изменить' : 'нажми чтобы отметить';
+  const todayMoodDay = getMoodDay(todayKey);
+  const filledSlots = [todayMoodDay.morning, todayMoodDay.afternoon, todayMoodDay.evening].filter(Boolean).length;
+  const curSlotEmoji = todayMoodDay[getCurrentSlot()];
+  const avgEmoji = getDayAvgEmoji(todayKey);
+  document.getElementById('mood-emoji').textContent = curSlotEmoji || avgEmoji || '😊';
+  document.getElementById('mood-hint').textContent = filledSlots === 0 ? 'нажми чтобы отметить' : filledSlots === 3 ? `утро · день · вечер ✓` : `${filledSlots}/3 отметки · можно изменить`;
 
   let total = 0, done = 0;
   days.forEach(d => {
@@ -1416,8 +1466,9 @@ function renderMonthView() {
     const doneDay = md.habitsDone + md.tasksDone;
     const dayPct = totalDay ? doneDay/totalDay : 0;
     const dotClass = dayPct >= 0.7 ? 'high' : dayPct >= 0.4 ? 'mid' : '';
-    cells.push(`<div class="month-cell ${md.mood?'has-mood':''} ${isToday?'today':''}">
-      ${md.mood ? `<div class="m-emoji">${md.mood}</div>` : ''}
+    const avgEmoji = getDayAvgEmoji(md.key);
+    cells.push(`<div class="month-cell ${avgEmoji?'has-mood':''} ${isToday?'today':''}">
+      ${avgEmoji ? `<div class="m-emoji">${avgEmoji}</div>` : ''}
       <div class="day-num">${md.date.getDate()}</div>
       ${doneDay > 0 ? `<div class="progress-dot ${dotClass}"></div>` : ''}
     </div>`);
@@ -1425,7 +1476,24 @@ function renderMonthView() {
   document.getElementById('month-mood-grid').innerHTML = cells.join('');
 
   const moodCounts = {};
-  monthDays.forEach(md => { if (md.mood) moodCounts[md.mood] = (moodCounts[md.mood] || 0) + 1; });
+  let allMoodScores = [];
+  monthDays.forEach(md => {
+    const mDay = getMoodDay(md.key);
+    [mDay.morning, mDay.afternoon, mDay.evening].filter(Boolean).forEach(e => {
+      moodCounts[e] = (moodCounts[e] || 0) + 1;
+      allMoodScores.push(MOOD_SCORE[e] || 3);
+    });
+  });
+  const monthAvgScore = allMoodScores.length ? allMoodScores.reduce((s,x) => s+x, 0) / allMoodScores.length : null;
+  const monthAvgEmoji = scoreToEmoji(monthAvgScore);
+  const avgEl = document.getElementById('month-mood-avg');
+  if (monthAvgScore !== null) {
+    avgEl.style.display = 'flex';
+    document.getElementById('month-avg-score').textContent = monthAvgScore.toFixed(1) + ' / 5';
+    document.getElementById('month-avg-emoji').textContent = monthAvgEmoji;
+  } else {
+    avgEl.style.display = 'none';
+  }
   const sortedMoods = Object.entries(moodCounts).sort((a,b) => b[1] - a[1]);
   document.getElementById('mood-counters').innerHTML = sortedMoods.length === 0
     ? '<div class="empty" style="grid-column:1/-1">отметь настроение, чтобы увидеть статистику</div>'
@@ -1453,7 +1521,12 @@ function renderYearView() {
       const halfDone = state.habits.length > 0 && dayHabits >= Math.ceil(state.habits.length / 2);
       if (halfDone) { currentStreak++; yearBestStreak = Math.max(yearBestStreak, currentStreak); }
       else currentStreak = 0;
-      if (state.moods[k]) yearMoods[state.moods[k]] = (yearMoods[state.moods[k]] || 0) + 1;
+      if (state.moods[k]) {
+        const mDay = getMoodDay(k);
+        [mDay.morning, mDay.afternoon, mDay.evening].filter(Boolean).forEach(e => {
+          yearMoods[e] = (yearMoods[e] || 0) + 1;
+        });
+      }
     }
     totalAll += mTotal; doneAll += mDone; activeAll += mActive;
     monthsData.push({ month: m, total: mTotal, done: mDone, pct: mTotal ? Math.round(mDone/mTotal*100) : 0 });
@@ -1989,6 +2062,38 @@ function calcOverallStreak() {
   return streak;
 }
 
+const MOOD_SCORE = { '🥰': 5, '😊': 5, '🤩': 5, '😌': 4, '😎': 4, '😐': 3, '😴': 2, '😔': 2, '😤': 2, '😭': 1 };
+let selectedMoodSlot = 'morning';
+
+function getMoodDay(key) {
+  const m = state.moods[key];
+  if (!m) return { morning: null, afternoon: null, evening: null };
+  if (typeof m === 'string') return { morning: m, afternoon: null, evening: null };
+  return { morning: m.morning || null, afternoon: m.afternoon || null, evening: m.evening || null };
+}
+function moodScoreNum(moodDay) {
+  const slots = [moodDay.morning, moodDay.afternoon, moodDay.evening].filter(Boolean);
+  if (!slots.length) return null;
+  return slots.reduce((s, e) => s + (MOOD_SCORE[e] || 3), 0) / slots.length;
+}
+function scoreToEmoji(score) {
+  if (score === null || score === undefined) return null;
+  if (score >= 4.5) return '🥰';
+  if (score >= 3.8) return '😊';
+  if (score >= 3) return '😌';
+  if (score >= 2.2) return '😔';
+  return '😭';
+}
+function getDayAvgEmoji(key) {
+  return scoreToEmoji(moodScoreNum(getMoodDay(key)));
+}
+function getCurrentSlot() {
+  const h = new Date().getHours();
+  if (h < 12) return 'morning';
+  if (h < 18) return 'afternoon';
+  return 'evening';
+}
+
 // ====== EVENTS ======
 document.getElementById('prev-week').onclick = () => { viewWeekStart = addDays(viewWeekStart, -7); render(); };
 document.getElementById('next-week').onclick = () => { viewWeekStart = addDays(viewWeekStart, 7); render(); };
@@ -2005,13 +2110,37 @@ document.getElementById('notes-area').addEventListener('input', (e) => {
 });
 
 document.getElementById('mood-open').onclick = () => {
-  const cur = state.moods[fmt(new Date())];
-  document.querySelectorAll('#mood-modal .mood-opt').forEach(el => el.classList.toggle('selected', el.dataset.m === cur));
+  const todayKey = fmt(new Date());
+  const md = getMoodDay(todayKey);
+  selectedMoodSlot = getCurrentSlot();
+
+  document.getElementById('slot-morning-show').textContent = md.morning || '—';
+  document.getElementById('slot-afternoon-show').textContent = md.afternoon || '—';
+  document.getElementById('slot-evening-show').textContent = md.evening || '—';
+
+  document.querySelectorAll('.mood-slot-btn').forEach(el => el.classList.toggle('active', el.dataset.slot === selectedMoodSlot));
+
+  const curEmoji = md[selectedMoodSlot];
+  document.querySelectorAll('#mood-modal .mood-opt').forEach(el => el.classList.toggle('selected', el.dataset.m === curEmoji));
+
   document.getElementById('mood-modal').classList.add('show');
 };
+
+document.querySelectorAll('.mood-slot-btn').forEach(el => {
+  el.onclick = () => {
+    selectedMoodSlot = el.dataset.slot;
+    document.querySelectorAll('.mood-slot-btn').forEach(b => b.classList.toggle('active', b.dataset.slot === selectedMoodSlot));
+    const md = getMoodDay(fmt(new Date()));
+    document.querySelectorAll('#mood-modal .mood-opt').forEach(e => e.classList.toggle('selected', e.dataset.m === md[selectedMoodSlot]));
+  };
+});
+
 document.querySelectorAll('#mood-modal .mood-opt').forEach(el => {
   el.onclick = () => {
-    state.moods[fmt(new Date())] = el.dataset.m;
+    const todayKey = fmt(new Date());
+    const md = getMoodDay(todayKey);
+    md[selectedMoodSlot] = el.dataset.m;
+    state.moods[todayKey] = md;
     document.getElementById('mood-modal').classList.remove('show');
     render(); scheduleSave();
   };
