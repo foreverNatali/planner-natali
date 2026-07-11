@@ -1,0 +1,2400 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#F4EFE8">
+<title>Мой планер · 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F4EFE8;
+    --card: #FBF7F1;
+    --ink: #2D2824;
+    --ink-soft: #6B645C;
+    --ink-muted: #A59B8F;
+    --line: #E8DFD2;
+    --rose: #D4A5A0;
+    --rose-soft: #EFD9D4;
+    --rose-deep: #B07F7A;
+    --sage: #A8B598;
+    --sage-soft: #D8DFCB;
+    --clay: #C89580;
+    --clay-soft: #E9CEBE;
+    --cream: #E8D9B8;
+    --cream-soft: #F2E6CC;
+    --lilac: #B8A5C4;
+    --lilac-soft: #DDD1E3;
+    --sky: #A5BCC4;
+    --sky-soft: #D4DEE2;
+    --shadow-soft: 0 2px 8px rgba(45, 40, 36, 0.04);
+    --shadow-med: 0 4px 16px rgba(45, 40, 36, 0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { overflow-x: hidden; }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+    padding-bottom: 80px;
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(circle at 15% 10%, rgba(212, 165, 160, 0.12) 0%, transparent 45%),
+      radial-gradient(circle at 85% 80%, rgba(168, 181, 152, 0.1) 0%, transparent 45%);
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 28px 22px; }
+
+  .header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+  .logo { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(26px, 4.5vw, 36px); line-height: 1; letter-spacing: -0.02em; }
+  .logo em { font-style: italic; font-weight: 400; color: var(--rose-deep); }
+  .logo .year { display: block; font-size: 10px; font-weight: 600; letter-spacing: 0.3em; color: var(--ink-muted); margin-top: 6px; text-transform: uppercase; }
+  .date-pill { background: var(--card); color: var(--ink-soft); border: 1px solid var(--line); padding: 10px 18px; border-radius: 999px; font-weight: 600; font-size: 12px; display: flex; align-items: center; gap: 10px; }
+  .date-pill::before { content: ''; width: 6px; height: 6px; background: var(--ink-muted); border-radius: 50%; transition: background 0.3s; }
+  .date-pill.synced::before { background: var(--sage); box-shadow: 0 0 0 3px rgba(168, 181, 152, 0.2); }
+  .date-pill.syncing::before { background: var(--clay); animation: pulse 1.2s infinite; }
+  .date-pill.error::before { background: var(--rose-deep); }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+  .date-pill strong { color: var(--ink); font-weight: 700; }
+
+  .tabs { display: flex; gap: 4px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 5px; margin-bottom: 20px; box-shadow: var(--shadow-soft); overflow-x: auto; }
+  .tab { flex: 1; background: transparent; border: none; padding: 11px 12px; border-radius: 12px; cursor: pointer; font-family: inherit; font-weight: 600; font-size: 13px; color: var(--ink-soft); transition: all 0.25s; letter-spacing: 0.02em; white-space: nowrap; }
+  .tab:hover { color: var(--ink); }
+  .tab.active { background: var(--ink); color: var(--bg); box-shadow: var(--shadow-soft); }
+
+  .week-nav { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 24px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 6px; box-shadow: var(--shadow-soft); }
+  .week-btn { background: transparent; border: none; width: 36px; height: 36px; border-radius: 10px; cursor: pointer; font-size: 16px; color: var(--ink-soft); transition: all 0.25s; display: flex; align-items: center; justify-content: center; }
+  .week-btn:hover { background: var(--bg); color: var(--ink); }
+  .week-label { font-weight: 600; font-size: 14px; flex: 1; text-align: center; }
+  .week-label small { display: block; font-size: 10px; font-weight: 500; opacity: 0.55; margin-top: 2px; letter-spacing: 0.05em; text-transform: uppercase; }
+
+  .hero { display: grid; grid-template-columns: 1.25fr 1fr; gap: 14px; margin-bottom: 24px; }
+  @media (max-width: 720px) { .hero { grid-template-columns: 1fr; } }
+
+  .big-progress { background: var(--rose-soft); border: 1px solid var(--rose); border-radius: 22px; padding: 26px 28px; position: relative; overflow: hidden; box-shadow: var(--shadow-soft); }
+  .big-progress::before { content: ''; position: absolute; top: -30px; right: -30px; width: 140px; height: 140px; background: var(--cream-soft); border-radius: 50%; opacity: 0.6; }
+  .big-progress h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 17px; margin-bottom: 6px; position: relative; letter-spacing: -0.01em; }
+  .big-progress .percent { font-family: 'Fraunces', serif; font-weight: 700; font-size: clamp(56px, 10vw, 82px); line-height: 1; letter-spacing: -0.04em; position: relative; display: flex; align-items: baseline; gap: 4px; }
+  .big-progress .percent small { font-size: 26px; font-weight: 600; color: var(--rose-deep); }
+  .big-progress .sub { font-size: 13px; font-weight: 600; opacity: 0.75; margin-top: 8px; position: relative; color: var(--ink-soft); }
+
+  .mini-stats { display: grid; grid-template-rows: 1fr 1fr; gap: 14px; }
+  .mini-stat { border: 1px solid var(--line); border-radius: 20px; padding: 16px 20px; display: flex; flex-direction: column; justify-content: center; box-shadow: var(--shadow-soft); }
+  .mini-stat.streak { background: var(--sage-soft); border-color: var(--sage); }
+  .mini-stat.mood-card { background: var(--cream-soft); border-color: var(--cream); cursor: pointer; transition: transform 0.2s; }
+  .mini-stat.mood-card:hover { transform: translateY(-1px); box-shadow: var(--shadow-med); }
+  .mini-stat .label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-soft); opacity: 0.75; }
+  .mini-stat .value { font-family: 'Fraunces', serif; font-weight: 700; font-size: 30px; letter-spacing: -0.02em; display: flex; align-items: baseline; gap: 8px; margin-top: 2px; }
+  .mini-stat .value .emoji { font-size: 28px; }
+  .mini-stat .value .unit { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 600; opacity: 0.65; }
+  .mini-stat .hint { font-size: 11px; font-weight: 500; opacity: 0.6; margin-top: 3px; }
+
+  .mood-strip { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 22px 24px; box-shadow: var(--shadow-soft); margin-bottom: 24px; }
+  .mood-strip h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 16px; margin-bottom: 16px; letter-spacing: -0.01em; display: flex; align-items: baseline; gap: 10px; }
+  .mood-strip h3 em { font-family: inherit; font-style: normal; font-weight: 500; font-size: 12px; color: var(--ink-muted); letter-spacing: 0.05em; }
+  .mood-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+  .mood-day { text-align: center; padding: 12px 4px; border: 1px solid var(--line); border-radius: 14px; background: var(--bg); }
+  .mood-day.today { border-color: var(--rose-deep); border-width: 1.5px; }
+  .mood-day.empty { opacity: 0.4; }
+  .mood-day .emoji { font-size: 22px; line-height: 1; height: 26px; display: flex; align-items: center; justify-content: center; }
+  .mood-day .emoji.placeholder { font-size: 14px; opacity: 0.3; }
+  .mood-day .lbl { font-size: 9px; font-weight: 600; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 4px; }
+  .mood-day.today .lbl { color: var(--rose-deep); }
+
+  /* 3-slot mood display in week strip */
+  .mood-day-slots { display: flex; flex-direction: column; align-items: center; gap: 0px; min-height: 60px; justify-content: center; }
+  .mood-slot-pip { font-size: 16px; line-height: 1.3; }
+  @media (max-width: 400px) { .mood-slot-pip { font-size: 13px; } }
+
+  /* Mood modal slot picker */
+  .mood-slots-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
+  .mood-slot-btn { padding: 10px 6px; border: 1.5px solid var(--line); border-radius: 14px; background: var(--bg); cursor: pointer; text-align: center; font-family: inherit; transition: all 0.2s; }
+  .mood-slot-btn:hover { border-color: var(--ink-muted); }
+  .mood-slot-btn.active { background: var(--cream-soft); border-color: var(--clay); box-shadow: 0 2px 8px rgba(200,149,128,0.18); }
+  .mood-slot-btn .s-icon { font-size: 18px; line-height: 1; }
+  .mood-slot-btn .s-name { font-size: 10px; font-weight: 700; color: var(--ink-soft); margin-top: 2px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .mood-slot-btn .s-emoji { font-size: 18px; line-height: 1; margin-top: 4px; min-height: 22px; display: flex; align-items: center; justify-content: center; }
+
+  /* Monthly avg mood badge */
+  .month-mood-avg { display: flex; align-items: center; gap: 8px; margin-top: 12px; padding: 10px 14px; background: var(--cream-soft); border: 1px solid var(--cream); border-radius: 12px; }
+  .month-mood-avg .avg-label { font-size: 11px; font-weight: 600; color: var(--ink-soft); flex: 1; }
+  .month-mood-avg .avg-val { font-family: 'Fraunces', serif; font-weight: 700; font-size: 15px; color: var(--ink); }
+  .month-mood-avg .avg-emoji { font-size: 22px; }
+
+  .week-chart { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 22px 24px; box-shadow: var(--shadow-soft); margin-bottom: 24px; }
+  .week-chart h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 16px; margin-bottom: 16px; letter-spacing: -0.01em; }
+  .chart-bars { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; height: 110px; align-items: end; }
+  .chart-col { display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%; }
+  .chart-bar-wrap { width: 100%; height: 100%; display: flex; align-items: flex-end; }
+  .chart-bar { width: 100%; background: var(--rose-soft); border-radius: 6px 6px 3px 3px; min-height: 4px; position: relative; transition: height 0.7s cubic-bezier(0.34, 1.2, 0.64, 1); display: flex; align-items: flex-start; justify-content: center; padding-top: 4px; }
+  .chart-bar.today { background: var(--rose-deep); }
+  .chart-bar.today span { color: white; }
+  .chart-bar span { font-size: 10px; font-weight: 700; color: var(--rose-deep); }
+  .chart-col .lbl { font-size: 10px; font-weight: 600; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.7; }
+  .chart-col .lbl.today { color: var(--rose-deep); opacity: 1; }
+
+  .days-strip { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-bottom: 24px; }
+  .day-chip { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 10px 4px; cursor: pointer; text-align: center; transition: all 0.25s; position: relative; }
+  .day-chip:hover { transform: translateY(-1px); border-color: var(--ink-muted); }
+  .day-chip.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .day-chip.today::after { content: ''; position: absolute; top: 5px; right: 5px; width: 5px; height: 5px; background: var(--clay); border-radius: 50%; }
+  .day-chip .dow { font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.6; }
+  .day-chip .num { font-family: 'Fraunces', serif; font-weight: 600; font-size: 20px; margin-top: 2px; letter-spacing: -0.02em; }
+  .day-chip .dot-row { display: flex; justify-content: center; gap: 2px; margin-top: 4px; min-height: 4px; }
+  .day-chip .dot { width: 4px; height: 4px; background: var(--rose-deep); border-radius: 50%; }
+  .day-chip.active .dot { background: var(--cream); }
+
+  .section-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: 24px; margin: 28px 0 14px; display: flex; align-items: baseline; gap: 12px; letter-spacing: -0.02em; }
+  .section-title em { font-style: italic; font-weight: 400; color: var(--ink-soft); }
+  .section-title .count { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 700; background: var(--ink); color: var(--bg); padding: 3px 9px; border-radius: 999px; letter-spacing: 0.04em; }
+  .section-title .add-btn { margin-left: auto; background: var(--ink); color: var(--bg); border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 18px; cursor: pointer; transition: transform 0.25s; line-height: 1; display: flex; align-items: center; justify-content: center; }
+  .section-title .add-btn:hover { transform: rotate(90deg); background: var(--rose-deep); }
+
+  .habits, .tasks, .notes { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 6px 20px; box-shadow: var(--shadow-soft); }
+  .notes { padding: 18px 22px; }
+
+  .habit { display: flex; align-items: center; gap: 14px; padding: 14px 4px; border-bottom: 1px solid var(--line); }
+  .habit:last-child { border-bottom: none; }
+  .habit .emoji { font-size: 20px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: var(--bg); border-radius: 12px; flex-shrink: 0; }
+  .habit .info { flex: 1; min-width: 0; }
+  .habit .name { font-weight: 600; font-size: 14px; margin-bottom: 2px; letter-spacing: -0.005em; }
+  .habit .streak-mini { font-size: 11px; font-weight: 500; color: var(--rose-deep); }
+  .habit-week { display: flex; gap: 5px; flex-shrink: 0; }
+  .habit-box { width: 26px; height: 26px; border: 1.5px solid var(--line); border-radius: 8px; cursor: pointer; background: transparent; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .habit-box::before { content: attr(data-d); font-size: 8px; font-weight: 700; color: var(--ink-muted); letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.55; }
+  .habit-box:hover { border-color: var(--ink-muted); }
+  .habit-box.done { background: var(--sage); border-color: var(--sage); }
+  .habit-box.done::before { content: '✓'; font-size: 13px; opacity: 1; color: var(--card); }
+  .habit-box.today { border-color: var(--rose-deep); border-width: 2px; }
+  .habit-box.today.done { border-color: var(--sage); }
+  .habit-box:active { transform: scale(0.9); }
+
+  .del { background: transparent; border: none; color: var(--ink-muted); opacity: 0.3; cursor: pointer; font-size: 16px; padding: 4px 6px; transition: opacity 0.2s; font-family: inherit; }
+  .habit:hover .del, .task:hover .del, .goal-card:hover .del, .project-card:hover .del { opacity: 0.6; }
+  .del:hover { opacity: 1 !important; color: var(--rose-deep); }
+
+  @media (max-width: 640px) {
+    .habit { flex-wrap: wrap; }
+    .habit-week { width: 100%; justify-content: space-between; margin-top: 6px; }
+    .habit-box { flex: 1; max-width: 40px; }
+    .del { opacity: 0.6; }
+  }
+
+  .task { display: flex; align-items: center; gap: 14px; padding: 14px 4px; border-bottom: 1px solid var(--line); cursor: pointer; }
+  .task:last-child { border-bottom: none; }
+  .task .check { width: 22px; height: 22px; border: 1.5px solid var(--ink-muted); border-radius: 7px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.25s; }
+  .task.done .check { background: var(--ink); border-color: var(--ink); color: var(--cream); }
+  .task.done .check::after { content: '✓'; font-size: 13px; font-weight: 700; }
+  .task .text { flex: 1; font-size: 14px; font-weight: 500; transition: all 0.25s; letter-spacing: -0.005em; }
+  .task.done .text { text-decoration: line-through; text-decoration-color: var(--ink-muted); opacity: 0.5; }
+
+  .empty { text-align: center; padding: 28px 16px; color: var(--ink-muted); font-family: 'Fraunces', serif; font-style: italic; font-size: 14px; }
+
+  .notes textarea { width: 100%; border: none; outline: none; resize: none; font-family: 'Fraunces', serif; font-size: 16px; font-style: italic; background: transparent; color: var(--ink); min-height: 80px; line-height: 1.55; }
+  .notes textarea::placeholder { color: var(--ink-muted); opacity: 0.6; }
+
+  .month-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 22px; box-shadow: var(--shadow-soft); margin-bottom: 24px; }
+  .month-grid .head { font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-muted); text-align: center; padding-bottom: 6px; }
+  .month-cell { aspect-ratio: 1; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; background: var(--bg); position: relative; border: 1px solid transparent; transition: all 0.2s; }
+  .month-cell.empty { background: transparent; }
+  .month-cell.today { border-color: var(--rose-deep); }
+  .month-cell .day-num { font-family: 'Fraunces', serif; font-weight: 500; font-size: 13px; color: var(--ink-soft); }
+  .month-cell.has-mood .day-num { color: var(--ink); }
+  .month-cell .m-emoji { font-size: 18px; line-height: 1; }
+  .month-cell .progress-dot { position: absolute; bottom: 4px; width: 4px; height: 4px; border-radius: 50%; background: var(--rose-deep); opacity: 0.3; }
+  .month-cell .progress-dot.high { opacity: 1; }
+  .month-cell .progress-dot.mid { opacity: 0.6; }
+
+  .months-chart-card { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 24px; box-shadow: var(--shadow-soft); margin-bottom: 24px; }
+  .months-chart-card h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 16px; margin-bottom: 18px; letter-spacing: -0.01em; }
+  .months-chart { display: grid; grid-template-columns: repeat(12, 1fr); gap: 6px; height: 130px; align-items: end; }
+  .month-col { display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%; }
+  .month-bar-wrap { width: 100%; height: 100%; display: flex; align-items: flex-end; }
+  .month-bar { width: 100%; background: var(--rose-soft); border-radius: 4px 4px 2px 2px; min-height: 3px; transition: height 0.7s cubic-bezier(0.34, 1.2, 0.64, 1); position: relative; }
+  .month-bar.current { background: var(--rose-deep); }
+  .month-bar .v { position: absolute; top: -16px; left: 50%; transform: translateX(-50%); font-size: 9px; font-weight: 700; color: var(--ink-soft); white-space: nowrap; }
+  .month-col .m-lbl { font-size: 9px; font-weight: 600; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.7; }
+  .month-col .m-lbl.current { color: var(--rose-deep); opacity: 1; }
+
+  .ranking-card { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 22px 24px; box-shadow: var(--shadow-soft); margin-bottom: 24px; }
+  .ranking-card h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 16px; margin-bottom: 16px; letter-spacing: -0.01em; }
+  .rank-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .rank-row:last-child { border-bottom: none; }
+  .rank-row .r-emoji { font-size: 18px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: var(--bg); border-radius: 10px; flex-shrink: 0; }
+  .rank-row .r-name { flex: 1; font-weight: 500; font-size: 14px; }
+  .rank-row .r-bar { flex: 1; height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; max-width: 200px; }
+  .rank-row .r-fill { height: 100%; background: var(--rose-deep); border-radius: 3px; transition: width 0.7s cubic-bezier(0.34, 1.2, 0.64, 1); }
+  .rank-row .r-pct { font-family: 'Fraunces', serif; font-weight: 600; font-size: 14px; color: var(--ink); min-width: 40px; text-align: right; }
+
+  .mood-counters { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 8px; margin-top: 14px; }
+  .mood-counter { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 10px; text-align: center; }
+  .mood-counter .e { font-size: 22px; }
+  .mood-counter .c { font-family: 'Fraunces', serif; font-weight: 600; font-size: 16px; color: var(--ink); margin-top: 4px; }
+  .mood-counter .l { font-size: 9px; color: var(--ink-muted); font-weight: 500; margin-top: 2px; }
+
+  /* GOALS / PROJECTS HERO */
+  .goals-hero { background: linear-gradient(135deg, var(--lilac-soft), var(--rose-soft)); border: 1px solid var(--lilac); border-radius: 22px; padding: 28px; margin-bottom: 16px; position: relative; overflow: hidden; box-shadow: var(--shadow-soft); }
+  .goals-hero::before { content: ''; position: absolute; top: -40px; right: -40px; width: 160px; height: 160px; background: var(--cream-soft); border-radius: 50%; opacity: 0.5; }
+  .goals-hero h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 28px; letter-spacing: -0.02em; position: relative; margin-bottom: 8px; }
+  .goals-hero h2 em { font-style: italic; font-weight: 400; color: var(--rose-deep); }
+  .goals-hero .meta { font-size: 13px; color: var(--ink-soft); font-weight: 600; position: relative; display: flex; gap: 18px; flex-wrap: wrap; }
+  .goals-hero .meta strong { font-family: 'Fraunces', serif; font-weight: 700; font-size: 17px; color: var(--ink); }
+
+  /* GOALS / PROJECTS SUBTABS */
+  .subtabs { display: flex; gap: 4px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 4px; margin-bottom: 16px; box-shadow: var(--shadow-soft); }
+  .subtab { flex: 1; background: transparent; border: none; padding: 10px; border-radius: 10px; cursor: pointer; font-family: inherit; font-weight: 600; font-size: 13px; color: var(--ink-soft); transition: all 0.2s; }
+  .subtab.active { background: var(--ink); color: var(--bg); }
+
+  .goal-filters { display: flex; gap: 6px; margin-bottom: 16px; overflow-x: auto; padding-bottom: 4px; }
+  .goal-filters::-webkit-scrollbar { height: 0; }
+  .gf-chip { background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; cursor: pointer; font-family: inherit; font-weight: 600; font-size: 12px; color: var(--ink-soft); white-space: nowrap; transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
+  .gf-chip:hover { border-color: var(--ink-muted); color: var(--ink); }
+  .gf-chip.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .gf-chip .ico { font-size: 13px; }
+
+  .goal-mode-toggle { display: flex; gap: 6px; margin-bottom: 16px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 4px; box-shadow: var(--shadow-soft); }
+  .goal-mode-toggle button { flex: 1; background: transparent; border: none; padding: 10px; border-radius: 10px; cursor: pointer; font-family: inherit; font-weight: 600; font-size: 13px; color: var(--ink-soft); transition: all 0.2s; }
+  .goal-mode-toggle button.active { background: var(--ink); color: var(--bg); }
+
+  .goals-list, .projects-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+
+  /* GOAL CARD */
+  .goal-card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px 20px; box-shadow: var(--shadow-soft); transition: all 0.2s; position: relative; }
+  .goal-card:hover { box-shadow: var(--shadow-med); }
+  .goal-card.done { opacity: 0.65; }
+  .goal-card.overdue { border-color: var(--rose); background: linear-gradient(to right, var(--rose-soft) 0%, var(--card) 30%); }
+  .goal-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+  .goal-emoji { font-size: 22px; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; background: var(--bg); border-radius: 12px; flex-shrink: 0; }
+  .goal-info { flex: 1; min-width: 0; }
+  .goal-name { font-family: 'Fraunces', serif; font-weight: 600; font-size: 17px; letter-spacing: -0.01em; color: var(--ink); line-height: 1.3; word-wrap: break-word; }
+  .goal-card.done .goal-name { text-decoration: line-through; text-decoration-color: var(--ink-muted); }
+  .goal-meta { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; align-items: center; }
+  .goal-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; color: var(--ink); }
+  .goal-tag.health { background: var(--sage-soft); }
+  .goal-tag.relations { background: var(--rose-soft); }
+  .goal-tag.work { background: var(--clay-soft); }
+  .goal-tag.finance { background: var(--cream-soft); }
+  .goal-tag.creative { background: var(--lilac-soft); }
+  .goal-tag.learning { background: var(--sky-soft); }
+  .goal-tag.rest { background: var(--bg); border: 1px solid var(--line); }
+  .goal-tag.home { background: var(--bg); border: 1px solid var(--line); }
+  .goal-tag.other { background: var(--bg); border: 1px solid var(--line); color: var(--ink-soft); }
+
+  .goal-deadline { font-size: 11px; color: var(--ink-soft); font-weight: 500; }
+  .goal-deadline.urgent { color: var(--rose-deep); font-weight: 700; }
+  .goal-deadline.overdue { color: var(--rose-deep); font-weight: 700; }
+
+  .goal-progress { margin-top: 10px; height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; }
+  .goal-progress-fill { height: 100%; background: linear-gradient(90deg, var(--rose), var(--rose-deep)); border-radius: 3px; transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+  .goal-progress-fill.complete { background: var(--sage); }
+
+  .goal-progress-text { font-size: 12px; font-weight: 600; color: var(--ink-soft); margin-top: 6px; display: flex; justify-content: space-between; align-items: center; }
+  .goal-progress-text .pct { font-family: 'Fraunces', serif; font-weight: 700; font-size: 14px; color: var(--ink); }
+
+  .goal-checkbox { display: flex; align-items: center; gap: 10px; margin-top: 10px; cursor: pointer; }
+  .goal-checkbox .cb { width: 24px; height: 24px; border: 1.5px solid var(--ink-muted); border-radius: 8px; display: flex; align-items: center; justify-content: center; transition: all 0.25s; flex-shrink: 0; }
+  .goal-card.done .goal-checkbox .cb { background: var(--sage); border-color: var(--sage); color: white; }
+  .goal-card.done .goal-checkbox .cb::after { content: '✓'; font-size: 14px; font-weight: 700; }
+  .goal-checkbox .label { font-size: 13px; color: var(--ink-soft); font-weight: 500; }
+
+  .goal-counter { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
+  .goal-counter .cnt-btn { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--line); background: var(--bg); cursor: pointer; font-size: 16px; font-weight: 600; color: var(--ink); transition: all 0.2s; display: flex; align-items: center; justify-content: center; line-height: 1; flex-shrink: 0; }
+  .goal-counter .cnt-btn:hover { border-color: var(--rose-deep); }
+  .goal-counter .cnt-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .goal-counter .cnt-display { flex: 1; text-align: center; font-family: 'Fraunces', serif; font-weight: 600; font-size: 22px; color: var(--ink); }
+  .goal-counter .cnt-display small { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 500; color: var(--ink-muted); }
+
+  .goal-steps { margin-top: 12px; display: flex; flex-direction: column; gap: 6px; }
+  .goal-step { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px; background: var(--bg); cursor: pointer; transition: all 0.2s; }
+  .goal-step:hover { background: var(--line); }
+  .goal-step .sb { width: 18px; height: 18px; border: 1.5px solid var(--ink-muted); border-radius: 6px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
+  .goal-step.done .sb { background: var(--sage); border-color: var(--sage); color: white; }
+  .goal-step.done .sb::after { content: '✓'; font-size: 11px; font-weight: 700; }
+  .goal-step .st { font-size: 13px; flex: 1; }
+  .goal-step.done .st { text-decoration: line-through; opacity: 0.5; }
+  .goal-step .step-del { background: transparent; border: none; color: var(--ink-muted); opacity: 0.3; cursor: pointer; font-size: 13px; transition: opacity 0.2s; }
+  .goal-step:hover .step-del { opacity: 0.7; }
+
+  .add-step-btn { background: transparent; border: 1px dashed var(--ink-muted); border-radius: 10px; padding: 8px; font-size: 12px; font-weight: 500; color: var(--ink-soft); cursor: pointer; margin-top: 4px; transition: all 0.2s; }
+  .add-step-btn:hover { border-color: var(--rose-deep); color: var(--rose-deep); }
+
+  .goal-note { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); font-family: 'Fraunces', serif; font-style: italic; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+
+  .goal-actions { position: absolute; top: 14px; right: 14px; display: flex; gap: 4px; opacity: 0; transition: opacity 0.2s; }
+  .goal-card:hover .goal-actions, .project-card:hover .goal-actions { opacity: 1; }
+  @media (max-width: 640px) { .goal-actions { opacity: 0.6 !important; } }
+  .goal-actions button { background: transparent; border: none; color: var(--ink-muted); cursor: pointer; padding: 4px 6px; font-size: 14px; font-family: inherit; transition: color 0.2s; }
+  .goal-actions button:hover { color: var(--rose-deep); }
+
+  /* PROJECT CARD */
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    padding: 22px;
+    box-shadow: var(--shadow-soft);
+    transition: all 0.2s;
+    position: relative;
+  }
+  .project-card:hover { box-shadow: var(--shadow-med); }
+  .project-card.done { opacity: 0.7; }
+
+  .project-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+  .project-emoji { font-size: 22px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: var(--bg); border-radius: 12px; flex-shrink: 0; }
+  .project-info { flex: 1; min-width: 200px; }
+  .project-name { font-family: 'Fraunces', serif; font-weight: 600; font-size: 19px; letter-spacing: -0.01em; color: var(--ink); line-height: 1.3; }
+  .project-card.done .project-name { text-decoration: line-through; text-decoration-color: var(--ink-muted); }
+
+  .view-toggle {
+    display: flex;
+    gap: 4px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 3px;
+    flex-shrink: 0;
+  }
+  .view-toggle button {
+    background: transparent;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 11px;
+    color: var(--ink-soft);
+    transition: all 0.2s;
+  }
+  .view-toggle button.active {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  .project-progress-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--ink-soft);
+    font-weight: 600;
+    margin-top: 8px;
+  }
+  .project-progress-row .pct {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--ink);
+  }
+
+  .project-progress-bar {
+    height: 6px;
+    background: var(--line);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 4px;
+    margin-bottom: 12px;
+  }
+  .project-progress-bar > div {
+    height: 100%;
+    background: linear-gradient(90deg, var(--rose), var(--rose-deep));
+    border-radius: 3px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .project-progress-bar.complete > div { background: var(--sage); }
+
+  /* TIMELINE (horizontal) */
+  .timeline-wrap {
+    background: var(--bg);
+    border-radius: 14px;
+    padding: 22px 18px;
+    margin-top: 14px;
+    overflow-x: auto;
+  }
+  .timeline-caption {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 18px;
+    text-align: center;
+  }
+  .timeline {
+    position: relative;
+    height: 100px;
+    min-width: 480px;
+    padding: 0 30px;
+  }
+  .timeline-track {
+    position: absolute;
+    left: 30px;
+    right: 30px;
+    top: 24px;
+    height: 3px;
+    background: var(--line);
+    border-radius: 2px;
+  }
+  .timeline-track-fill {
+    position: absolute;
+    left: 30px;
+    top: 24px;
+    height: 3px;
+    background: var(--sage);
+    border-radius: 2px;
+    transition: width 0.6s ease;
+  }
+  .milestone {
+    position: absolute;
+    top: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80px;
+    margin-left: -40px;
+    cursor: pointer;
+  }
+  .milestone-dot {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 2px solid var(--ink-muted);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    z-index: 2;
+    position: relative;
+  }
+  .milestone.done .milestone-dot {
+    background: var(--sage);
+    border-color: var(--sage);
+    color: white;
+  }
+  .milestone.done .milestone-dot::after { content: '✓'; font-size: 12px; font-weight: 700; }
+  .milestone.current .milestone-dot {
+    background: var(--card);
+    border: 3px solid var(--rose-deep);
+    width: 26px; height: 26px;
+    box-shadow: 0 0 0 4px rgba(176, 127, 122, 0.18);
+    animation: pulseRing 2s infinite;
+  }
+  .milestone.current .milestone-dot::after {
+    content: '';
+    width: 8px; height: 8px;
+    background: var(--rose-deep);
+    border-radius: 50%;
+  }
+  .milestone.overdue .milestone-dot {
+    background: var(--rose-soft);
+    border-color: var(--rose-deep);
+    color: var(--rose-deep);
+  }
+  .milestone.overdue .milestone-dot::after { content: '!'; font-size: 13px; font-weight: 800; }
+
+  @keyframes pulseRing {
+    0%, 100% { box-shadow: 0 0 0 4px rgba(176, 127, 122, 0.18); }
+    50% { box-shadow: 0 0 0 8px rgba(176, 127, 122, 0.08); }
+  }
+
+  .milestone-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-top: 8px;
+    text-align: center;
+    line-height: 1.3;
+    word-wrap: break-word;
+  }
+  .milestone.current .milestone-label { color: var(--rose-deep); }
+  .milestone:not(.done):not(.current):not(.overdue) .milestone-label { color: var(--ink-soft); font-weight: 600; }
+  .milestone-date {
+    font-size: 9px;
+    color: var(--ink-muted);
+    margin-top: 3px;
+    font-weight: 500;
+  }
+  .milestone.current .milestone-date { color: var(--rose-deep); font-weight: 700; }
+  .milestone.overdue .milestone-date { color: var(--rose-deep); font-weight: 700; }
+
+  /* TIMELINE (vertical list) */
+  .timeline-list {
+    margin-top: 14px;
+    background: var(--bg);
+    border-radius: 14px;
+    padding: 20px 18px;
+  }
+  .ms-row {
+    display: flex;
+    gap: 14px;
+    padding: 10px 0;
+    position: relative;
+    cursor: pointer;
+  }
+  .ms-row:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 14px;
+    top: 38px;
+    bottom: -10px;
+    width: 1.5px;
+    background: var(--line);
+  }
+  .ms-row.done:not(:last-child)::before { background: var(--sage); }
+  .ms-circle {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 2px solid var(--ink-muted);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+    position: relative;
+    z-index: 1;
+  }
+  .ms-row.done .ms-circle { background: var(--sage); border-color: var(--sage); color: white; }
+  .ms-row.done .ms-circle::after { content: '✓'; font-size: 14px; font-weight: 700; }
+  .ms-row.current .ms-circle { background: var(--card); border: 3px solid var(--rose-deep); box-shadow: 0 0 0 3px rgba(176, 127, 122, 0.15); }
+  .ms-row.current .ms-circle::after { content: ''; width: 8px; height: 8px; background: var(--rose-deep); border-radius: 50%; }
+  .ms-row.overdue .ms-circle { background: var(--rose-soft); border-color: var(--rose-deep); color: var(--rose-deep); }
+  .ms-row.overdue .ms-circle::after { content: '!'; font-size: 14px; font-weight: 800; }
+
+  .ms-content { flex: 1; min-width: 0; padding-top: 2px; }
+  .ms-name { font-weight: 600; font-size: 14px; color: var(--ink); }
+  .ms-row.done .ms-name { text-decoration: line-through; text-decoration-color: var(--ink-muted); opacity: 0.7; }
+  .ms-meta { font-size: 11px; color: var(--ink-soft); margin-top: 2px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .ms-meta .urgent { color: var(--rose-deep); font-weight: 700; }
+  .ms-meta .overdue { color: var(--rose-deep); font-weight: 700; }
+
+  .ms-actions {
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    align-self: center;
+  }
+  .ms-row:hover .ms-actions { opacity: 1; }
+  @media (max-width: 640px) { .ms-actions { opacity: 0.5; } }
+  .ms-actions button { background: transparent; border: none; color: var(--ink-muted); cursor: pointer; padding: 4px 6px; font-size: 13px; font-family: inherit; }
+  .ms-actions button:hover { color: var(--rose-deep); }
+
+  .add-ms-btn {
+    background: transparent;
+    border: 1px dashed var(--ink-muted);
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    cursor: pointer;
+    margin-top: 8px;
+    transition: all 0.2s;
+    width: 100%;
+  }
+  .add-ms-btn:hover { border-color: var(--rose-deep); color: var(--rose-deep); }
+
+  .project-legend {
+    display: flex;
+    gap: 14px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    font-size: 11px;
+    color: var(--ink-soft);
+    flex-wrap: wrap;
+  }
+  .project-legend span { display: flex; align-items: center; gap: 5px; }
+  .project-legend .dot {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .project-legend .dot.done-d { background: var(--sage); }
+  .project-legend .dot.cur-d { background: var(--rose-deep); }
+  .project-legend .dot.over-d { background: var(--rose-soft); border: 1.5px solid var(--rose-deep); }
+  .project-legend .dot.fut-d { background: var(--card); border: 1.5px solid var(--ink-muted); }
+
+  .project-note {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  /* MODALS */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(45, 40, 36, 0.3); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+  .modal-overlay.show { display: flex; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .modal { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 26px; max-width: 440px; width: 100%; box-shadow: 0 20px 60px rgba(45, 40, 36, 0.15); max-height: 90vh; overflow-y: auto; }
+  .modal h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 22px; margin-bottom: 18px; }
+  .modal h3 em { font-style: italic; font-weight: 400; color: var(--rose-deep); }
+
+  .mood-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 18px; }
+  .mood-opt { aspect-ratio: 1; border: 1.5px solid var(--line); border-radius: 14px; background: var(--bg); cursor: pointer; font-size: 24px; display: flex; align-items: center; justify-content: center; transition: all 0.25s; }
+  .mood-opt:hover { transform: translateY(-2px); border-color: var(--ink-muted); }
+  .mood-opt.selected { background: var(--cream-soft); border-color: var(--clay); transform: scale(1.05); }
+
+  .modal input, .modal textarea, .modal select { width: 100%; border: 1.5px solid var(--line); border-radius: 12px; padding: 12px 14px; font-size: 15px; font-family: inherit; font-weight: 500; outline: none; background: var(--bg); margin-bottom: 14px; color: var(--ink); transition: all 0.2s; }
+  .modal input:focus, .modal textarea:focus, .modal select:focus { background: white; border-color: var(--rose-deep); }
+  .modal textarea { resize: vertical; min-height: 60px; font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; }
+  .modal input[type="number"] { -moz-appearance: textfield; }
+
+  .field-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; color: var(--ink-muted); text-transform: uppercase; margin-bottom: 10px; margin-top: 4px; }
+
+  .emoji-picker { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+  .emoji-opt { width: 38px; height: 38px; border: 1.5px solid transparent; border-radius: 10px; background: var(--bg); cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .emoji-opt:hover { border-color: var(--line); }
+  .emoji-opt.selected { border-color: var(--ink); background: var(--cream-soft); }
+
+  .type-picker { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 18px; }
+  .type-opt { border: 1.5px solid var(--line); border-radius: 12px; padding: 12px 8px; background: var(--bg); cursor: pointer; text-align: center; transition: all 0.2s; }
+  .type-opt:hover { border-color: var(--ink-muted); }
+  .type-opt.selected { border-color: var(--ink); background: var(--cream-soft); }
+  .type-opt .ti { font-size: 22px; }
+  .type-opt .tl { font-size: 11px; font-weight: 600; color: var(--ink-soft); margin-top: 4px; }
+
+  .sphere-picker { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin-bottom: 18px; }
+  .sphere-opt { border: 1.5px solid var(--line); border-radius: 10px; padding: 8px 10px; background: var(--bg); cursor: pointer; font-size: 12px; font-weight: 600; color: var(--ink-soft); transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
+  .sphere-opt:hover { border-color: var(--ink-muted); }
+  .sphere-opt.selected { border-color: var(--ink); color: var(--ink); }
+
+  .target-row { display: flex; gap: 8px; }
+  .target-row > div { flex: 1; }
+
+  .modal-actions { display: flex; gap: 10px; }
+  .btn { flex: 1; padding: 13px; border: 1.5px solid var(--line); border-radius: 12px; font-family: inherit; font-weight: 600; font-size: 13px; cursor: pointer; transition: all 0.25s; }
+  .btn-primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .btn-primary:hover { background: var(--rose-deep); border-color: var(--rose-deep); }
+  .btn-secondary { background: transparent; color: var(--ink-soft); }
+  .btn-secondary:hover { background: var(--bg); color: var(--ink); }
+
+  .tip { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 11px; color: var(--ink-muted); font-style: italic; font-family: 'Fraunces', serif; }
+  .tip::before, .tip::after { content: '·'; margin: 0 8px; opacity: 0.5; }
+
+  .loader { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px; z-index: 1000; transition: opacity 0.4s; }
+  .loader.hide { opacity: 0; pointer-events: none; }
+  .loader-circle { width: 32px; height: 32px; border: 2px solid var(--line); border-top-color: var(--rose-deep); border-radius: 50%; animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loader-text { font-family: 'Fraunces', serif; font-style: italic; color: var(--ink-soft); font-size: 14px; }
+
+  .view-content { display: none; }
+  .view-content.active { display: block; }
+  .sub-view { display: none; }
+  .sub-view.active { display: block; }
+</style>
+</head>
+<body>
+
+<div class="loader" id="loader">
+  <div class="loader-circle"></div>
+  <div class="loader-text">синхронизация…</div>
+</div>
+
+<div class="container">
+
+  <header class="header">
+    <h1 class="logo">
+      planner <em>aî</em>
+      <span class="year">две тысячи двадцать шесть</span>
+    </h1>
+    <div class="date-pill" id="sync-pill"><strong id="today-label">—</strong></div>
+  </header>
+
+  <div class="tabs">
+    <button class="tab active" data-view="week">Неделя</button>
+    <button class="tab" data-view="month">Месяц</button>
+    <button class="tab" data-view="year">Год</button>
+    <button class="tab" data-view="goals">Цели</button>
+  </div>
+
+  <!-- ====== WEEK VIEW ====== -->
+  <div class="view-content active" id="view-week">
+    <div class="week-nav">
+      <button class="week-btn" id="prev-week">‹</button>
+      <div class="week-label" id="week-label">—</div>
+      <button class="week-btn" id="next-week">›</button>
+    </div>
+    <div class="hero">
+      <div class="big-progress">
+        <h2>Прогресс недели</h2>
+        <div class="percent"><span id="week-pct">0</span><small>%</small></div>
+        <div class="sub" id="week-sub">0 из 0 выполнено</div>
+      </div>
+      <div class="mini-stats">
+        <div class="mini-stat streak">
+          <div class="label">Серия</div>
+          <div class="value"><span id="streak">0</span><span class="unit">дней подряд</span></div>
+        </div>
+        <div class="mini-stat mood-card" id="mood-open">
+          <div class="label">Настроение сегодня</div>
+          <div class="value"><span class="emoji" id="mood-emoji">😊</span></div>
+          <div class="hint" id="mood-hint">нажми чтобы отметить</div>
+        </div>
+      </div>
+    </div>
+    <div class="mood-strip">
+      <h3>Настроение недели <em>динамика по дням</em></h3>
+      <div class="mood-days" id="mood-days"></div>
+    </div>
+    <div class="week-chart">
+      <h3>Неделя в цифрах</h3>
+      <div class="chart-bars" id="chart-bars"></div>
+    </div>
+    <div class="days-strip" id="days-strip"></div>
+    <h2 class="section-title">Привычки <span class="count" id="habits-count">0</span><button class="add-btn" id="add-habit">+</button></h2>
+    <div class="habits" id="habits-list"></div>
+    <h2 class="section-title">Задачи <em id="selected-day-label">сегодня</em><span class="count" id="tasks-count">0</span><button class="add-btn" id="add-task">+</button></h2>
+    <div class="tasks" id="tasks-list"></div>
+    <h2 class="section-title">Заметки <em id="notes-day-label">—</em></h2>
+    <div class="notes"><textarea id="notes-area" placeholder="мысли, идеи, впечатления дня…"></textarea></div>
+  </div>
+
+  <!-- ====== MONTH VIEW ====== -->
+  <div class="view-content" id="view-month">
+    <div class="week-nav">
+      <button class="week-btn" id="prev-month">‹</button>
+      <div class="week-label" id="month-label">—</div>
+      <button class="week-btn" id="next-month">›</button>
+    </div>
+    <div class="hero">
+      <div class="big-progress">
+        <h2>Прогресс месяца</h2>
+        <div class="percent"><span id="month-pct">0</span><small>%</small></div>
+        <div class="sub" id="month-sub">0 из 0 выполнено</div>
+      </div>
+      <div class="mini-stats">
+        <div class="mini-stat streak">
+          <div class="label">Лучшая серия</div>
+          <div class="value"><span id="best-streak">0</span><span class="unit">дней</span></div>
+        </div>
+        <div class="mini-stat" style="background: var(--clay-soft); border-color: var(--clay);">
+          <div class="label">Активных дней</div>
+          <div class="value"><span id="active-days">0</span><span class="unit">из месяца</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="ranking-card">
+      <h3>Рейтинг привычек за месяц</h3>
+      <div id="month-ranking"></div>
+    </div>
+    <div class="mood-strip">
+      <h3>Настроение месяца <em>календарь</em></h3>
+      <div class="month-grid" id="month-mood-grid"></div>
+      <div class="month-mood-avg" id="month-mood-avg" style="display:none">
+        <div class="avg-label">Среднее настроение за месяц</div>
+        <div class="avg-val" id="month-avg-score">—</div>
+        <div class="avg-emoji" id="month-avg-emoji">—</div>
+      </div>
+      <div class="mood-counters" id="mood-counters"></div>
+    </div>
+  </div>
+
+  <!-- ====== YEAR VIEW ====== -->
+  <div class="view-content" id="view-year">
+    <div class="week-nav">
+      <button class="week-btn" id="prev-year">‹</button>
+      <div class="week-label" id="year-label">—</div>
+      <button class="week-btn" id="next-year">›</button>
+    </div>
+    <div class="hero">
+      <div class="big-progress">
+        <h2>Прогресс года</h2>
+        <div class="percent"><span id="year-pct">0</span><small>%</small></div>
+        <div class="sub" id="year-sub">0 из 0 выполнено</div>
+      </div>
+      <div class="mini-stats">
+        <div class="mini-stat streak">
+          <div class="label">Лучшая серия года</div>
+          <div class="value"><span id="year-best-streak">0</span><span class="unit">дней</span></div>
+        </div>
+        <div class="mini-stat" style="background: var(--clay-soft); border-color: var(--clay);">
+          <div class="label">Активных дней</div>
+          <div class="value"><span id="year-active-days">0</span><span class="unit">в году</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="months-chart-card">
+      <h3>Прогресс по месяцам</h3>
+      <div class="months-chart" id="months-chart"></div>
+    </div>
+    <div class="ranking-card">
+      <h3>Рейтинг привычек за год</h3>
+      <div id="year-ranking"></div>
+    </div>
+    <div class="mood-strip">
+      <h3>Настроения года <em>сколько каких</em></h3>
+      <div class="mood-counters" id="year-mood-counters"></div>
+    </div>
+  </div>
+
+  <!-- ====== GOALS VIEW ====== -->
+  <div class="view-content" id="view-goals">
+    <div class="goals-hero" id="goals-hero">
+      <h2 id="goals-hero-title">Мои <em>цели</em></h2>
+      <div class="meta" id="goals-hero-meta"></div>
+    </div>
+
+    <div class="subtabs">
+      <button class="subtab active" data-sub="goals">Цели</button>
+      <button class="subtab" data-sub="projects">Проекты</button>
+    </div>
+
+    <!-- GOALS SUB -->
+    <div class="sub-view active" id="sub-goals">
+      <div class="goal-mode-toggle" id="goals-mode-toggle">
+        <button class="active" data-mode="active">Активные</button>
+        <button data-mode="archive">Архив</button>
+      </div>
+      <div class="goal-filters" id="goal-filters">
+        <button class="gf-chip active" data-sphere="all"><span class="ico">✦</span> Все</button>
+        <button class="gf-chip" data-sphere="health"><span class="ico">🌿</span> Здоровье</button>
+        <button class="gf-chip" data-sphere="relations"><span class="ico">🤍</span> Отношения</button>
+        <button class="gf-chip" data-sphere="work"><span class="ico">💼</span> Работа</button>
+        <button class="gf-chip" data-sphere="finance"><span class="ico">💰</span> Финансы</button>
+        <button class="gf-chip" data-sphere="creative"><span class="ico">✨</span> Творчество</button>
+        <button class="gf-chip" data-sphere="learning"><span class="ico">📚</span> Развитие</button>
+        <button class="gf-chip" data-sphere="rest"><span class="ico">🌙</span> Отдых</button>
+        <button class="gf-chip" data-sphere="home"><span class="ico">🏠</span> Дом</button>
+        <button class="gf-chip" data-sphere="other"><span class="ico">○</span> Другое</button>
+      </div>
+      <h2 class="section-title">Список целей<span class="count" id="goals-count">0</span><button class="add-btn" id="add-goal">+</button></h2>
+      <div class="goals-list" id="goals-list"></div>
+    </div>
+
+    <!-- PROJECTS SUB -->
+    <div class="sub-view" id="sub-projects">
+      <div class="goal-mode-toggle" id="projects-mode-toggle">
+        <button class="active" data-mode="active">Активные</button>
+        <button data-mode="archive">Архив</button>
+      </div>
+      <h2 class="section-title">Список проектов<span class="count" id="projects-count">0</span><button class="add-btn" id="add-project">+</button></h2>
+      <div class="projects-list" id="projects-list"></div>
+    </div>
+  </div>
+
+  <div class="tip">данные синхронизируются между устройствами</div>
+</div>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="mood-modal">
+  <div class="modal">
+    <h3>Как <em>настроение</em>?</h3>
+    <div class="mood-slots-row" id="mood-slots-row">
+      <button class="mood-slot-btn" data-slot="morning">
+        <div class="s-icon">🌅</div>
+        <div class="s-name">Утро</div>
+        <div class="s-emoji" id="slot-morning-show">—</div>
+      </button>
+      <button class="mood-slot-btn" data-slot="afternoon">
+        <div class="s-icon">☀️</div>
+        <div class="s-name">День</div>
+        <div class="s-emoji" id="slot-afternoon-show">—</div>
+      </button>
+      <button class="mood-slot-btn" data-slot="evening">
+        <div class="s-icon">🌙</div>
+        <div class="s-name">Вечер</div>
+        <div class="s-emoji" id="slot-evening-show">—</div>
+      </button>
+    </div>
+    <div class="mood-grid">
+      <div class="mood-opt" data-m="🥰">🥰</div>
+      <div class="mood-opt" data-m="😊">😊</div>
+      <div class="mood-opt" data-m="🤩">🤩</div>
+      <div class="mood-opt" data-m="😌">😌</div>
+      <div class="mood-opt" data-m="😎">😎</div>
+      <div class="mood-opt" data-m="😐">😐</div>
+      <div class="mood-opt" data-m="😴">😴</div>
+      <div class="mood-opt" data-m="😔">😔</div>
+      <div class="mood-opt" data-m="😤">😤</div>
+      <div class="mood-opt" data-m="😭">😭</div>
+    </div>
+    <div class="modal-actions"><button class="btn btn-secondary" data-close>закрыть</button></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="habit-modal">
+  <div class="modal">
+    <h3>Новая <em>привычка</em></h3>
+    <input type="text" id="habit-input" placeholder="например, читать перед сном" maxlength="40">
+    <div class="field-label">Иконка</div>
+    <div class="emoji-picker" id="habit-emoji-picker">
+      <div class="emoji-opt selected" data-e="✿">✿</div>
+      <div class="emoji-opt" data-e="☀️">☀️</div>
+      <div class="emoji-opt" data-e="🌿">🌿</div>
+      <div class="emoji-opt" data-e="💧">💧</div>
+      <div class="emoji-opt" data-e="🥗">🥗</div>
+      <div class="emoji-opt" data-e="📖">📖</div>
+      <div class="emoji-opt" data-e="🧘">🧘</div>
+      <div class="emoji-opt" data-e="🌙">🌙</div>
+      <div class="emoji-opt" data-e="💰">💰</div>
+      <div class="emoji-opt" data-e="🏃">🏃</div>
+      <div class="emoji-opt" data-e="✒️">✒️</div>
+      <div class="emoji-opt" data-e="🤍">🤍</div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" data-close>отмена</button>
+      <button class="btn btn-primary" id="habit-save">добавить</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="task-modal">
+  <div class="modal">
+    <h3>Новая <em>задача</em></h3>
+    <input type="text" id="task-input" placeholder="что нужно сделать…" maxlength="80">
+    <div class="modal-actions">
+      <button class="btn btn-secondary" data-close>отмена</button>
+      <button class="btn btn-primary" id="task-save">добавить</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="goal-modal">
+  <div class="modal">
+    <h3 id="goal-modal-title">Новая <em>цель</em></h3>
+    <input type="text" id="goal-name" placeholder="название цели" maxlength="60">
+    <div class="field-label">Иконка</div>
+    <div class="emoji-picker" id="goal-emoji-picker">
+      <div class="emoji-opt selected" data-e="🎯">🎯</div>
+      <div class="emoji-opt" data-e="🌿">🌿</div>
+      <div class="emoji-opt" data-e="📖">📖</div>
+      <div class="emoji-opt" data-e="💰">💰</div>
+      <div class="emoji-opt" data-e="🏃">🏃</div>
+      <div class="emoji-opt" data-e="🧘">🧘</div>
+      <div class="emoji-opt" data-e="✨">✨</div>
+      <div class="emoji-opt" data-e="🌸">🌸</div>
+      <div class="emoji-opt" data-e="💼">💼</div>
+      <div class="emoji-opt" data-e="🤍">🤍</div>
+      <div class="emoji-opt" data-e="🌙">🌙</div>
+      <div class="emoji-opt" data-e="🏠">🏠</div>
+    </div>
+    <div class="field-label">Сфера жизни</div>
+    <div class="sphere-picker" id="goal-sphere-picker">
+      <div class="sphere-opt selected" data-s="other">○ Другое</div>
+      <div class="sphere-opt" data-s="health">🌿 Здоровье</div>
+      <div class="sphere-opt" data-s="relations">🤍 Отношения</div>
+      <div class="sphere-opt" data-s="work">💼 Работа</div>
+      <div class="sphere-opt" data-s="finance">💰 Финансы</div>
+      <div class="sphere-opt" data-s="creative">✨ Творчество</div>
+      <div class="sphere-opt" data-s="learning">📚 Развитие</div>
+      <div class="sphere-opt" data-s="rest">🌙 Отдых</div>
+      <div class="sphere-opt" data-s="home">🏠 Дом</div>
+    </div>
+    <div class="field-label">Тип цели</div>
+    <div class="type-picker" id="goal-type-picker">
+      <div class="type-opt selected" data-t="checkbox"><div class="ti">✓</div><div class="tl">галочка</div></div>
+      <div class="type-opt" data-t="counter"><div class="ti">12/50</div><div class="tl">счётчик</div></div>
+      <div class="type-opt" data-t="steps"><div class="ti">☰</div><div class="tl">шаги</div></div>
+    </div>
+    <div id="counter-fields" style="display:none;">
+      <div class="field-label">Цифры</div>
+      <div class="target-row">
+        <div><input type="number" id="goal-current" placeholder="сейчас" min="0"></div>
+        <div><input type="number" id="goal-target" placeholder="цель" min="1"></div>
+      </div>
+    </div>
+    <div class="field-label">Дедлайн (опционально)</div>
+    <input type="date" id="goal-deadline">
+    <div class="field-label">Заметка (опционально)</div>
+    <textarea id="goal-note" placeholder="зачем эта цель, мысли, шаги…" rows="2"></textarea>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" data-close>отмена</button>
+      <button class="btn btn-primary" id="goal-save">сохранить</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="step-modal">
+  <div class="modal">
+    <h3>Новый <em>шаг</em></h3>
+    <input type="text" id="step-input" placeholder="что нужно сделать…" maxlength="80">
+    <div class="modal-actions">
+      <button class="btn btn-secondary" data-close>отмена</button>
+      <button class="btn btn-primary" id="step-save">добавить</button>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECT MODAL -->
+<div class="modal-overlay" id="project-modal">
+  <div class="modal">
+    <h3 id="project-modal-title">Новый <em>проект</em></h3>
+    <input type="text" id="project-name" placeholder="название проекта" maxlength="60">
+    <div class="field-label">Иконка</div>
+    <div class="emoji-picker" id="project-emoji-picker">
+      <div class="emoji-opt selected" data-e="🚀">🚀</div>
+      <div class="emoji-opt" data-e="📱">📱</div>
+      <div class="emoji-opt" data-e="✨">✨</div>
+      <div class="emoji-opt" data-e="📖">📖</div>
+      <div class="emoji-opt" data-e="🏠">🏠</div>
+      <div class="emoji-opt" data-e="💼">💼</div>
+      <div class="emoji-opt" data-e="🌿">🌿</div>
+      <div class="emoji-opt" data-e="✈️">✈️</div>
+      <div class="emoji-opt" data-e="🎨">🎨</div>
+      <div class="emoji-opt" data-e="💰">💰</div>
+      <div class="emoji-opt" data-e="🎯">🎯</div>
+      <div class="emoji-opt" data-e="🌸">🌸</div>
+    </div>
+    <div class="field-label">Сфера жизни</div>
+    <div class="sphere-picker" id="project-sphere-picker">
+      <div class="sphere-opt selected" data-s="other">○ Другое</div>
+      <div class="sphere-opt" data-s="health">🌿 Здоровье</div>
+      <div class="sphere-opt" data-s="relations">🤍 Отношения</div>
+      <div class="sphere-opt" data-s="work">💼 Работа</div>
+      <div class="sphere-opt" data-s="finance">💰 Финансы</div>
+      <div class="sphere-opt" data-s="creative">✨ Творчество</div>
+      <div class="sphere-opt" data-s="learning">📚 Развитие</div>
+      <div class="sphere-opt" data-s="rest">🌙 Отдых</div>
+      <div class="sphere-opt" data-s="home">🏠 Дом</div>
+    </div>
+    <div class="field-label">Заметка о проекте (опционально)</div>
+    <textarea id="project-note" placeholder="зачем этот проект, какая большая цель…" rows="2"></textarea>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" data-close>отмена</button>
+      <button class="btn btn-primary" id="project-save">сохранить</button>
+    </div>
+  </div>
+</div>
+
+<!-- MILESTONE MODAL -->
+<div class="modal-overlay" id="ms-modal">
+  <div class="modal">
+    <h3 id="ms-modal-title">Новый <em>этап</em></h3>
+    <input type="text" id="ms-name" placeholder="название этапа" maxlength="50">
+    <div class="field-label">Дедлайн</div>
+    <input type="date" id="ms-deadline">
+    <div class="modal-actions">
+      <button class="btn btn-secondary" data-close>отмена</button>
+      <button class="btn btn-primary" id="ms-save">сохранить</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, doc, onSnapshot, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA7oQ268VgVD077tAHCxtv5Ew7IpuJgoP8",
+  authDomain: "planner-natali.firebaseapp.com",
+  projectId: "planner-natali",
+  storageBucket: "planner-natali.firebasestorage.app",
+  messagingSenderId: "96185727639",
+  appId: "1:96185727639:web:4262e108a84e8ec7c287d2"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const USER_ID = 'natali';
+const docRef = doc(db, 'planners', USER_ID);
+
+const DOW = ['пн','вт','ср','чт','пт','сб','вс'];
+const DOW_FULL = ['понедельник','вторник','среда','четверг','пятница','суббота','воскресенье'];
+const MONTHS_SHORT = ['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
+const MONTHS = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+const MONTHS_NOM = ['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь'];
+const SPHERE_LABELS = { health: 'Здоровье', relations: 'Отношения', work: 'Работа', finance: 'Финансы', creative: 'Творчество', learning: 'Развитие', rest: 'Отдых', home: 'Дом', other: 'Другое' };
+
+let state = { habits: [], tasks: {}, moods: {}, notes: {}, goals: [], projects: [] };
+let viewWeekStart = getMonday(new Date());
+let selectedDate = new Date();
+let viewMonth = new Date();
+let viewYear = new Date().getFullYear();
+let currentTab = 'week';
+let currentSubtab = 'goals';
+let firstLoad = true;
+let saveTimer = null;
+let isApplyingRemote = false;
+
+let goalFilter = 'all';
+let goalsMode = 'active';
+let projectsMode = 'active';
+let editingGoalId = null;
+let selectedGoalEmoji = '🎯';
+let selectedGoalSphere = 'other';
+let selectedGoalType = 'checkbox';
+let pendingStepGoalId = null;
+
+let editingProjectId = null;
+let selectedProjectEmoji = '🚀';
+let selectedProjectSphere = 'other';
+let pendingMsProjectId = null;
+let editingMsId = null;
+
+const syncPill = document.getElementById('sync-pill');
+function setSyncStatus(status) {
+  syncPill.classList.remove('synced','syncing','error');
+  if (status) syncPill.classList.add(status);
+}
+
+function getMonday(d) { d = new Date(d); d.setHours(0,0,0,0); const day = d.getDay(); d.setDate(d.getDate() + (day === 0 ? -6 : 1 - day)); return d; }
+function fmt(d) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+function isSameDay(a, b) { return fmt(a) === fmt(b); }
+function addDays(d, n) { const x = new Date(d); x.setDate(x.getDate()+n); return x; }
+function addMonths(d, n) { const x = new Date(d); x.setMonth(x.getMonth()+n); return x; }
+function weekDays(start) { return Array.from({length:7}, (_,i) => addDays(start, i)); }
+function uid() { return Math.random().toString(36).slice(2,10); }
+function escapeHtml(s) { return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function daysInMonth(year, month) { return new Date(year, month+1, 0).getDate(); }
+
+function scheduleSave() {
+  if (isApplyingRemote) return;
+  setSyncStatus('syncing');
+  if (saveTimer) clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveToCloud, 600);
+}
+
+async function saveToCloud() {
+  try {
+    await setDoc(docRef, {
+      habits: state.habits, tasks: state.tasks,
+      moods: state.moods, notes: state.notes,
+      goals: state.goals || [], projects: state.projects || [],
+      updatedAt: Date.now()
+    });
+    setSyncStatus('synced');
+  } catch(e) {
+    console.error('Save error:', e);
+    setSyncStatus('error');
+    setTimeout(saveToCloud, 3000);
+  }
+}
+
+function applyRemote(data) {
+  isApplyingRemote = true;
+  state.habits = data.habits || [];
+  state.tasks = data.tasks || {};
+  state.moods = data.moods || {};
+  state.notes = data.notes || {};
+  state.goals = data.goals || [];
+  state.projects = data.projects || [];
+  isApplyingRemote = false;
+  render();
+  setSyncStatus('synced');
+}
+
+onSnapshot(docRef, async (snap) => {
+  if (snap.exists()) {
+    applyRemote(snap.data());
+  } else if (firstLoad) {
+    // Документ с данными не найден. Раньше здесь автоматически создавался
+    // пустой документ поверх существующего — из-за ложного "не найдено" от
+    // слушателя это один раз стёрло весь трекер. Больше ничего не перезаписываем
+    // автоматически: подтверждаем прямым чтением, прежде чем показывать ошибку.
+    const fresh = await getDoc(docRef);
+    if (fresh.exists()) {
+      applyRemote(fresh.data());
+    } else {
+      setSyncStatus('error');
+      alert('Документ с данными планера не найден в облаке. Ничего не создаём автоматически, чтобы не затереть данные — проверь Firestore или напиши разработчику.');
+    }
+  }
+  if (firstLoad) {
+    firstLoad = false;
+    document.getElementById('loader').classList.add('hide');
+    setTimeout(() => document.getElementById('loader').remove(), 500);
+  }
+}, (err) => {
+  console.error('Sync error:', err);
+  setSyncStatus('error');
+  if (firstLoad) {
+    firstLoad = false;
+    document.getElementById('loader').classList.add('hide');
+    alert('Не удалось подключиться к облаку. Проверь интернет и обнови страницу.');
+  }
+});
+
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.onclick = () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    currentTab = tab.dataset.view;
+    document.querySelectorAll('.view-content').forEach(v => v.classList.remove('active'));
+    document.getElementById('view-' + currentTab).classList.add('active');
+    render();
+  };
+});
+
+document.querySelectorAll('.subtab').forEach(tab => {
+  tab.onclick = () => {
+    document.querySelectorAll('.subtab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    currentSubtab = tab.dataset.sub;
+    document.querySelectorAll('.sub-view').forEach(v => v.classList.remove('active'));
+    document.getElementById('sub-' + currentSubtab).classList.add('active');
+    renderGoalsView();
+  };
+});
+
+function render() {
+  const today = new Date();
+  document.getElementById('today-label').textContent = `${DOW_FULL[((today.getDay()+6)%7)]}, ${today.getDate()} ${MONTHS[today.getMonth()]}`;
+  if (currentTab === 'week') renderWeekView();
+  else if (currentTab === 'month') renderMonthView();
+  else if (currentTab === 'year') renderYearView();
+  else if (currentTab === 'goals') renderGoalsView();
+}
+
+function renderWeekView() {
+  const today = new Date();
+  const days = weekDays(viewWeekStart);
+  const first = days[0], last = days[6];
+  const sameMonth = first.getMonth() === last.getMonth();
+  const label = sameMonth
+    ? `${first.getDate()}–${last.getDate()} ${MONTHS[first.getMonth()]}`
+    : `${first.getDate()} ${MONTHS_SHORT[first.getMonth()]} — ${last.getDate()} ${MONTHS_SHORT[last.getMonth()]}`;
+  const isCurrent = isSameDay(viewWeekStart, getMonday(new Date()));
+  document.getElementById('week-label').innerHTML = `${label}<small>${isCurrent ? 'текущая неделя' : first.getFullYear() + ' год'}</small>`;
+  const todayKey = fmt(today);
+
+  document.getElementById('mood-days').innerHTML = days.map(d => {
+    const k = fmt(d); const md = getMoodDay(k); const isToday = k === todayKey;
+    const hasAny = md.morning || md.afternoon || md.evening;
+    return `<div class="mood-day ${isToday?'today':''} ${!hasAny?'empty':''}">
+      <div class="mood-day-slots">
+        <span class="mood-slot-pip" title="Утро">${md.morning || '<span style="opacity:0.2;font-size:10px">○</span>'}</span>
+        <span class="mood-slot-pip" title="День">${md.afternoon || '<span style="opacity:0.2;font-size:10px">○</span>'}</span>
+        <span class="mood-slot-pip" title="Вечер">${md.evening || '<span style="opacity:0.2;font-size:10px">○</span>'}</span>
+      </div>
+      <div class="lbl">${DOW[((d.getDay()+6)%7)]} ${d.getDate()}</div>
+    </div>`;
+  }).join('');
+
+  const strip = document.getElementById('days-strip');
+  strip.innerHTML = days.map(d => {
+    const key = fmt(d); const isSel = isSameDay(d, selectedDate); const isToday = isSameDay(d, today);
+    const tasks = state.tasks[key] || []; const doneCount = tasks.filter(t => t.done).length;
+    const habitsDone = state.habits.filter(h => h.done && h.done[key]).length;
+    const dots = Math.min(5, doneCount + habitsDone);
+    return `<div class="day-chip ${isSel?'active':''} ${isToday?'today':''}" data-date="${key}">
+      <div class="dow">${DOW[((d.getDay()+6)%7)]}</div>
+      <div class="num">${d.getDate()}</div>
+      <div class="dot-row">${'<div class="dot"></div>'.repeat(dots)}</div>
+    </div>`;
+  }).join('');
+  strip.querySelectorAll('.day-chip').forEach(el => {
+    el.onclick = () => {
+      const [y,m,d] = el.dataset.date.split('-').map(Number);
+      selectedDate = new Date(y, m-1, d); render();
+    };
+  });
+
+  const habitsWrap = document.getElementById('habits-list');
+  document.getElementById('habits-count').textContent = state.habits.length;
+  if (state.habits.length === 0) {
+    habitsWrap.innerHTML = '<div class="empty">добавь свою первую привычку ↗</div>';
+  } else {
+    habitsWrap.innerHTML = state.habits.map(h => {
+      const weekCount = days.filter(d => h.done && h.done[fmt(d)]).length;
+      const streak = calcHabitStreak(h);
+      return `<div class="habit" data-id="${h.id}">
+        <div class="emoji">${h.emoji}</div>
+        <div class="info">
+          <div class="name">${escapeHtml(h.name)}</div>
+          <div class="streak-mini">${streak > 0 ? streak + ' дн. подряд · ' : ''}${weekCount}/7 на неделе</div>
+        </div>
+        <div class="habit-week">
+          ${days.map(d => {
+            const k = fmt(d); const done = h.done && h.done[k]; const isToday = k === todayKey;
+            return `<button class="habit-box ${done?'done':''} ${isToday?'today':''}" data-d="${DOW[((d.getDay()+6)%7)]}" data-hid="${h.id}" data-date="${k}"></button>`;
+          }).join('')}
+        </div>
+        <button class="del" data-del="${h.id}">×</button>
+      </div>`;
+    }).join('');
+    habitsWrap.querySelectorAll('.habit-box').forEach(btn => {
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        const habit = state.habits.find(x => x.id === btn.dataset.hid);
+        if (!habit.done) habit.done = {};
+        const k = btn.dataset.date;
+        if (habit.done[k]) delete habit.done[k]; else habit.done[k] = true;
+        render(); scheduleSave();
+      };
+    });
+    habitsWrap.querySelectorAll('[data-del]').forEach(btn => {
+      btn.onclick = () => {
+        if (!confirm('Удалить привычку?')) return;
+        state.habits = state.habits.filter(h => h.id !== btn.dataset.del);
+        render(); scheduleSave();
+      };
+    });
+  }
+
+  const key = fmt(selectedDate);
+  const tasks = state.tasks[key] || [];
+  document.getElementById('tasks-count').textContent = tasks.length;
+  const isToday = isSameDay(selectedDate, today);
+  document.getElementById('selected-day-label').textContent = isToday ? 'сегодня' : `на ${selectedDate.getDate()} ${MONTHS_SHORT[selectedDate.getMonth()]}`;
+  document.getElementById('notes-day-label').textContent = isToday ? 'сегодня' : `${selectedDate.getDate()} ${MONTHS_SHORT[selectedDate.getMonth()]}`;
+
+  const tasksWrap = document.getElementById('tasks-list');
+  if (tasks.length === 0) {
+    tasksWrap.innerHTML = '<div class="empty">на этот день пока ничего не запланировано</div>';
+  } else {
+    tasksWrap.innerHTML = tasks.map(t => `
+      <div class="task ${t.done?'done':''}" data-tid="${t.id}">
+        <div class="check"></div>
+        <div class="text">${escapeHtml(t.text)}</div>
+        <button class="del" data-deltask="${t.id}">×</button>
+      </div>
+    `).join('');
+    tasksWrap.querySelectorAll('.task').forEach(el => {
+      el.onclick = (e) => {
+        if (e.target.closest('.del')) return;
+        const task = state.tasks[key].find(x => x.id === el.dataset.tid);
+        task.done = !task.done; render(); scheduleSave();
+      };
+    });
+    tasksWrap.querySelectorAll('[data-deltask]').forEach(btn => {
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        state.tasks[key] = state.tasks[key].filter(t => t.id !== btn.dataset.deltask);
+        if (state.tasks[key].length === 0) delete state.tasks[key];
+        render(); scheduleSave();
+      };
+    });
+  }
+
+  document.getElementById('notes-area').value = state.notes[key] || '';
+  const todayMoodDay = getMoodDay(todayKey);
+  const filledSlots = [todayMoodDay.morning, todayMoodDay.afternoon, todayMoodDay.evening].filter(Boolean).length;
+  const curSlotEmoji = todayMoodDay[getCurrentSlot()];
+  const avgEmoji = getDayAvgEmoji(todayKey);
+  document.getElementById('mood-emoji').textContent = curSlotEmoji || avgEmoji || '😊';
+  document.getElementById('mood-hint').textContent = filledSlots === 0 ? 'нажми чтобы отметить' : filledSlots === 3 ? `утро · день · вечер ✓` : `${filledSlots}/3 отметки · можно изменить`;
+
+  let total = 0, done = 0;
+  days.forEach(d => {
+    const k = fmt(d);
+    state.habits.forEach(h => { total++; if (h.done && h.done[k]) done++; });
+    (state.tasks[k] || []).forEach(t => { total++; if (t.done) done++; });
+  });
+  const pct = total ? Math.round(done/total*100) : 0;
+  document.getElementById('week-pct').textContent = pct;
+  document.getElementById('week-sub').textContent = `${done} из ${total} выполнено`;
+  document.getElementById('streak').textContent = calcOverallStreak();
+
+  const counts = days.map(d => {
+    const k = fmt(d);
+    let c = state.habits.filter(h => h.done && h.done[k]).length;
+    c += (state.tasks[k] || []).filter(t => t.done).length;
+    return c;
+  });
+  const max = Math.max(...counts, 1);
+  document.getElementById('chart-bars').innerHTML = days.map((d, i) => {
+    const k = fmt(d); const isT = k === todayKey;
+    const hPct = counts[i] === 0 ? 0 : (counts[i]/max * 100);
+    return `<div class="chart-col">
+      <div class="chart-bar-wrap">
+        <div class="chart-bar ${isT?'today':''}" style="height:${hPct}%">
+          ${counts[i] > 0 ? `<span>${counts[i]}</span>` : ''}
+        </div>
+      </div>
+      <div class="lbl ${isT?'today':''}">${DOW[((d.getDay()+6)%7)]}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderMonthView() {
+  const year = viewMonth.getFullYear(); const month = viewMonth.getMonth();
+  const days = daysInMonth(year, month);
+  const today = new Date();
+  const isCurMonth = today.getFullYear() === year && today.getMonth() === month;
+  document.getElementById('month-label').innerHTML = `${MONTHS_NOM[month]} ${year}<small>${isCurMonth ? 'текущий месяц' : ''}</small>`;
+
+  let total = 0, done = 0, activeDays = 0;
+  const monthDays = [];
+  for (let i = 1; i <= days; i++) {
+    const d = new Date(year, month, i); const k = fmt(d);
+    let dayHabits = 0, dayHabitsTotal = state.habits.length;
+    let dayTasksDone = 0, dayTasksTotal = (state.tasks[k] || []).length;
+    state.habits.forEach(h => { total++; if (h.done && h.done[k]) { done++; dayHabits++; } });
+    (state.tasks[k] || []).forEach(t => { total++; if (t.done) { done++; dayTasksDone++; } });
+    const dayDone = dayHabits + dayTasksDone;
+    if (dayDone > 0) activeDays++;
+    monthDays.push({ date: d, key: k, habitsDone: dayHabits, habitsTotal: dayHabitsTotal, tasksDone: dayTasksDone, tasksTotal: dayTasksTotal, mood: state.moods[k] });
+  }
+  const pct = total ? Math.round(done/total*100) : 0;
+  document.getElementById('month-pct').textContent = pct;
+  document.getElementById('month-sub').textContent = `${done} из ${total} выполнено`;
+  document.getElementById('active-days').textContent = activeDays;
+
+  let bestStreak = 0, currentStreak = 0;
+  monthDays.forEach(md => {
+    const dayDone = md.habitsDone >= Math.ceil(md.habitsTotal / 2) && md.habitsTotal > 0;
+    if (dayDone) { currentStreak++; bestStreak = Math.max(bestStreak, currentStreak); }
+    else currentStreak = 0;
+  });
+  document.getElementById('best-streak').textContent = bestStreak;
+
+  const ranking = state.habits.map(h => {
+    let cnt = 0; monthDays.forEach(md => { if (h.done && h.done[md.key]) cnt++; });
+    return { habit: h, count: cnt, pct: Math.round(cnt/days*100) };
+  }).sort((a,b) => b.count - a.count);
+  const maxRank = ranking[0]?.count || 1;
+  document.getElementById('month-ranking').innerHTML = ranking.length === 0
+    ? '<div class="empty">нет данных</div>'
+    : ranking.map(r => `<div class="rank-row">
+        <div class="r-emoji">${r.habit.emoji}</div>
+        <div class="r-name">${escapeHtml(r.habit.name)}</div>
+        <div class="r-bar"><div class="r-fill" style="width:${(r.count/maxRank)*100}%"></div></div>
+        <div class="r-pct">${r.pct}%</div>
+      </div>`).join('');
+
+  const firstDow = ((new Date(year, month, 1).getDay()+6)%7);
+  const cells = [];
+  DOW.forEach(d => cells.push(`<div class="head">${d}</div>`));
+  for (let i = 0; i < firstDow; i++) cells.push('<div class="month-cell empty"></div>');
+  monthDays.forEach(md => {
+    const isToday = isSameDay(md.date, today);
+    const totalDay = md.habitsTotal + md.tasksTotal;
+    const doneDay = md.habitsDone + md.tasksDone;
+    const dayPct = totalDay ? doneDay/totalDay : 0;
+    const dotClass = dayPct >= 0.7 ? 'high' : dayPct >= 0.4 ? 'mid' : '';
+    const avgEmoji = getDayAvgEmoji(md.key);
+    cells.push(`<div class="month-cell ${avgEmoji?'has-mood':''} ${isToday?'today':''}">
+      ${avgEmoji ? `<div class="m-emoji">${avgEmoji}</div>` : ''}
+      <div class="day-num">${md.date.getDate()}</div>
+      ${doneDay > 0 ? `<div class="progress-dot ${dotClass}"></div>` : ''}
+    </div>`);
+  });
+  document.getElementById('month-mood-grid').innerHTML = cells.join('');
+
+  const moodCounts = {};
+  let allMoodScores = [];
+  monthDays.forEach(md => {
+    const mDay = getMoodDay(md.key);
+    [mDay.morning, mDay.afternoon, mDay.evening].filter(Boolean).forEach(e => {
+      moodCounts[e] = (moodCounts[e] || 0) + 1;
+      allMoodScores.push(MOOD_SCORE[e] || 3);
+    });
+  });
+  const monthAvgScore = allMoodScores.length ? allMoodScores.reduce((s,x) => s+x, 0) / allMoodScores.length : null;
+  const monthAvgEmoji = scoreToEmoji(monthAvgScore);
+  const avgEl = document.getElementById('month-mood-avg');
+  if (monthAvgScore !== null) {
+    avgEl.style.display = 'flex';
+    document.getElementById('month-avg-score').textContent = monthAvgScore.toFixed(1) + ' / 5';
+    document.getElementById('month-avg-emoji').textContent = monthAvgEmoji;
+  } else {
+    avgEl.style.display = 'none';
+  }
+  const sortedMoods = Object.entries(moodCounts).sort((a,b) => b[1] - a[1]);
+  document.getElementById('mood-counters').innerHTML = sortedMoods.length === 0
+    ? '<div class="empty" style="grid-column:1/-1">отметь настроение, чтобы увидеть статистику</div>'
+    : sortedMoods.map(([emoji, count]) => `<div class="mood-counter">
+        <div class="e">${emoji}</div><div class="c">${count}</div><div class="l">дн.</div>
+      </div>`).join('');
+}
+
+function renderYearView() {
+  const year = viewYear; const today = new Date(); const isCurYear = today.getFullYear() === year;
+  document.getElementById('year-label').innerHTML = `${year}<small>${isCurYear ? 'текущий год' : ''}</small>`;
+
+  let totalAll = 0, doneAll = 0, activeAll = 0;
+  const monthsData = []; let yearBestStreak = 0, currentStreak = 0; const yearMoods = {};
+  for (let m = 0; m < 12; m++) {
+    const days = daysInMonth(year, m);
+    let mTotal = 0, mDone = 0, mActive = 0;
+    for (let i = 1; i <= days; i++) {
+      const d = new Date(year, m, i); const k = fmt(d);
+      let dayHabits = 0;
+      state.habits.forEach(h => { mTotal++; if (h.done && h.done[k]) { mDone++; dayHabits++; } });
+      (state.tasks[k] || []).forEach(t => { mTotal++; if (t.done) mDone++; });
+      const dayDone = dayHabits + ((state.tasks[k] || []).filter(t => t.done).length);
+      if (dayDone > 0) mActive++;
+      const halfDone = state.habits.length > 0 && dayHabits >= Math.ceil(state.habits.length / 2);
+      if (halfDone) { currentStreak++; yearBestStreak = Math.max(yearBestStreak, currentStreak); }
+      else currentStreak = 0;
+      if (state.moods[k]) {
+        const mDay = getMoodDay(k);
+        [mDay.morning, mDay.afternoon, mDay.evening].filter(Boolean).forEach(e => {
+          yearMoods[e] = (yearMoods[e] || 0) + 1;
+        });
+      }
+    }
+    totalAll += mTotal; doneAll += mDone; activeAll += mActive;
+    monthsData.push({ month: m, total: mTotal, done: mDone, pct: mTotal ? Math.round(mDone/mTotal*100) : 0 });
+  }
+  const yearPct = totalAll ? Math.round(doneAll/totalAll*100) : 0;
+  document.getElementById('year-pct').textContent = yearPct;
+  document.getElementById('year-sub').textContent = `${doneAll} из ${totalAll} выполнено`;
+  document.getElementById('year-best-streak').textContent = yearBestStreak;
+  document.getElementById('year-active-days').textContent = activeAll;
+
+  const maxPct = Math.max(...monthsData.map(m => m.pct), 1);
+  document.getElementById('months-chart').innerHTML = monthsData.map(md => {
+    const isCurrent = isCurYear && today.getMonth() === md.month;
+    const h = md.pct === 0 ? 0 : (md.pct / Math.max(maxPct, 50)) * 100;
+    return `<div class="month-col">
+      <div class="month-bar-wrap">
+        <div class="month-bar ${isCurrent?'current':''}" style="height:${Math.min(h, 100)}%">
+          ${md.pct > 0 ? `<span class="v">${md.pct}%</span>` : ''}
+        </div>
+      </div>
+      <div class="m-lbl ${isCurrent?'current':''}">${MONTHS_SHORT[md.month]}</div>
+    </div>`;
+  }).join('');
+
+  const yearRanking = state.habits.map(h => {
+    let cnt = 0;
+    if (h.done) Object.keys(h.done).forEach(k => { if (k.startsWith(year + '-')) cnt++; });
+    return { habit: h, count: cnt };
+  }).sort((a,b) => b.count - a.count);
+  const maxYRank = yearRanking[0]?.count || 1;
+  document.getElementById('year-ranking').innerHTML = yearRanking.length === 0
+    ? '<div class="empty">нет данных</div>'
+    : yearRanking.map(r => `<div class="rank-row">
+        <div class="r-emoji">${r.habit.emoji}</div>
+        <div class="r-name">${escapeHtml(r.habit.name)}</div>
+        <div class="r-bar"><div class="r-fill" style="width:${(r.count/maxYRank)*100}%"></div></div>
+        <div class="r-pct">${r.count} дн.</div>
+      </div>`).join('');
+
+  const sortedYearMoods = Object.entries(yearMoods).sort((a,b) => b[1] - a[1]);
+  document.getElementById('year-mood-counters').innerHTML = sortedYearMoods.length === 0
+    ? '<div class="empty" style="grid-column:1/-1">пока нет данных о настроении</div>'
+    : sortedYearMoods.map(([emoji, count]) => `<div class="mood-counter">
+        <div class="e">${emoji}</div><div class="c">${count}</div><div class="l">дн.</div>
+      </div>`).join('');
+}
+
+// ====== GOALS ======
+function goalProgress(g) {
+  if (g.type === 'checkbox') return g.done ? 1 : 0;
+  if (g.type === 'counter') return g.target > 0 ? Math.min(g.current / g.target, 1) : 0;
+  if (g.type === 'steps') {
+    const total = (g.steps || []).length;
+    if (total === 0) return 0;
+    return g.steps.filter(s => s.done).length / total;
+  }
+  return 0;
+}
+function isGoalDone(g) { return goalProgress(g) >= 1; }
+function isGoalOverdue(g) {
+  if (!g.deadline || isGoalDone(g)) return false;
+  const today = new Date(); today.setHours(0,0,0,0);
+  const dl = new Date(g.deadline); dl.setHours(0,0,0,0);
+  return dl < today;
+}
+function daysUntilDeadline(d) {
+  if (!d) return null;
+  const today = new Date(); today.setHours(0,0,0,0);
+  const dl = new Date(d); dl.setHours(0,0,0,0);
+  return Math.round((dl - today) / (1000*60*60*24));
+}
+function deadlineText(deadline, isDone) {
+  if (!deadline) return '';
+  const days = daysUntilDeadline(deadline);
+  const dl = new Date(deadline);
+  const dateStr = `до ${dl.getDate()} ${MONTHS_SHORT[dl.getMonth()]}`;
+  if (days === null) return '';
+  if (days < 0 && !isDone) return `просрочено ${Math.abs(days)} дн.`;
+  if (days === 0) return 'сегодня дедлайн';
+  if (days === 1) return 'завтра дедлайн';
+  if (days <= 7) return `${dateStr} · ${days} дн.`;
+  return dateStr;
+}
+function deadlineClass(deadline, isDone) {
+  if (!deadline || isDone) return '';
+  const days = daysUntilDeadline(deadline);
+  if (days < 0) return 'overdue';
+  if (days <= 3) return 'urgent';
+  return '';
+}
+
+// ====== PROJECTS ======
+function projectProgress(p) {
+  const ms = p.milestones || [];
+  if (ms.length === 0) return 0;
+  return ms.filter(m => m.done).length / ms.length;
+}
+function isProjectDone(p) { return projectProgress(p) >= 1 && (p.milestones || []).length > 0; }
+
+function renderGoalsView() {
+  const goals = state.goals || [];
+  const projects = state.projects || [];
+
+  // hero
+  if (currentSubtab === 'goals') {
+    document.getElementById('goals-hero-title').innerHTML = 'Мои <em>цели</em>';
+    const active = goals.filter(g => !isGoalDone(g));
+    const done = goals.filter(g => isGoalDone(g));
+    const activePct = active.length === 0 ? 0 : Math.round(active.reduce((sum, g) => sum + goalProgress(g)*100, 0) / active.length);
+    document.getElementById('goals-hero-meta').innerHTML = `
+      <span><strong>${activePct}%</strong> прогресс</span>
+      <span><strong>${active.length}</strong> активных</span>
+      <span><strong>${done.length}</strong> выполнено</span>
+    `;
+  } else {
+    document.getElementById('goals-hero-title').innerHTML = 'Мои <em>проекты</em>';
+    const active = projects.filter(p => !isProjectDone(p));
+    const done = projects.filter(p => isProjectDone(p));
+    const activePct = active.length === 0 ? 0 : Math.round(active.reduce((sum, p) => sum + projectProgress(p)*100, 0) / active.length);
+    document.getElementById('goals-hero-meta').innerHTML = `
+      <span><strong>${activePct}%</strong> средний прогресс</span>
+      <span><strong>${active.length}</strong> активных</span>
+      <span><strong>${done.length}</strong> завершено</span>
+    `;
+  }
+
+  if (currentSubtab === 'goals') renderGoalsList();
+  else renderProjectsList();
+}
+
+function renderGoalsList() {
+  const goals = state.goals || [];
+  const active = goals.filter(g => !isGoalDone(g));
+  const done = goals.filter(g => isGoalDone(g));
+  let displayed = goalsMode === 'archive' ? done : active;
+  if (goalFilter !== 'all') displayed = displayed.filter(g => (g.sphere || 'other') === goalFilter);
+  if (goalsMode === 'active') {
+    displayed.sort((a, b) => {
+      if (a.deadline && b.deadline) return new Date(a.deadline) - new Date(b.deadline);
+      if (a.deadline) return -1;
+      if (b.deadline) return 1;
+      return 0;
+    });
+  } else {
+    displayed.sort((a, b) => (b.completedAt || 0) - (a.completedAt || 0));
+  }
+  document.getElementById('goals-count').textContent = displayed.length;
+
+  const wrap = document.getElementById('goals-list');
+  if (displayed.length === 0) {
+    wrap.innerHTML = `<div class="empty" style="background:var(--card);border:1px solid var(--line);border-radius:18px;padding:40px 20px;">${goalsMode === 'archive' ? 'архив пока пуст' : 'добавь свою первую цель ↗'}</div>`;
+    return;
+  }
+  wrap.innerHTML = displayed.map(g => renderGoalCard(g)).join('');
+  attachGoalHandlers();
+}
+
+function renderGoalCard(g) {
+  const progress = goalProgress(g); const isDone = progress >= 1;
+  const overdue = isGoalOverdue(g);
+  const deadline = deadlineText(g.deadline, isDone);
+  const dlClass = deadlineClass(g.deadline, isDone);
+
+  let body = '';
+  if (g.type === 'checkbox') {
+    body = `<div class="goal-checkbox" data-toggle="${g.id}">
+      <div class="cb"></div>
+      <div class="label">${isDone ? 'выполнено' : 'отметить как выполненное'}</div>
+    </div>`;
+  } else if (g.type === 'counter') {
+    body = `<div class="goal-counter">
+      <button class="cnt-btn" data-cnt="dec" data-id="${g.id}" ${g.current <= 0 ? 'disabled' : ''}>−</button>
+      <div class="cnt-display">${g.current || 0}<small> / ${g.target || 1}</small></div>
+      <button class="cnt-btn" data-cnt="inc" data-id="${g.id}" ${g.current >= g.target ? 'disabled' : ''}>+</button>
+    </div>`;
+  } else if (g.type === 'steps') {
+    const steps = g.steps || [];
+    body = `<div class="goal-steps">
+      ${steps.map(s => `<div class="goal-step ${s.done?'done':''}" data-step="${g.id}|${s.id}">
+        <div class="sb"></div>
+        <div class="st">${escapeHtml(s.text)}</div>
+        <button class="step-del" data-stepdel="${g.id}|${s.id}">×</button>
+      </div>`).join('')}
+      <button class="add-step-btn" data-addstep="${g.id}">+ добавить шаг</button>
+    </div>`;
+  }
+  const hasProgressBar = g.type !== 'checkbox' || isDone;
+  return `<div class="goal-card ${isDone?'done':''} ${overdue?'overdue':''}" data-goal="${g.id}">
+    <div class="goal-actions">
+      <button data-edit="${g.id}">✎</button>
+      <button data-goaldel="${g.id}">×</button>
+    </div>
+    <div class="goal-head">
+      <div class="goal-emoji">${g.emoji || '🎯'}</div>
+      <div class="goal-info">
+        <div class="goal-name">${escapeHtml(g.name)}</div>
+        <div class="goal-meta">
+          <span class="goal-tag ${g.sphere || 'other'}">${SPHERE_LABELS[g.sphere || 'other']}</span>
+          ${deadline ? `<span class="goal-deadline ${dlClass}">${deadline}</span>` : ''}
+        </div>
+      </div>
+    </div>
+    ${body}
+    ${hasProgressBar ? `
+      <div class="goal-progress"><div class="goal-progress-fill ${isDone?'complete':''}" style="width:${progress*100}%"></div></div>
+      <div class="goal-progress-text">
+        <span>${g.type === 'counter' ? `${g.current || 0} из ${g.target || 1}` : g.type === 'steps' ? `${(g.steps||[]).filter(s => s.done).length} из ${(g.steps||[]).length}` : isDone ? 'готово' : ''}</span>
+        <span class="pct">${Math.round(progress*100)}%</span>
+      </div>
+    ` : ''}
+    ${g.note ? `<div class="goal-note">${escapeHtml(g.note)}</div>` : ''}
+  </div>`;
+}
+
+function attachGoalHandlers() {
+  document.querySelectorAll('[data-toggle]').forEach(el => {
+    el.onclick = () => {
+      const g = state.goals.find(x => x.id === el.dataset.toggle);
+      g.done = !g.done;
+      if (g.done) g.completedAt = Date.now();
+      else delete g.completedAt;
+      render(); scheduleSave();
+    };
+  });
+  document.querySelectorAll('[data-cnt]').forEach(btn => {
+    btn.onclick = () => {
+      const g = state.goals.find(x => x.id === btn.dataset.id);
+      if (btn.dataset.cnt === 'inc' && g.current < g.target) g.current = (g.current || 0) + 1;
+      if (btn.dataset.cnt === 'dec' && g.current > 0) g.current = g.current - 1;
+      if (g.current >= g.target) g.completedAt = Date.now();
+      else if (g.completedAt) delete g.completedAt;
+      render(); scheduleSave();
+    };
+  });
+  document.querySelectorAll('[data-step]').forEach(el => {
+    el.onclick = (e) => {
+      if (e.target.closest('[data-stepdel]')) return;
+      const [gid, sid] = el.dataset.step.split('|');
+      const g = state.goals.find(x => x.id === gid);
+      const s = g.steps.find(x => x.id === sid);
+      s.done = !s.done;
+      const allDone = g.steps.every(x => x.done) && g.steps.length > 0;
+      if (allDone) g.completedAt = Date.now();
+      else if (g.completedAt) delete g.completedAt;
+      render(); scheduleSave();
+    };
+  });
+  document.querySelectorAll('[data-stepdel]').forEach(btn => {
+    btn.onclick = (e) => {
+      e.stopPropagation();
+      const [gid, sid] = btn.dataset.stepdel.split('|');
+      const g = state.goals.find(x => x.id === gid);
+      g.steps = g.steps.filter(x => x.id !== sid);
+      render(); scheduleSave();
+    };
+  });
+  document.querySelectorAll('[data-addstep]').forEach(btn => {
+    btn.onclick = () => {
+      pendingStepGoalId = btn.dataset.addstep;
+      document.getElementById('step-input').value = '';
+      document.getElementById('step-modal').classList.add('show');
+      setTimeout(() => document.getElementById('step-input').focus(), 100);
+    };
+  });
+  document.querySelectorAll('[data-edit]').forEach(btn => {
+    btn.onclick = () => openGoalModal(btn.dataset.edit);
+  });
+  document.querySelectorAll('[data-goaldel]').forEach(btn => {
+    btn.onclick = () => {
+      if (!confirm('Удалить цель?')) return;
+      state.goals = state.goals.filter(g => g.id !== btn.dataset.goaldel);
+      render(); scheduleSave();
+    };
+  });
+}
+
+// ====== PROJECTS ======
+function renderProjectsList() {
+  const projects = state.projects || [];
+  const active = projects.filter(p => !isProjectDone(p));
+  const done = projects.filter(p => isProjectDone(p));
+  let displayed = projectsMode === 'archive' ? done : active;
+  document.getElementById('projects-count').textContent = displayed.length;
+
+  const wrap = document.getElementById('projects-list');
+  if (displayed.length === 0) {
+    wrap.innerHTML = `<div class="empty" style="background:var(--card);border:1px solid var(--line);border-radius:18px;padding:40px 20px;">${projectsMode === 'archive' ? 'архив пуст' : 'добавь свой первый проект ↗'}</div>`;
+    return;
+  }
+  wrap.innerHTML = displayed.map(p => renderProjectCard(p)).join('');
+  attachProjectHandlers();
+}
+
+function projectStartFinishDates(p) {
+  const ms = p.milestones || [];
+  if (ms.length === 0) return [null, null];
+  const dates = ms.filter(m => m.deadline).map(m => new Date(m.deadline));
+  if (dates.length === 0) return [null, null];
+  const start = new Date(Math.min(...dates));
+  const finish = new Date(Math.max(...dates));
+  return [start, finish];
+}
+
+function renderProjectCard(p) {
+  const progress = projectProgress(p);
+  const isDone = progress >= 1 && (p.milestones || []).length > 0;
+  const ms = (p.milestones || []).slice().sort((a, b) => {
+    if (a.deadline && b.deadline) return new Date(a.deadline) - new Date(b.deadline);
+    if (a.deadline) return -1;
+    if (b.deadline) return 1;
+    return 0;
+  });
+  const viewMode = p.viewMode || 'timeline'; // 'timeline' or 'list'
+  const [startDate, finishDate] = projectStartFinishDates(p);
+
+  const totalMs = ms.length;
+  const doneMs = ms.filter(m => m.done).length;
+
+  // determine "current" (first not-done, not-overdue) and overdue ones
+  let currentFound = false;
+  const enrichedMs = ms.map(m => {
+    let status = 'future';
+    if (m.done) status = 'done';
+    else if (m.deadline && daysUntilDeadline(m.deadline) < 0) status = 'overdue';
+    else if (!currentFound) { status = 'current'; currentFound = true; }
+    return { ...m, status };
+  });
+
+  let timelineHtml = '';
+  if (totalMs > 0) {
+    if (viewMode === 'timeline') {
+      const stepWidth = totalMs > 1 ? 100 / (totalMs - 1) : 0;
+      const fillWidth = totalMs > 1 ? (doneMs > 0 ? ((doneMs - 1) / (totalMs - 1) * 100) : 0) : 0;
+      timelineHtml = `<div class="timeline-wrap">
+        <div class="timeline-caption">Шкала проекта</div>
+        <div class="timeline">
+          <div class="timeline-track"></div>
+          ${doneMs > 1 ? `<div class="timeline-track-fill" style="width:calc(${fillWidth}% - 0px); right:auto;"></div>` : ''}
+          ${enrichedMs.map((m, i) => {
+            const left = totalMs > 1 ? (i * stepWidth) : 50;
+            const dl = m.deadline ? new Date(m.deadline) : null;
+            const dateStr = dl ? `${dl.getDate()} ${MONTHS_SHORT[dl.getMonth()]}` : '—';
+            return `<div class="milestone ${m.status}" style="left: calc(30px + ${left}% * (100% - 60px) / 100%); left: ${30 + (i * (100 - 60/4) / Math.max(totalMs - 1, 1))}px;" data-msclick="${p.id}|${m.id}">
+              <div class="milestone-dot"></div>
+              <div class="milestone-label">${escapeHtml(m.name)}</div>
+              <div class="milestone-date">${dateStr}</div>
+            </div>`;
+          }).join('')}
+        </div>
+        <div class="project-legend">
+          <span><span class="dot done-d"></span>выполнено</span>
+          <span><span class="dot cur-d"></span>в работе</span>
+          <span><span class="dot over-d"></span>просрочено</span>
+          <span><span class="dot fut-d"></span>впереди</span>
+        </div>
+      </div>`;
+      // simpler positioning: use percentage
+      timelineHtml = `<div class="timeline-wrap">
+        <div class="timeline-caption">Шкала проекта</div>
+        <div class="timeline">
+          <div class="timeline-track"></div>
+          ${doneMs > 0 && totalMs > 1 ? `<div class="timeline-track-fill" style="width:calc((100% - 60px) * ${(doneMs - 1) / (totalMs - 1)});"></div>` : ''}
+          ${enrichedMs.map((m, i) => {
+            const leftPct = totalMs > 1 ? (i / (totalMs - 1)) * 100 : 50;
+            const dl = m.deadline ? new Date(m.deadline) : null;
+            const dateStr = dl ? `${dl.getDate()} ${MONTHS_SHORT[dl.getMonth()]}` : '—';
+            return `<div class="milestone ${m.status}" style="left: calc(30px + (100% - 60px) * ${leftPct/100});" data-msclick="${p.id}|${m.id}">
+              <div class="milestone-dot"></div>
+              <div class="milestone-label">${escapeHtml(m.name)}</div>
+              <div class="milestone-date">${dateStr}</div>
+            </div>`;
+          }).join('')}
+        </div>
+        <div class="project-legend">
+          <span><span class="dot done-d"></span>выполнено</span>
+          <span><span class="dot cur-d"></span>в работе</span>
+          <span><span class="dot over-d"></span>просрочено</span>
+          <span><span class="dot fut-d"></span>впереди</span>
+        </div>
+      </div>
+      <button class="add-ms-btn" data-addms="${p.id}">+ добавить этап</button>`;
+    } else {
+      timelineHtml = `<div class="timeline-list">
+        ${enrichedMs.map(m => {
+          const dl = m.deadline ? new Date(m.deadline) : null;
+          const dateStr = dl ? `${dl.getDate()} ${MONTHS_SHORT[dl.getMonth()]} ${dl.getFullYear()}` : 'без даты';
+          let metaCls = '';
+          let metaText = dateStr;
+          if (m.status === 'overdue') {
+            metaCls = 'overdue';
+            const days = Math.abs(daysUntilDeadline(m.deadline));
+            metaText = `просрочено ${days} дн. · ${dateStr}`;
+          } else if (m.status === 'current' && m.deadline) {
+            const days = daysUntilDeadline(m.deadline);
+            if (days <= 7) { metaCls = 'urgent'; metaText = `${days <= 0 ? 'сегодня' : days + ' дн. до дедлайна'} · ${dateStr}`; }
+          }
+          return `<div class="ms-row ${m.status}" data-msclick="${p.id}|${m.id}">
+            <div class="ms-circle"></div>
+            <div class="ms-content">
+              <div class="ms-name">${escapeHtml(m.name)}</div>
+              <div class="ms-meta"><span class="${metaCls}">${metaText}</span></div>
+            </div>
+            <div class="ms-actions">
+              <button data-msedit="${p.id}|${m.id}">✎</button>
+              <button data-msdel="${p.id}|${m.id}">×</button>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+      <button class="add-ms-btn" data-addms="${p.id}">+ добавить этап</button>`;
+    }
+  } else {
+    timelineHtml = `<button class="add-ms-btn" data-addms="${p.id}">+ добавить первый этап</button>`;
+  }
+
+  const startStr = startDate ? `${startDate.getDate()} ${MONTHS_SHORT[startDate.getMonth()]}` : '—';
+  const finishStr = finishDate ? `${finishDate.getDate()} ${MONTHS_SHORT[finishDate.getMonth()]}` : '—';
+
+  return `<div class="project-card ${isDone?'done':''}" data-project="${p.id}">
+    <div class="goal-actions">
+      <button data-projectedit="${p.id}">✎</button>
+      <button data-projectdel="${p.id}">×</button>
+    </div>
+    <div class="project-head">
+      <div class="project-emoji">${p.emoji || '🚀'}</div>
+      <div class="project-info">
+        <div class="project-name">${escapeHtml(p.name)}</div>
+        <div class="goal-meta">
+          <span class="goal-tag ${p.sphere || 'other'}">${SPHERE_LABELS[p.sphere || 'other']}</span>
+          <span style="font-size: 11px; color: var(--ink-soft); font-weight: 500;">${doneMs} из ${totalMs} этапов</span>
+        </div>
+      </div>
+      ${totalMs > 0 ? `<div class="view-toggle">
+        <button class="${viewMode === 'timeline' ? 'active' : ''}" data-vm="${p.id}|timeline">шкала</button>
+        <button class="${viewMode === 'list' ? 'active' : ''}" data-vm="${p.id}|list">список</button>
+      </div>` : ''}
+    </div>
+    <div class="project-progress-bar ${isDone?'complete':''}"><div style="width:${progress*100}%"></div></div>
+    <div class="project-progress-row">
+      <span>Старт: ${startStr}</span>
+      <span class="pct">${Math.round(progress*100)}%</span>
+      <span>Финал: ${finishStr}</span>
+    </div>
+    ${timelineHtml}
+    ${p.note ? `<div class="project-note">${escapeHtml(p.note)}</div>` : ''}
+  </div>`;
+}
+
+function attachProjectHandlers() {
+  document.querySelectorAll('[data-msclick]').forEach(el => {
+    el.onclick = (e) => {
+      if (e.target.closest('[data-msdel]') || e.target.closest('[data-msedit]')) return;
+      const [pid, mid] = el.dataset.msclick.split('|');
+      const p = state.projects.find(x => x.id === pid);
+      const m = p.milestones.find(x => x.id === mid);
+      m.done = !m.done;
+      if (m.done) m.completedAt = Date.now();
+      else delete m.completedAt;
+      render(); scheduleSave();
+    };
+  });
+  document.querySelectorAll('[data-vm]').forEach(btn => {
+    btn.onclick = () => {
+      const [pid, mode] = btn.dataset.vm.split('|');
+      const p = state.projects.find(x => x.id === pid);
+      p.viewMode = mode;
+      render(); scheduleSave();
+    };
+  });
+  document.querySelectorAll('[data-addms]').forEach(btn => {
+    btn.onclick = () => {
+      pendingMsProjectId = btn.dataset.addms;
+      editingMsId = null;
+      document.getElementById('ms-modal-title').innerHTML = 'Новый <em>этап</em>';
+      document.getElementById('ms-name').value = '';
+      document.getElementById('ms-deadline').value = '';
+      document.getElementById('ms-modal').classList.add('show');
+      setTimeout(() => document.getElementById('ms-name').focus(), 100);
+    };
+  });
+  document.querySelectorAll('[data-msedit]').forEach(btn => {
+    btn.onclick = () => {
+      const [pid, mid] = btn.dataset.msedit.split('|');
+      const p = state.projects.find(x => x.id === pid);
+      const m = p.milestones.find(x => x.id === mid);
+      pendingMsProjectId = pid;
+      editingMsId = mid;
+      document.getElementById('ms-modal-title').innerHTML = 'Этап <em>проекта</em>';
+      document.getElementById('ms-name').value = m.name;
+      document.getElementById('ms-deadline').value = m.deadline || '';
+      document.getElementById('ms-modal').classList.add('show');
+      setTimeout(() => document.getElementById('ms-name').focus(), 100);
+    };
+  });
+  document.querySelectorAll('[data-msdel]').forEach(btn => {
+    btn.onclick = (e) => {
+      e.stopPropagation();
+      if (!confirm('Удалить этап?')) return;
+      const [pid, mid] = btn.dataset.msdel.split('|');
+      const p = state.projects.find(x => x.id === pid);
+      p.milestones = p.milestones.filter(x => x.id !== mid);
+      render(); scheduleSave();
+    };
+  });
+  document.querySelectorAll('[data-projectedit]').forEach(btn => {
+    btn.onclick = () => openProjectModal(btn.dataset.projectedit);
+  });
+  document.querySelectorAll('[data-projectdel]').forEach(btn => {
+    btn.onclick = () => {
+      if (!confirm('Удалить проект со всеми этапами?')) return;
+      state.projects = state.projects.filter(p => p.id !== btn.dataset.projectdel);
+      render(); scheduleSave();
+    };
+  });
+}
+
+function calcHabitStreak(h) {
+  if (!h.done) return 0;
+  let streak = 0; let d = new Date(); d.setHours(0,0,0,0);
+  if (!h.done[fmt(d)]) d = addDays(d, -1);
+  while (h.done[fmt(d)]) { streak++; d = addDays(d, -1); }
+  return streak;
+}
+function calcOverallStreak() {
+  if (state.habits.length === 0) return 0;
+  let streak = 0; let d = new Date(); d.setHours(0,0,0,0);
+  const checkDay = (day) => {
+    const k = fmt(day);
+    return state.habits.filter(h => h.done && h.done[k]).length >= Math.ceil(state.habits.length / 2);
+  };
+  if (!checkDay(d)) d = addDays(d, -1);
+  while (checkDay(d)) { streak++; d = addDays(d, -1); if (streak > 365) break; }
+  return streak;
+}
+
+const MOOD_SCORE = { '🥰': 5, '😊': 5, '🤩': 5, '😌': 4, '😎': 4, '😐': 3, '😴': 2, '😔': 2, '😤': 2, '😭': 1 };
+let selectedMoodSlot = 'morning';
+
+function getMoodDay(key) {
+  const m = state.moods[key];
+  if (!m) return { morning: null, afternoon: null, evening: null };
+  if (typeof m === 'string') return { morning: m, afternoon: null, evening: null };
+  return { morning: m.morning || null, afternoon: m.afternoon || null, evening: m.evening || null };
+}
+function moodScoreNum(moodDay) {
+  const slots = [moodDay.morning, moodDay.afternoon, moodDay.evening].filter(Boolean);
+  if (!slots.length) return null;
+  return slots.reduce((s, e) => s + (MOOD_SCORE[e] || 3), 0) / slots.length;
+}
+function scoreToEmoji(score) {
+  if (score === null || score === undefined) return null;
+  if (score >= 4.5) return '🥰';
+  if (score >= 3.8) return '😊';
+  if (score >= 3) return '😌';
+  if (score >= 2.2) return '😔';
+  return '😭';
+}
+function getDayAvgEmoji(key) {
+  return scoreToEmoji(moodScoreNum(getMoodDay(key)));
+}
+function getCurrentSlot() {
+  const h = new Date().getHours();
+  if (h < 12) return 'morning';
+  if (h < 18) return 'afternoon';
+  return 'evening';
+}
+
+// ====== EVENTS ======
+document.getElementById('prev-week').onclick = () => { viewWeekStart = addDays(viewWeekStart, -7); render(); };
+document.getElementById('next-week').onclick = () => { viewWeekStart = addDays(viewWeekStart, 7); render(); };
+document.getElementById('prev-month').onclick = () => { viewMonth = addMonths(viewMonth, -1); render(); };
+document.getElementById('next-month').onclick = () => { viewMonth = addMonths(viewMonth, 1); render(); };
+document.getElementById('prev-year').onclick = () => { viewYear--; render(); };
+document.getElementById('next-year').onclick = () => { viewYear++; render(); };
+
+document.getElementById('notes-area').addEventListener('input', (e) => {
+  const key = fmt(selectedDate);
+  if (e.target.value.trim()) state.notes[key] = e.target.value;
+  else delete state.notes[key];
+  scheduleSave();
+});
+
+document.getElementById('mood-open').onclick = () => {
+  const todayKey = fmt(new Date());
+  const md = getMoodDay(todayKey);
+  selectedMoodSlot = getCurrentSlot();
+
+  document.getElementById('slot-morning-show').textContent = md.morning || '—';
+  document.getElementById('slot-afternoon-show').textContent = md.afternoon || '—';
+  document.getElementById('slot-evening-show').textContent = md.evening || '—';
+
+  document.querySelectorAll('.mood-slot-btn').forEach(el => el.classList.toggle('active', el.dataset.slot === selectedMoodSlot));
+
+  const curEmoji = md[selectedMoodSlot];
+  document.querySelectorAll('#mood-modal .mood-opt').forEach(el => el.classList.toggle('selected', el.dataset.m === curEmoji));
+
+  document.getElementById('mood-modal').classList.add('show');
+};
+
+document.querySelectorAll('.mood-slot-btn').forEach(el => {
+  el.onclick = () => {
+    selectedMoodSlot = el.dataset.slot;
+    document.querySelectorAll('.mood-slot-btn').forEach(b => b.classList.toggle('active', b.dataset.slot === selectedMoodSlot));
+    const md = getMoodDay(fmt(new Date()));
+    document.querySelectorAll('#mood-modal .mood-opt').forEach(e => e.classList.toggle('selected', e.dataset.m === md[selectedMoodSlot]));
+  };
+});
+
+document.querySelectorAll('#mood-modal .mood-opt').forEach(el => {
+  el.onclick = () => {
+    const todayKey = fmt(new Date());
+    const md = getMoodDay(todayKey);
+    md[selectedMoodSlot] = el.dataset.m;
+    state.moods[todayKey] = md;
+    document.getElementById('mood-modal').classList.remove('show');
+    render(); scheduleSave();
+  };
+});
+
+let selectedHabitEmoji = '✿';
+document.getElementById('add-habit').onclick = () => {
+  document.getElementById('habit-input').value = '';
+  selectedHabitEmoji = '✿';
+  document.querySelectorAll('#habit-emoji-picker .emoji-opt').forEach(e => e.classList.toggle('selected', e.dataset.e === '✿'));
+  document.getElementById('habit-modal').classList.add('show');
+  setTimeout(() => document.getElementById('habit-input').focus(), 100);
+};
+document.querySelectorAll('#habit-emoji-picker .emoji-opt').forEach(el => {
+  el.onclick = () => {
+    document.querySelectorAll('#habit-emoji-picker .emoji-opt').forEach(e => e.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedHabitEmoji = el.dataset.e;
+  };
+});
+document.getElementById('habit-save').onclick = () => {
+  const name = document.getElementById('habit-input').value.trim();
+  if (!name) return;
+  state.habits.push({ id: uid(), name, emoji: selectedHabitEmoji, done: {} });
+  document.getElementById('habit-modal').classList.remove('show');
+  render(); scheduleSave();
+};
+
+document.getElementById('add-task').onclick = () => {
+  document.getElementById('task-input').value = '';
+  document.getElementById('task-modal').classList.add('show');
+  setTimeout(() => document.getElementById('task-input').focus(), 100);
+};
+document.getElementById('task-save').onclick = () => {
+  const text = document.getElementById('task-input').value.trim();
+  if (!text) return;
+  const key = fmt(selectedDate);
+  if (!state.tasks[key]) state.tasks[key] = [];
+  state.tasks[key].push({ id: uid(), text, done: false });
+  document.getElementById('task-modal').classList.remove('show');
+  render(); scheduleSave();
+};
+
+document.getElementById('habit-input').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('habit-save').click(); });
+document.getElementById('task-input').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('task-save').click(); });
+
+// ====== GOALS UI ======
+document.querySelectorAll('.gf-chip').forEach(chip => {
+  chip.onclick = () => {
+    document.querySelectorAll('.gf-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    goalFilter = chip.dataset.sphere;
+    renderGoalsList();
+  };
+});
+document.querySelectorAll('#goals-mode-toggle button').forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll('#goals-mode-toggle button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    goalsMode = btn.dataset.mode;
+    renderGoalsList();
+  };
+});
+document.querySelectorAll('#projects-mode-toggle button').forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll('#projects-mode-toggle button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    projectsMode = btn.dataset.mode;
+    renderProjectsList();
+  };
+});
+
+document.querySelectorAll('#goal-emoji-picker .emoji-opt').forEach(el => {
+  el.onclick = () => {
+    document.querySelectorAll('#goal-emoji-picker .emoji-opt').forEach(e => e.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedGoalEmoji = el.dataset.e;
+  };
+});
+document.querySelectorAll('#goal-sphere-picker .sphere-opt').forEach(el => {
+  el.onclick = () => {
+    document.querySelectorAll('#goal-sphere-picker .sphere-opt').forEach(e => e.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedGoalSphere = el.dataset.s;
+  };
+});
+document.querySelectorAll('#goal-type-picker .type-opt').forEach(el => {
+  el.onclick = () => {
+    document.querySelectorAll('#goal-type-picker .type-opt').forEach(e => e.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedGoalType = el.dataset.t;
+    document.getElementById('counter-fields').style.display = selectedGoalType === 'counter' ? 'block' : 'none';
+  };
+});
+
+function openGoalModal(goalId) {
+  editingGoalId = goalId || null;
+  const modal = document.getElementById('goal-modal');
+  const title = document.getElementById('goal-modal-title');
+  if (goalId) {
+    const g = state.goals.find(x => x.id === goalId);
+    title.innerHTML = 'Редактировать <em>цель</em>';
+    document.getElementById('goal-name').value = g.name;
+    selectedGoalEmoji = g.emoji || '🎯';
+    selectedGoalSphere = g.sphere || 'other';
+    selectedGoalType = g.type || 'checkbox';
+    document.getElementById('goal-current').value = g.current || '';
+    document.getElementById('goal-target').value = g.target || '';
+    document.getElementById('goal-deadline').value = g.deadline || '';
+    document.getElementById('goal-note').value = g.note || '';
+  } else {
+    title.innerHTML = 'Новая <em>цель</em>';
+    document.getElementById('goal-name').value = '';
+    selectedGoalEmoji = '🎯';
+    selectedGoalSphere = 'other';
+    selectedGoalType = 'checkbox';
+    document.getElementById('goal-current').value = '';
+    document.getElementById('goal-target').value = '';
+    document.getElementById('goal-deadline').value = '';
+    document.getElementById('goal-note').value = '';
+  }
+  document.querySelectorAll('#goal-emoji-picker .emoji-opt').forEach(e => e.classList.toggle('selected', e.dataset.e === selectedGoalEmoji));
+  document.querySelectorAll('#goal-sphere-picker .sphere-opt').forEach(e => e.classList.toggle('selected', e.dataset.s === selectedGoalSphere));
+  document.querySelectorAll('#goal-type-picker .type-opt').forEach(e => e.classList.toggle('selected', e.dataset.t === selectedGoalType));
+  document.getElementById('counter-fields').style.display = selectedGoalType === 'counter' ? 'block' : 'none';
+  modal.classList.add('show');
+  setTimeout(() => document.getElementById('goal-name').focus(), 100);
+}
+
+document.getElementById('add-goal').onclick = () => openGoalModal();
+
+document.getElementById('goal-save').onclick = () => {
+  const name = document.getElementById('goal-name').value.trim();
+  if (!name) return;
+  const note = document.getElementById('goal-note').value.trim();
+  const deadline = document.getElementById('goal-deadline').value || null;
+  if (editingGoalId) {
+    const g = state.goals.find(x => x.id === editingGoalId);
+    const oldType = g.type;
+    g.name = name; g.emoji = selectedGoalEmoji; g.sphere = selectedGoalSphere;
+    g.type = selectedGoalType; g.deadline = deadline; g.note = note;
+    if (selectedGoalType === 'counter') {
+      g.current = parseInt(document.getElementById('goal-current').value) || 0;
+      g.target = parseInt(document.getElementById('goal-target').value) || 1;
+    }
+    if (oldType !== selectedGoalType) {
+      if (selectedGoalType === 'checkbox') g.done = false;
+      if (selectedGoalType === 'steps' && !g.steps) g.steps = [];
+    }
+    if (g.completedAt && !isGoalDone(g)) delete g.completedAt;
+  } else {
+    const goal = { id: uid(), name, emoji: selectedGoalEmoji, sphere: selectedGoalSphere, type: selectedGoalType, deadline, note, createdAt: Date.now() };
+    if (selectedGoalType === 'checkbox') goal.done = false;
+    if (selectedGoalType === 'counter') {
+      goal.current = parseInt(document.getElementById('goal-current').value) || 0;
+      goal.target = parseInt(document.getElementById('goal-target').value) || 1;
+    }
+    if (selectedGoalType === 'steps') goal.steps = [];
+    state.goals.push(goal);
+  }
+  document.getElementById('goal-modal').classList.remove('show');
+  render(); scheduleSave();
+};
+
+document.getElementById('goal-name').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('goal-save').click(); });
+
+document.getElementById('step-save').onclick = () => {
+  const text = document.getElementById('step-input').value.trim();
+  if (!text || !pendingStepGoalId) return;
+  const g = state.goals.find(x => x.id === pendingStepGoalId);
+  if (!g.steps) g.steps = [];
+  g.steps.push({ id: uid(), text, done: false });
+  if (g.completedAt) delete g.completedAt;
+  document.getElementById('step-modal').classList.remove('show');
+  render(); scheduleSave();
+};
+document.getElementById('step-input').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('step-save').click(); });
+
+// ====== PROJECTS UI ======
+document.querySelectorAll('#project-emoji-picker .emoji-opt').forEach(el => {
+  el.onclick = () => {
+    document.querySelectorAll('#project-emoji-picker .emoji-opt').forEach(e => e.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedProjectEmoji = el.dataset.e;
+  };
+});
+document.querySelectorAll('#project-sphere-picker .sphere-opt').forEach(el => {
+  el.onclick = () => {
+    document.querySelectorAll('#project-sphere-picker .sphere-opt').forEach(e => e.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedProjectSphere = el.dataset.s;
+  };
+});
+
+function openProjectModal(projectId) {
+  editingProjectId = projectId || null;
+  const title = document.getElementById('project-modal-title');
+  if (projectId) {
+    const p = state.projects.find(x => x.id === projectId);
+    title.innerHTML = 'Редактировать <em>проект</em>';
+    document.getElementById('project-name').value = p.name;
+    selectedProjectEmoji = p.emoji || '🚀';
+    selectedProjectSphere = p.sphere || 'other';
+    document.getElementById('project-note').value = p.note || '';
+  } else {
+    title.innerHTML = 'Новый <em>проект</em>';
+    document.getElementById('project-name').value = '';
+    selectedProjectEmoji = '🚀';
+    selectedProjectSphere = 'other';
+    document.getElementById('project-note').value = '';
+  }
+  document.querySelectorAll('#project-emoji-picker .emoji-opt').forEach(e => e.classList.toggle('selected', e.dataset.e === selectedProjectEmoji));
+  document.querySelectorAll('#project-sphere-picker .sphere-opt').forEach(e => e.classList.toggle('selected', e.dataset.s === selectedProjectSphere));
+  document.getElementById('project-modal').classList.add('show');
+  setTimeout(() => document.getElementById('project-name').focus(), 100);
+}
+
+document.getElementById('add-project').onclick = () => openProjectModal();
+
+document.getElementById('project-save').onclick = () => {
+  const name = document.getElementById('project-name').value.trim();
+  if (!name) return;
+  const note = document.getElementById('project-note').value.trim();
+  if (editingProjectId) {
+    const p = state.projects.find(x => x.id === editingProjectId);
+    p.name = name; p.emoji = selectedProjectEmoji; p.sphere = selectedProjectSphere; p.note = note;
+  } else {
+    state.projects.push({
+      id: uid(), name, emoji: selectedProjectEmoji, sphere: selectedProjectSphere,
+      note, milestones: [], viewMode: 'timeline', createdAt: Date.now()
+    });
+  }
+  document.getElementById('project-modal').classList.remove('show');
+  render(); scheduleSave();
+};
+document.getElementById('project-name').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('project-save').click(); });
+
+document.getElementById('ms-save').onclick = () => {
+  const name = document.getElementById('ms-name').value.trim();
+  if (!name || !pendingMsProjectId) return;
+  const deadline = document.getElementById('ms-deadline').value || null;
+  const p = state.projects.find(x => x.id === pendingMsProjectId);
+  if (!p.milestones) p.milestones = [];
+  if (editingMsId) {
+    const m = p.milestones.find(x => x.id === editingMsId);
+    m.name = name; m.deadline = deadline;
+  } else {
+    p.milestones.push({ id: uid(), name, deadline, done: false });
+  }
+  document.getElementById('ms-modal').classList.remove('show');
+  render(); scheduleSave();
+};
+document.getElementById('ms-name').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('ms-save').click(); });
+
+document.querySelectorAll('[data-close]').forEach(el => { el.onclick = () => el.closest('.modal-overlay').classList.remove('show'); });
+document.querySelectorAll('.modal-overlay').forEach(el => {
+  el.addEventListener('click', e => { if (e.target === el) el.classList.remove('show'); });
+});
+</script>
+</body>
+</html>
