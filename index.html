@@ -7,36 +7,36 @@
 <title>Мой планер · 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #F4EFE8;
-    --card: #FBF7F1;
-    --ink: #2D2824;
-    --ink-soft: #6B645C;
-    --ink-muted: #A59B8F;
-    --line: #E8DFD2;
-    --rose: #D4A5A0;
-    --rose-soft: #EFD9D4;
-    --rose-deep: #B07F7A;
-    --sage: #A8B598;
-    --sage-soft: #D8DFCB;
-    --clay: #C89580;
-    --clay-soft: #E9CEBE;
-    --cream: #E8D9B8;
-    --cream-soft: #F2E6CC;
-    --lilac: #B8A5C4;
-    --lilac-soft: #DDD1E3;
-    --sky: #A5BCC4;
-    --sky-soft: #D4DEE2;
-    --shadow-soft: 0 2px 8px rgba(45, 40, 36, 0.04);
-    --shadow-med: 0 4px 16px rgba(45, 40, 36, 0.06);
+    --bg: #F7F3EB;
+    --card: #FFFDF8;
+    --ink: #221D18;
+    --ink-soft: #6E655A;
+    --ink-muted: #A79B8A;
+    --line: #E4D9C6;
+    --rose: #CFA49C;
+    --rose-soft: #F0E1DA;
+    --rose-deep: #7A3231;
+    --sage: #A3A582;
+    --sage-soft: #E6E4D1;
+    --clay: #B99457;
+    --clay-soft: #EDE0C4;
+    --cream: #D9C69A;
+    --cream-soft: #F1E8D2;
+    --lilac: #A398AE;
+    --lilac-soft: #E0D9E4;
+    --sky: #97A9B0;
+    --sky-soft: #DAE1E2;
+    --shadow-soft: 0 1px 3px rgba(34, 29, 24, 0.05);
+    --shadow-med: 0 6px 20px rgba(34, 29, 24, 0.07);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html, body { overflow-x: hidden; }
   body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Golos Text', sans-serif;
     background: var(--bg);
     color: var(--ink);
     min-height: 100vh;
@@ -53,7 +53,7 @@
   .container { max-width: 1100px; margin: 0 auto; padding: 28px 22px; }
 
   .header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
-  .logo { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(26px, 4.5vw, 36px); line-height: 1; letter-spacing: -0.02em; }
+  .logo { font-family: 'Playfair Display', serif; font-weight: 600; font-size: clamp(26px, 4.5vw, 36px); line-height: 1; letter-spacing: -0.02em; }
   .logo em { font-style: italic; font-weight: 400; color: var(--rose-deep); }
   .logo .year { display: block; font-size: 10px; font-weight: 600; letter-spacing: 0.3em; color: var(--ink-muted); margin-top: 6px; text-transform: uppercase; }
   .date-pill { background: var(--card); color: var(--ink-soft); border: 1px solid var(--line); padding: 10px 18px; border-radius: 999px; font-weight: 600; font-size: 12px; display: flex; align-items: center; gap: 10px; }
@@ -80,8 +80,8 @@
 
   .big-progress { background: var(--rose-soft); border: 1px solid var(--rose); border-radius: 22px; padding: 26px 28px; position: relative; overflow: hidden; box-shadow: var(--shadow-soft); }
   .big-progress::before { content: ''; position: absolute; top: -30px; right: -30px; width: 140px; height: 140px; background: var(--cream-soft); border-radius: 50%; opacity: 0.6; }
-  .big-progress h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 17px; margin-bottom: 6px; position: relative; letter-spacing: -0.01em; }
-  .big-progress .percent { font-family: 'Fraunces', serif; font-weight: 700; font-size: clamp(56px, 10vw, 82px); line-height: 1; letter-spacing: -0.04em; position: relative; display: flex; align-items: baseline; gap: 4px; }
+  .big-progress h2 { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 17px; margin-bottom: 6px; position: relative; letter-spacing: -0.01em; }
+  .big-progress .percent { font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(56px, 10vw, 82px); line-height: 1; letter-spacing: -0.04em; position: relative; display: flex; align-items: baseline; gap: 4px; }
   .big-progress .percent small { font-size: 26px; font-weight: 600; color: var(--rose-deep); }
   .big-progress .sub { font-size: 13px; font-weight: 600; opacity: 0.75; margin-top: 8px; position: relative; color: var(--ink-soft); }
 
@@ -91,13 +91,13 @@
   .mini-stat.mood-card { background: var(--cream-soft); border-color: var(--cream); cursor: pointer; transition: transform 0.2s; }
   .mini-stat.mood-card:hover { transform: translateY(-1px); box-shadow: var(--shadow-med); }
   .mini-stat .label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-soft); opacity: 0.75; }
-  .mini-stat .value { font-family: 'Fraunces', serif; font-weight: 700; font-size: 30px; letter-spacing: -0.02em; display: flex; align-items: baseline; gap: 8px; margin-top: 2px; }
+  .mini-stat .value { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 30px; letter-spacing: -0.02em; display: flex; align-items: baseline; gap: 8px; margin-top: 2px; }
   .mini-stat .value .emoji { font-size: 28px; }
-  .mini-stat .value .unit { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 600; opacity: 0.65; }
+  .mini-stat .value .unit { font-family: 'Golos Text', sans-serif; font-size: 12px; font-weight: 600; opacity: 0.65; }
   .mini-stat .hint { font-size: 11px; font-weight: 500; opacity: 0.6; margin-top: 3px; }
 
   .mood-strip { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 22px 24px; box-shadow: var(--shadow-soft); margin-bottom: 24px; }
-  .mood-strip h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 16px; margin-bottom: 16px; letter-spacing: -0.01em; display: flex; align-items: baseline; gap: 10px; }
+  .mood-strip h3 { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 16px; margin-bottom: 16px; letter-spacing: -0.01em; display: flex; align-items: baseline; gap: 10px; }
   .mood-strip h3 em { font-family: inherit; font-style: normal; font-weight: 500; font-size: 12px; color: var(--ink-muted); letter-spacing: 0.05em; }
   .mood-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
   .mood-day { text-align: center; padding: 12px 4px; border: 1px solid var(--line); border-radius: 14px; background: var(--bg); }
@@ -125,11 +125,11 @@
   /* Monthly avg mood badge */
   .month-mood-avg { display: flex; align-items: center; gap: 8px; margin-top: 12px; padding: 10px 14px; background: var(--cream-soft); border: 1px solid var(--cream); border-radius: 12px; }
   .month-mood-avg .avg-label { font-size: 11px; font-weight: 600; color: var(--ink-soft); flex: 1; }
-  .month-mood-avg .avg-val { font-family: 'Fraunces', serif; font-weight: 700; font-size: 15px; color: var(--ink); }
+  .month-mood-avg .avg-val { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 15px; color: var(--ink); }
   .month-mood-avg .avg-emoji { font-size: 22px; }
 
   .week-chart { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 22px 24px; box-shadow: var(--shadow-soft); margin-bottom: 24px; }
-  .week-chart h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 16px; margin-bottom: 16px; letter-spacing: -0.01em; }
+  .week-chart h3 { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 16px; margin-bottom: 16px; letter-spacing: -0.01em; }
   .chart-bars { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; height: 110px; align-items: end; }
   .chart-col { display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%; }
   .chart-bar-wrap { width: 100%; height: 100%; display: flex; align-items: flex-end; }
@@ -146,14 +146,14 @@
   .day-chip.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
   .day-chip.today::after { content: ''; position: absolute; top: 5px; right: 5px; width: 5px; height: 5px; background: var(--clay); border-radius: 50%; }
   .day-chip .dow { font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.6; }
-  .day-chip .num { font-family: 'Fraunces', serif; font-weight: 600; font-size: 20px; margin-top: 2px; letter-spacing: -0.02em; }
+  .day-chip .num { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 20px; margin-top: 2px; letter-spacing: -0.02em; }
   .day-chip .dot-row { display: flex; justify-content: center; gap: 2px; margin-top: 4px; min-height: 4px; }
   .day-chip .dot { width: 4px; height: 4px; background: var(--rose-deep); border-radius: 50%; }
   .day-chip.active .dot { background: var(--cream); }
 
-  .section-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: 24px; margin: 28px 0 14px; display: flex; align-items: baseline; gap: 12px; letter-spacing: -0.02em; }
+  .section-title { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 24px; margin: 28px 0 14px; display: flex; align-items: baseline; gap: 12px; letter-spacing: -0.02em; }
   .section-title em { font-style: italic; font-weight: 400; color: var(--ink-soft); }
-  .section-title .count { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 700; background: var(--ink); color: var(--bg); padding: 3px 9px; border-radius: 999px; letter-spacing: 0.04em; }
+  .section-title .count { font-family: 'Golos Text', sans-serif; font-size: 11px; font-weight: 700; background: var(--ink); color: var(--bg); padding: 3px 9px; border-radius: 999px; letter-spacing: 0.04em; }
   .section-title .add-btn { margin-left: auto; background: var(--ink); color: var(--bg); border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 18px; cursor: pointer; transition: transform 0.25s; line-height: 1; display: flex; align-items: center; justify-content: center; }
   .section-title .add-btn:hover { transform: rotate(90deg); background: var(--rose-deep); }
 
@@ -195,9 +195,9 @@
   .task .text { flex: 1; font-size: 14px; font-weight: 500; transition: all 0.25s; letter-spacing: -0.005em; }
   .task.done .text { text-decoration: line-through; text-decoration-color: var(--ink-muted); opacity: 0.5; }
 
-  .empty { text-align: center; padding: 28px 16px; color: var(--ink-muted); font-family: 'Fraunces', serif; font-style: italic; font-size: 14px; }
+  .empty { text-align: center; padding: 28px 16px; color: var(--ink-muted); font-family: 'Playfair Display', serif; font-style: italic; font-size: 14px; }
 
-  .notes textarea { width: 100%; border: none; outline: none; resize: none; font-family: 'Fraunces', serif; font-size: 16px; font-style: italic; background: transparent; color: var(--ink); min-height: 80px; line-height: 1.55; }
+  .notes textarea { width: 100%; border: none; outline: none; resize: none; font-family: 'Playfair Display', serif; font-size: 16px; font-style: italic; background: transparent; color: var(--ink); min-height: 80px; line-height: 1.55; }
   .notes textarea::placeholder { color: var(--ink-muted); opacity: 0.6; }
 
   .month-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 22px; box-shadow: var(--shadow-soft); margin-bottom: 24px; }
@@ -205,7 +205,7 @@
   .month-cell { aspect-ratio: 1; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; background: var(--bg); position: relative; border: 1px solid transparent; transition: all 0.2s; }
   .month-cell.empty { background: transparent; }
   .month-cell.today { border-color: var(--rose-deep); }
-  .month-cell .day-num { font-family: 'Fraunces', serif; font-weight: 500; font-size: 13px; color: var(--ink-soft); }
+  .month-cell .day-num { font-family: 'Playfair Display', serif; font-weight: 500; font-size: 13px; color: var(--ink-soft); }
   .month-cell.has-mood .day-num { color: var(--ink); }
   .month-cell .m-emoji { font-size: 18px; line-height: 1; }
   .month-cell .progress-dot { position: absolute; bottom: 4px; width: 4px; height: 4px; border-radius: 50%; background: var(--rose-deep); opacity: 0.3; }
@@ -213,7 +213,7 @@
   .month-cell .progress-dot.mid { opacity: 0.6; }
 
   .months-chart-card { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 24px; box-shadow: var(--shadow-soft); margin-bottom: 24px; }
-  .months-chart-card h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 16px; margin-bottom: 18px; letter-spacing: -0.01em; }
+  .months-chart-card h3 { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 16px; margin-bottom: 18px; letter-spacing: -0.01em; }
   .months-chart { display: grid; grid-template-columns: repeat(12, 1fr); gap: 6px; height: 130px; align-items: end; }
   .month-col { display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%; }
   .month-bar-wrap { width: 100%; height: 100%; display: flex; align-items: flex-end; }
@@ -224,28 +224,28 @@
   .month-col .m-lbl.current { color: var(--rose-deep); opacity: 1; }
 
   .ranking-card { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 22px 24px; box-shadow: var(--shadow-soft); margin-bottom: 24px; }
-  .ranking-card h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 16px; margin-bottom: 16px; letter-spacing: -0.01em; }
+  .ranking-card h3 { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 16px; margin-bottom: 16px; letter-spacing: -0.01em; }
   .rank-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
   .rank-row:last-child { border-bottom: none; }
   .rank-row .r-emoji { font-size: 18px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: var(--bg); border-radius: 10px; flex-shrink: 0; }
   .rank-row .r-name { flex: 1; font-weight: 500; font-size: 14px; }
   .rank-row .r-bar { flex: 1; height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; max-width: 200px; }
   .rank-row .r-fill { height: 100%; background: var(--rose-deep); border-radius: 3px; transition: width 0.7s cubic-bezier(0.34, 1.2, 0.64, 1); }
-  .rank-row .r-pct { font-family: 'Fraunces', serif; font-weight: 600; font-size: 14px; color: var(--ink); min-width: 40px; text-align: right; }
+  .rank-row .r-pct { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 14px; color: var(--ink); min-width: 40px; text-align: right; }
 
   .mood-counters { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 8px; margin-top: 14px; }
   .mood-counter { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 10px; text-align: center; }
   .mood-counter .e { font-size: 22px; }
-  .mood-counter .c { font-family: 'Fraunces', serif; font-weight: 600; font-size: 16px; color: var(--ink); margin-top: 4px; }
+  .mood-counter .c { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 16px; color: var(--ink); margin-top: 4px; }
   .mood-counter .l { font-size: 9px; color: var(--ink-muted); font-weight: 500; margin-top: 2px; }
 
   /* GOALS / PROJECTS HERO */
   .goals-hero { background: linear-gradient(135deg, var(--lilac-soft), var(--rose-soft)); border: 1px solid var(--lilac); border-radius: 22px; padding: 28px; margin-bottom: 16px; position: relative; overflow: hidden; box-shadow: var(--shadow-soft); }
   .goals-hero::before { content: ''; position: absolute; top: -40px; right: -40px; width: 160px; height: 160px; background: var(--cream-soft); border-radius: 50%; opacity: 0.5; }
-  .goals-hero h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 28px; letter-spacing: -0.02em; position: relative; margin-bottom: 8px; }
+  .goals-hero h2 { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 28px; letter-spacing: -0.02em; position: relative; margin-bottom: 8px; }
   .goals-hero h2 em { font-style: italic; font-weight: 400; color: var(--rose-deep); }
   .goals-hero .meta { font-size: 13px; color: var(--ink-soft); font-weight: 600; position: relative; display: flex; gap: 18px; flex-wrap: wrap; }
-  .goals-hero .meta strong { font-family: 'Fraunces', serif; font-weight: 700; font-size: 17px; color: var(--ink); }
+  .goals-hero .meta strong { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 17px; color: var(--ink); }
 
   /* GOALS / PROJECTS SUBTABS */
   .subtabs { display: flex; gap: 4px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 4px; margin-bottom: 16px; box-shadow: var(--shadow-soft); }
@@ -273,7 +273,7 @@
   .goal-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
   .goal-emoji { font-size: 22px; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; background: var(--bg); border-radius: 12px; flex-shrink: 0; }
   .goal-info { flex: 1; min-width: 0; }
-  .goal-name { font-family: 'Fraunces', serif; font-weight: 600; font-size: 17px; letter-spacing: -0.01em; color: var(--ink); line-height: 1.3; word-wrap: break-word; }
+  .goal-name { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 17px; letter-spacing: -0.01em; color: var(--ink); line-height: 1.3; word-wrap: break-word; }
   .goal-card.done .goal-name { text-decoration: line-through; text-decoration-color: var(--ink-muted); }
   .goal-meta { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; align-items: center; }
   .goal-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; color: var(--ink); }
@@ -296,7 +296,7 @@
   .goal-progress-fill.complete { background: var(--sage); }
 
   .goal-progress-text { font-size: 12px; font-weight: 600; color: var(--ink-soft); margin-top: 6px; display: flex; justify-content: space-between; align-items: center; }
-  .goal-progress-text .pct { font-family: 'Fraunces', serif; font-weight: 700; font-size: 14px; color: var(--ink); }
+  .goal-progress-text .pct { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 14px; color: var(--ink); }
 
   .goal-checkbox { display: flex; align-items: center; gap: 10px; margin-top: 10px; cursor: pointer; }
   .goal-checkbox .cb { width: 24px; height: 24px; border: 1.5px solid var(--ink-muted); border-radius: 8px; display: flex; align-items: center; justify-content: center; transition: all 0.25s; flex-shrink: 0; }
@@ -308,8 +308,8 @@
   .goal-counter .cnt-btn { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--line); background: var(--bg); cursor: pointer; font-size: 16px; font-weight: 600; color: var(--ink); transition: all 0.2s; display: flex; align-items: center; justify-content: center; line-height: 1; flex-shrink: 0; }
   .goal-counter .cnt-btn:hover { border-color: var(--rose-deep); }
   .goal-counter .cnt-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-  .goal-counter .cnt-display { flex: 1; text-align: center; font-family: 'Fraunces', serif; font-weight: 600; font-size: 22px; color: var(--ink); }
-  .goal-counter .cnt-display small { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 500; color: var(--ink-muted); }
+  .goal-counter .cnt-display { flex: 1; text-align: center; font-family: 'Playfair Display', serif; font-weight: 600; font-size: 22px; color: var(--ink); }
+  .goal-counter .cnt-display small { font-family: 'Golos Text', sans-serif; font-size: 13px; font-weight: 500; color: var(--ink-muted); }
 
   .goal-steps { margin-top: 12px; display: flex; flex-direction: column; gap: 6px; }
   .goal-step { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px; background: var(--bg); cursor: pointer; transition: all 0.2s; }
@@ -325,7 +325,7 @@
   .add-step-btn { background: transparent; border: 1px dashed var(--ink-muted); border-radius: 10px; padding: 8px; font-size: 12px; font-weight: 500; color: var(--ink-soft); cursor: pointer; margin-top: 4px; transition: all 0.2s; }
   .add-step-btn:hover { border-color: var(--rose-deep); color: var(--rose-deep); }
 
-  .goal-note { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); font-family: 'Fraunces', serif; font-style: italic; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .goal-note { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); font-family: 'Playfair Display', serif; font-style: italic; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
 
   .goal-actions { position: absolute; top: 14px; right: 14px; display: flex; gap: 4px; opacity: 0; transition: opacity 0.2s; }
   .goal-card:hover .goal-actions, .project-card:hover .goal-actions { opacity: 1; }
@@ -349,7 +349,7 @@
   .project-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
   .project-emoji { font-size: 22px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: var(--bg); border-radius: 12px; flex-shrink: 0; }
   .project-info { flex: 1; min-width: 200px; }
-  .project-name { font-family: 'Fraunces', serif; font-weight: 600; font-size: 19px; letter-spacing: -0.01em; color: var(--ink); line-height: 1.3; }
+  .project-name { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 19px; letter-spacing: -0.01em; color: var(--ink); line-height: 1.3; }
   .project-card.done .project-name { text-decoration: line-through; text-decoration-color: var(--ink-muted); }
 
   .view-toggle {
@@ -388,7 +388,7 @@
     margin-top: 8px;
   }
   .project-progress-row .pct {
-    font-family: 'Fraunces', serif;
+    font-family: 'Playfair Display', serif;
     font-weight: 700;
     font-size: 16px;
     color: var(--ink);
@@ -624,7 +624,7 @@
     margin-top: 12px;
     padding-top: 12px;
     border-top: 1px solid var(--line);
-    font-family: 'Fraunces', serif;
+    font-family: 'Playfair Display', serif;
     font-style: italic;
     font-size: 13px;
     color: var(--ink-soft);
@@ -637,7 +637,7 @@
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
   .modal { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 26px; max-width: 440px; width: 100%; box-shadow: 0 20px 60px rgba(45, 40, 36, 0.15); max-height: 90vh; overflow-y: auto; }
-  .modal h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 22px; margin-bottom: 18px; }
+  .modal h3 { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 22px; margin-bottom: 18px; }
   .modal h3 em { font-style: italic; font-weight: 400; color: var(--rose-deep); }
 
   .mood-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 18px; }
@@ -647,7 +647,7 @@
 
   .modal input, .modal textarea, .modal select { width: 100%; border: 1.5px solid var(--line); border-radius: 12px; padding: 12px 14px; font-size: 15px; font-family: inherit; font-weight: 500; outline: none; background: var(--bg); margin-bottom: 14px; color: var(--ink); transition: all 0.2s; }
   .modal input:focus, .modal textarea:focus, .modal select:focus { background: white; border-color: var(--rose-deep); }
-  .modal textarea { resize: vertical; min-height: 60px; font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; }
+  .modal textarea { resize: vertical; min-height: 60px; font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; }
   .modal input[type="number"] { -moz-appearance: textfield; }
 
   .field-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; color: var(--ink-muted); text-transform: uppercase; margin-bottom: 10px; margin-top: 4px; }
@@ -679,19 +679,103 @@
   .btn-secondary { background: transparent; color: var(--ink-soft); }
   .btn-secondary:hover { background: var(--bg); color: var(--ink); }
 
-  .tip { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 11px; color: var(--ink-muted); font-style: italic; font-family: 'Fraunces', serif; }
+  .tip { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 11px; color: var(--ink-muted); font-style: italic; font-family: 'Playfair Display', serif; }
   .tip::before, .tip::after { content: '·'; margin: 0 8px; opacity: 0.5; }
 
   .loader { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px; z-index: 1000; transition: opacity 0.4s; }
   .loader.hide { opacity: 0; pointer-events: none; }
   .loader-circle { width: 32px; height: 32px; border: 2px solid var(--line); border-top-color: var(--rose-deep); border-radius: 50%; animation: spin 0.8s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
-  .loader-text { font-family: 'Fraunces', serif; font-style: italic; color: var(--ink-soft); font-size: 14px; }
+  .loader-text { font-family: 'Playfair Display', serif; font-style: italic; color: var(--ink-soft); font-size: 14px; }
 
   .view-content { display: none; }
   .view-content.active { display: block; }
   .sub-view { display: none; }
   .sub-view.active { display: block; }
+  /* ===== EDITORIAL LAYER · глянцевый ежедневник ===== */
+
+  body {
+    background-image: none;
+    font-size: 15px;
+  }
+
+  /* Masthead */
+  .header { flex-direction: column; align-items: center; gap: 12px; margin-bottom: 26px; padding-top: 6px; }
+  .logo { text-align: center; font-weight: 500; font-size: clamp(38px, 8vw, 52px); letter-spacing: 0.01em; width: 100%; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); padding: 14px 0 16px; position: relative; }
+  .logo em { font-style: italic; font-weight: 400; color: var(--rose-deep); font-size: 0.55em; vertical-align: baseline; margin-left: 2px; }
+  .logo .year { font-family: 'Golos Text', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.32em; color: var(--clay); margin-top: 10px; }
+  .date-pill { background: transparent; border: none; padding: 0; border-radius: 0; font-family: 'Playfair Display', serif; font-style: italic; font-size: 15px; font-weight: 500; letter-spacing: 0.02em; color: var(--ink-soft); }
+  .date-pill strong { font-weight: 600; color: var(--ink); }
+
+  /* Вкладки — журнальная навигация с подчёркиванием */
+  .tabs { background: transparent; border: none; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); border-radius: 0; padding: 0; box-shadow: none; gap: 0; margin-bottom: 24px; }
+  .tab { border-radius: 0; padding: 13px 10px; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; position: relative; }
+  .tab.active { background: transparent; color: var(--ink); box-shadow: none; }
+  .tab.active::after { content: ''; position: absolute; left: 20%; right: 20%; bottom: -1px; height: 2px; background: var(--rose-deep); }
+
+  /* Навигация недели */
+  .week-nav { background: transparent; border: none; border-radius: 0; box-shadow: none; padding: 0; }
+  .week-label { font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 600; letter-spacing: 0.01em; }
+  .week-label small { font-family: 'Golos Text', sans-serif; letter-spacing: 0.22em; color: var(--clay); opacity: 1; font-weight: 600; }
+  .week-btn { border: 1px solid var(--line); border-radius: 50%; background: var(--card); }
+  .week-btn:hover { border-color: var(--ink); background: var(--card); }
+
+  /* Герой: прогресс как передовица */
+  .big-progress { background: var(--card); border: 1px solid var(--line); border-top: 2px solid var(--ink); border-radius: 4px; }
+  .big-progress::before { display: none; }
+  .big-progress h2 { font-family: 'Golos Text', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: var(--ink-soft); }
+  .big-progress .percent { font-weight: 500; letter-spacing: -0.02em; }
+  .big-progress .percent small { color: var(--rose-deep); font-weight: 400; font-style: italic; }
+  .big-progress .sub { border-top: 1px solid var(--line); padding-top: 10px; margin-top: 14px; font-weight: 500; }
+
+  .mini-stat { border-radius: 4px; }
+  .mini-stat.streak { background: var(--card); border: 1px solid var(--line); border-top: 2px solid var(--clay); }
+  .mini-stat.mood-card { background: var(--card); border: 1px solid var(--line); border-top: 2px solid var(--rose-deep); }
+  .mini-stat .label { letter-spacing: 0.24em; }
+  .mini-stat .value { font-weight: 500; }
+
+  /* Карточки-развороты */
+  .mood-strip, .week-chart, .months-chart-card, .goals-hero { border-radius: 4px; }
+  .mood-strip h3, .week-chart h3 { font-size: 18px; font-weight: 600; }
+  .mood-strip h3 em { font-family: 'Playfair Display', serif; font-style: italic; letter-spacing: 0.02em; text-transform: none; }
+  .mood-day, .mood-slot-btn { border-radius: 3px; }
+  .mood-day.today { border-color: var(--rose-deep); }
+
+  /* Заголовки разделов — как рубрики */
+  .section-title { font-weight: 600; letter-spacing: 0.01em; border-bottom: 1px solid var(--ink); padding-bottom: 10px; }
+  .section-title .count { font-family: 'Golos Text', sans-serif; background: transparent; border: 1px solid var(--clay); color: var(--clay); font-weight: 700; }
+  .section-title em { font-family: 'Playfair Display', serif; font-style: italic; color: var(--rose-deep); text-transform: none; letter-spacing: 0.02em; }
+  .add-btn { background: var(--ink); border-radius: 50%; }
+  .add-btn:hover { background: var(--rose-deep); }
+
+  /* Списки привычек и задач */
+  .habits, .tasks, .notes, .habit, .task, .goal-card, .day-chip { border-radius: 4px; }
+  .habit-box, .check, .cb { border-radius: 2px; }
+
+  /* Кнопки и модалки */
+  .btn, .btn-primary, .btn-secondary, .modal { border-radius: 4px; }
+  .btn-primary { background: var(--ink); }
+  .btn-primary:hover { background: var(--rose-deep); }
+  .emoji-opt, .mood-opt, .sphere-opt, .type-opt, .gf-chip { border-radius: 3px; }
+
+  /* Лоадер */
+  .loader-circle { border-color: var(--line); border-top-color: var(--rose-deep); }
+  .loader-text { font-family: 'Playfair Display', serif; font-style: italic; letter-spacing: 0.04em; }
+
+  /* Пончик прогресса */
+  .progress-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+  .donut { width: 76px; height: 76px; flex-shrink: 0; }
+  @media (max-width: 380px) { .donut { width: 62px; height: 62px; } }
+
+  /* Столбики недели — строже, бордо на сегодня */
+  .chart-bar { border-radius: 2px 2px 0 0; background: var(--rose-soft); border-bottom: 2px solid var(--rose); }
+  .chart-bar.today { background: var(--rose-deep); border-bottom-color: var(--ink); }
+  .chart-bar.today span { color: var(--card); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
 </style>
 </head>
 <body>
@@ -705,8 +789,8 @@
 
   <header class="header">
     <h1 class="logo">
-      planner <em>aî</em>
-      <span class="year">две тысячи двадцать шесть</span>
+      Planner
+      <span class="year">неделя за неделей · 2026</span>
     </h1>
     <div class="date-pill" id="sync-pill"><strong id="today-label">—</strong></div>
   </header>
@@ -728,7 +812,13 @@
     <div class="hero">
       <div class="big-progress">
         <h2>Прогресс недели</h2>
-        <div class="percent"><span id="week-pct">0</span><small>%</small></div>
+        <div class="progress-row">
+          <div class="percent"><span id="week-pct">0</span><small>%</small></div>
+          <svg class="donut" viewBox="0 0 84 84" aria-hidden="true">
+            <circle cx="42" cy="42" r="34" fill="none" stroke="var(--line)" stroke-width="9"/>
+            <circle id="donut-arc" cx="42" cy="42" r="34" fill="none" stroke="var(--rose-deep)" stroke-width="9" stroke-linecap="round" stroke-dasharray="0 213.6" transform="rotate(-90 42 42)" style="transition: stroke-dasharray 0.8s ease;"/>
+          </svg>
+        </div>
         <div class="sub" id="week-sub">0 из 0 выполнено</div>
       </div>
       <div class="mini-stats">
@@ -1155,6 +1245,7 @@ function scheduleSave() {
 }
 
 async function saveToCloud() {
+  if (!hasLoaded) return; // защита: не пишем в облако, пока не получили данные
   try {
     await setDoc(docRef, {
       habits: state.habits, tasks: state.tasks,
@@ -1183,8 +1274,8 @@ function applyRemote(data) {
   setSyncStatus('synced');
 }
 
-async function initialSetup() {
-  const seed = {
+function initialSeed() {
+  return {
     habits: [
       { id: uid(), name: 'Подъём в 07:00', emoji: '☀️', done: {} },
       { id: uid(), name: 'Зарядка', emoji: '🧘', done: {} },
@@ -1197,12 +1288,18 @@ async function initialSetup() {
     tasks: {}, moods: {}, notes: {}, goals: [], projects: [],
     updatedAt: Date.now()
   };
-  await setDoc(docRef, seed);
 }
 
+let hasLoaded = false;
 onSnapshot(docRef, async (snap) => {
-  if (snap.exists()) applyRemote(snap.data());
-  else if (firstLoad) await initialSetup();
+  if (snap.exists()) {
+    applyRemote(snap.data());
+  } else if (firstLoad) {
+    // Документа нет — показываем стартовый шаблон ТОЛЬКО на экране,
+    // в облако ничего не пишем, пока пользователь сам что-то не отметит
+    applyRemote(initialSeed());
+  }
+  hasLoaded = true;
   if (firstLoad) {
     firstLoad = false;
     document.getElementById('loader').classList.add('hide');
@@ -1386,6 +1483,8 @@ function renderWeekView() {
   });
   const pct = total ? Math.round(done/total*100) : 0;
   document.getElementById('week-pct').textContent = pct;
+  const donutArc = document.getElementById('donut-arc');
+  if (donutArc) donutArc.setAttribute('stroke-dasharray', (pct/100*213.6).toFixed(1) + ' 213.6');
   document.getElementById('week-sub').textContent = `${done} из ${total} выполнено`;
   document.getElementById('streak').textContent = calcOverallStreak();
 
