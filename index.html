@@ -772,6 +772,70 @@
   .chart-bar.today { background: var(--rose-deep); border-bottom-color: var(--ink); }
   .chart-bar.today span { color: var(--card); }
 
+  /* ===== Тёмная тема · золото на чернильном ===== */
+  html[data-theme="dark"] {
+    --bg: #1B1613;
+    --card: #241E19;
+    --ink: #EDE3D2;
+    --ink-soft: #9B8D79;
+    --ink-muted: #6B5F4E;
+    --line: #3A3128;
+    --rose: #8A7147;
+    --rose-soft: #2E2720;
+    --rose-deep: #C9A15E;
+    --sage: #7E7C5E;
+    --sage-soft: #2A2A20;
+    --clay: #C9A15E;
+    --clay-soft: #2E2720;
+    --cream: #8A7147;
+    --cream-soft: #2E2720;
+    --lilac: #7E7490;
+    --lilac-soft: #2A2530;
+    --sky: #6E7F86;
+    --sky-soft: #242B2E;
+    --shadow-soft: none;
+    --shadow-med: none;
+  }
+  html[data-theme="dark"] .logo { color: #D8B472; border-top-color: var(--rose-deep); border-bottom-color: var(--rose); }
+  html[data-theme="dark"] .logo .year { color: var(--rose); }
+  html[data-theme="dark"] .big-progress { border-top-color: var(--rose-deep); }
+  html[data-theme="dark"] .section-title { border-bottom-color: var(--rose-deep); }
+
+  .header-meta { display: flex; align-items: center; gap: 12px; }
+  .theme-toggle { background: transparent; border: 1px solid var(--line); border-radius: 50%; width: 34px; height: 34px; cursor: pointer; font-size: 15px; line-height: 1; display: flex; align-items: center; justify-content: center; transition: border-color 0.2s; }
+  .theme-toggle:hover { border-color: var(--rose-deep); }
+
+  /* Динамика месяца */
+  .month-dyn-bars { display: flex; align-items: flex-end; gap: 3px; height: 78px; }
+  .dyn-bar { flex: 1; background: var(--rose); border-radius: 1px; min-height: 3px; }
+  .dyn-bar.today { background: var(--rose-deep); }
+  .dyn-bar.future { background: var(--rose-soft); }
+  .month-dyn-axis { display: flex; justify-content: space-between; font-size: 9px; font-weight: 600; letter-spacing: 0.1em; color: var(--ink-muted); margin-top: 6px; text-transform: uppercase; }
+  .week-pcts { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; border-top: 1px solid var(--line); margin-top: 12px; padding-top: 10px; }
+  .wk-pct { text-align: center; }
+  .wk-lbl { font-size: 9px; font-weight: 700; letter-spacing: 0.14em; color: var(--ink-muted); text-transform: uppercase; }
+  .wk-val { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 600; color: var(--rose-deep); }
+  .wk-val.off { color: var(--line); }
+
+  /* Статистика привычки */
+  .streak-mini .hs { color: var(--rose-deep); font-weight: 700; }
+  .habit-progress { position: relative; max-width: 220px; margin-top: 7px; margin-right: 42px; background: var(--rose-soft); height: 3px; border-radius: 2px; }
+  .habit-progress-fill { height: 3px; background: var(--rose-deep); border-radius: 2px; transition: width 0.4s ease; }
+  .habit-progress-fill.low { background: #B45955; }
+  .habit-progress-pct { position: absolute; right: -40px; top: -5px; font-size: 10px; font-weight: 700; color: var(--ink-soft); }
+
+  /* Тепловая карта месяца */
+  .heatmap-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .heatmap { border-collapse: separate; border-spacing: 2px; }
+  .heatmap th.hm-day { font-size: 8px; font-weight: 700; color: var(--ink-muted); min-width: 15px; padding-bottom: 3px; }
+  .heatmap th.hm-day.today { color: var(--rose-deep); }
+  .heatmap td.hm-name { font-size: 11px; font-weight: 600; white-space: nowrap; padding-right: 8px; position: sticky; left: 0; background: var(--card); max-width: 120px; overflow: hidden; text-overflow: ellipsis; }
+  .heatmap td.hm-name span { color: var(--ink-soft); }
+  .hm-cell { width: 15px; height: 15px; min-width: 15px; background: var(--rose-soft); border-radius: 2px; cursor: pointer; }
+  .hm-cell.on { background: var(--rose-deep); }
+  .hm-cell.today { outline: 1.5px solid var(--rose-deep); outline-offset: -1.5px; }
+  .hm-cell.future { background: var(--bg); cursor: default; }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   }
@@ -779,6 +843,14 @@
 </style>
 </head>
 <body>
+
+<script>
+(function(){
+  var t = 'light';
+  try { t = localStorage.getItem('planner_theme') || 'light'; } catch(e) {}
+  document.documentElement.dataset.theme = t;
+})();
+</script>
 
 <div class="loader" id="loader">
   <div class="loader-circle"></div>
@@ -792,7 +864,10 @@
       Planner
       <span class="year">неделя за неделей · 2026</span>
     </h1>
-    <div class="date-pill" id="sync-pill"><strong id="today-label">—</strong></div>
+    <div class="header-meta">
+      <div class="date-pill" id="sync-pill"><strong id="today-label">—</strong></div>
+      <button class="theme-toggle" id="theme-toggle" title="Сменить тему">🌙</button>
+    </div>
   </header>
 
   <div class="tabs">
@@ -833,9 +908,11 @@
         </div>
       </div>
     </div>
-    <div class="mood-strip">
-      <h3>Настроение недели <em>динамика по дням</em></h3>
-      <div class="mood-days" id="mood-days"></div>
+    <div class="week-chart month-dyn">
+      <h3>Динамика месяца <em id="month-dyn-meta">—</em></h3>
+      <div class="month-dyn-bars" id="month-dyn-bars"></div>
+      <div class="month-dyn-axis" id="month-dyn-axis"></div>
+      <div class="week-pcts" id="week-pcts"></div>
     </div>
     <div class="week-chart">
       <h3>Неделя в цифрах</h3>
@@ -877,6 +954,12 @@
     <div class="ranking-card">
       <h3>Рейтинг привычек за месяц</h3>
       <div id="month-ranking"></div>
+    </div>
+    <div class="mood-strip heatmap-card">
+      <h3>Карта месяца <em>привычки × дни · нажми на клетку</em></h3>
+      <div class="heatmap-scroll">
+        <table class="heatmap" id="habit-heatmap"></table>
+      </div>
     </div>
     <div class="mood-strip">
       <h3>Настроение месяца <em>календарь</em></h3>
@@ -1185,6 +1268,15 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const themeBtn = document.getElementById('theme-toggle');
+function applyTheme(t) {
+  document.documentElement.dataset.theme = t;
+  if (themeBtn) themeBtn.textContent = t === 'dark' ? '☀️' : '🌙';
+  try { localStorage.setItem('planner_theme', t); } catch(e) {}
+}
+applyTheme(document.documentElement.dataset.theme || 'light');
+if (themeBtn) themeBtn.onclick = () => applyTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+
 const USER_ID = 'natali';
 const docRef = doc(db, 'planners', USER_ID);
 
@@ -1346,6 +1438,41 @@ function render() {
   else if (currentTab === 'goals') renderGoalsView();
 }
 
+function dayPct(k) {
+  let t = 0, d = 0;
+  state.habits.forEach(h => { t++; if (h.done && h.done[k]) d++; });
+  (state.tasks[k] || []).forEach(x => { t++; if (x.done) d++; });
+  return t ? Math.round(d/t*100) : 0;
+}
+
+function renderMonthDynamics(today, todayKey) {
+  const y = today.getFullYear(), m = today.getMonth();
+  const total = daysInMonth(y, m);
+  const elapsed = today.getDate();
+  const pcts = [];
+  for (let i = 1; i <= total; i++) pcts.push(dayPct(fmt(new Date(y, m, i))));
+  const avg = elapsed ? Math.round(pcts.slice(0, elapsed).reduce((a,b)=>a+b,0) / elapsed) : 0;
+  document.getElementById('month-dyn-meta').textContent = `${MONTHS_NOM[m].toLowerCase()} · в среднем ${avg}%`;
+  document.getElementById('month-dyn-bars').innerHTML = pcts.map((p, i) => {
+    const dNum = i + 1;
+    const future = dNum > elapsed;
+    const isT = dNum === elapsed;
+    const h = future ? 10 : Math.max(p, 4);
+    return `<div class="dyn-bar ${isT?'today':''} ${future?'future':''}" style="height:${h}%" title="${dNum}: ${p}%"></div>`;
+  }).join('');
+  document.getElementById('month-dyn-axis').innerHTML =
+    `<span>1</span><span>сегодня · ${elapsed}</span><span>${total}</span>`;
+  const weeks = [];
+  for (let w = 0; w * 7 < total; w++) {
+    const from = w*7, to = Math.min(from+7, total);
+    const slice = pcts.slice(from, Math.min(to, elapsed));
+    weeks.push(slice.length ? Math.round(slice.reduce((a,b)=>a+b,0)/slice.length) : null);
+  }
+  document.getElementById('week-pcts').innerHTML = weeks.map((wp, i) =>
+    `<div class="wk-pct"><div class="wk-lbl">Н${i+1}</div><div class="wk-val ${wp===null?'off':''}">${wp===null?'—':wp+'%'}</div></div>`
+  ).join('');
+}
+
 function renderWeekView() {
   const today = new Date();
   const days = weekDays(viewWeekStart);
@@ -1358,18 +1485,7 @@ function renderWeekView() {
   document.getElementById('week-label').innerHTML = `${label}<small>${isCurrent ? 'текущая неделя' : first.getFullYear() + ' год'}</small>`;
   const todayKey = fmt(today);
 
-  document.getElementById('mood-days').innerHTML = days.map(d => {
-    const k = fmt(d); const md = getMoodDay(k); const isToday = k === todayKey;
-    const hasAny = md.morning || md.afternoon || md.evening;
-    return `<div class="mood-day ${isToday?'today':''} ${!hasAny?'empty':''}">
-      <div class="mood-day-slots">
-        <span class="mood-slot-pip" title="Утро">${md.morning || '<span style="opacity:0.2;font-size:10px">○</span>'}</span>
-        <span class="mood-slot-pip" title="День">${md.afternoon || '<span style="opacity:0.2;font-size:10px">○</span>'}</span>
-        <span class="mood-slot-pip" title="Вечер">${md.evening || '<span style="opacity:0.2;font-size:10px">○</span>'}</span>
-      </div>
-      <div class="lbl">${DOW[((d.getDay()+6)%7)]} ${d.getDate()}</div>
-    </div>`;
-  }).join('');
+  renderMonthDynamics(today, todayKey);
 
   const strip = document.getElementById('days-strip');
   strip.innerHTML = days.map(d => {
@@ -1398,11 +1514,16 @@ function renderWeekView() {
     habitsWrap.innerHTML = state.habits.map(h => {
       const weekCount = days.filter(d => h.done && h.done[fmt(d)]).length;
       const streak = calcHabitStreak(h);
+      const ty = today.getFullYear(), tm = today.getMonth(), elapsed = today.getDate();
+      let monthCount = 0;
+      for (let i = 1; i <= elapsed; i++) if (h.done && h.done[fmt(new Date(ty, tm, i))]) monthCount++;
+      const monthPct = elapsed ? Math.round(monthCount/elapsed*100) : 0;
       return `<div class="habit" data-id="${h.id}">
         <div class="emoji">${h.emoji}</div>
         <div class="info">
           <div class="name">${escapeHtml(h.name)}</div>
-          <div class="streak-mini">${streak > 0 ? streak + ' дн. подряд · ' : ''}${weekCount}/7 на неделе</div>
+          <div class="streak-mini">${streak > 0 ? '<b class="hs">серия ' + streak + '</b> · ' : ''}${weekCount}/7 на неделе · ${monthCount}/${elapsed} за месяц</div>
+          <div class="habit-progress"><div class="habit-progress-fill ${monthPct < 40 ? 'low' : ''}" style="width:${monthPct}%"></div><span class="habit-progress-pct">${monthPct}%</span></div>
         </div>
         <div class="habit-week">
           ${days.map(d => {
@@ -1554,6 +1675,29 @@ function renderMonthView() {
         <div class="r-bar"><div class="r-fill" style="width:${(r.count/maxRank)*100}%"></div></div>
         <div class="r-pct">${r.pct}%</div>
       </div>`).join('');
+
+  const heatmap = document.getElementById('habit-heatmap');
+  const todayK = fmt(today);
+  heatmap.innerHTML =
+    `<tr><th class="hm-name"></th>${monthDays.map(md =>
+      `<th class="hm-day ${md.key===todayK?'today':''}">${md.date.getDate()}</th>`).join('')}</tr>` +
+    state.habits.map(h =>
+      `<tr><td class="hm-name">${h.emoji} <span>${escapeHtml(h.name)}</span></td>${monthDays.map(md => {
+        const on = h.done && h.done[md.key];
+        const future = md.date > today;
+        return `<td class="hm-cell ${on?'on':''} ${md.key===todayK?'today':''} ${future?'future':''}" data-hid="${h.id}" data-date="${md.key}"></td>`;
+      }).join('')}</tr>`
+    ).join('');
+  heatmap.querySelectorAll('.hm-cell:not(.future)').forEach(cell => {
+    cell.onclick = () => {
+      const habit = state.habits.find(x => x.id === cell.dataset.hid);
+      if (!habit) return;
+      if (!habit.done) habit.done = {};
+      const k = cell.dataset.date;
+      if (habit.done[k]) delete habit.done[k]; else habit.done[k] = true;
+      render(); scheduleSave();
+    };
+  });
 
   const firstDow = ((new Date(year, month, 1).getDay()+6)%7);
   const cells = [];
