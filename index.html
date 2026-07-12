@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#F4EFE8">
 <title>Мой планер · 2026</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Planner">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -836,6 +841,15 @@
   .hm-cell.today { outline: 1.5px solid var(--rose-deep); outline-offset: -1.5px; }
   .hm-cell.future { background: var(--bg); cursor: default; }
 
+  /* Идеальные дни и недели */
+  :root { --perfect: #5E8253; }
+  html[data-theme="dark"] { --perfect: #A3B475; }
+  .chart-bar.perfect { background: var(--perfect); border-bottom-color: var(--perfect); }
+  .chart-bar.perfect span { color: var(--card); }
+  .dyn-bar.perfect { background: var(--perfect); }
+  .habit.week-perfect .habit-box.done { background: var(--perfect); border-color: var(--perfect); }
+  .habit.week-perfect .streak-mini { color: var(--perfect); font-weight: 600; }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   }
@@ -1458,7 +1472,7 @@ function renderMonthDynamics(today, todayKey) {
     const future = dNum > elapsed;
     const isT = dNum === elapsed;
     const h = future ? 10 : Math.max(p, 4);
-    return `<div class="dyn-bar ${isT?'today':''} ${future?'future':''}" style="height:${h}%" title="${dNum}: ${p}%"></div>`;
+    return `<div class="dyn-bar ${isT?'today':''} ${future?'future':''} ${!future && p === 100 ? 'perfect' : ''}" style="height:${h}%" title="${dNum}: ${p}%"></div>`;
   }).join('');
   document.getElementById('month-dyn-axis').innerHTML =
     `<span>1</span><span>сегодня · ${elapsed}</span><span>${total}</span>`;
@@ -1518,7 +1532,7 @@ function renderWeekView() {
       let monthCount = 0;
       for (let i = 1; i <= elapsed; i++) if (h.done && h.done[fmt(new Date(ty, tm, i))]) monthCount++;
       const monthPct = elapsed ? Math.round(monthCount/elapsed*100) : 0;
-      return `<div class="habit" data-id="${h.id}">
+      return `<div class="habit ${weekCount === 7 ? 'week-perfect' : ''}" data-id="${h.id}">
         <div class="emoji">${h.emoji}</div>
         <div class="info">
           <div class="name">${escapeHtml(h.name)}</div>
@@ -1618,10 +1632,12 @@ function renderWeekView() {
   const max = Math.max(...counts, 1);
   document.getElementById('chart-bars').innerHTML = days.map((d, i) => {
     const k = fmt(d); const isT = k === todayKey;
+    const planned = state.habits.length + (state.tasks[k] || []).length;
+    const isPerfect = planned > 0 && counts[i] === planned;
     const hPct = counts[i] === 0 ? 0 : (counts[i]/max * 100);
     return `<div class="chart-col">
       <div class="chart-bar-wrap">
-        <div class="chart-bar ${isT?'today':''}" style="height:${hPct}%">
+        <div class="chart-bar ${isT?'today':''} ${isPerfect?'perfect':''}" style="height:${hPct}%">
           ${counts[i] > 0 ? `<span>${counts[i]}</span>` : ''}
         </div>
       </div>
