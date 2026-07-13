@@ -856,6 +856,89 @@
     *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   }
 
+
+  /* ===== Трекер ЗГТ ===== */
+  .hrt-title-card {
+    background: linear-gradient(135deg, var(--rose-soft), var(--cream-soft));
+    border: 1px solid var(--rose);
+    border-radius: 22px;
+    padding: 24px 26px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    box-shadow: var(--shadow-soft);
+  }
+  .hrt-title-card h2 { font-family: 'Playfair Display', serif; font-size: 28px; line-height: 1.1; font-weight: 600; }
+  .hrt-title-card h2 em { font-weight: 400; color: var(--rose-deep); }
+  .hrt-title-card p { color: var(--ink-soft); font-size: 12px; font-weight: 500; margin-top: 6px; }
+  .hrt-day-badge { flex-shrink: 0; background: var(--ink); color: var(--bg); padding: 8px 14px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+  .hrt-subtabs { display: flex; gap: 4px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 5px; margin-bottom: 16px; overflow-x: auto; box-shadow: var(--shadow-soft); }
+  .hrt-subtab { flex: 1; min-width: 105px; border: 0; background: transparent; color: var(--ink-soft); padding: 11px 12px; border-radius: 12px; font-family: inherit; font-weight: 700; font-size: 12px; cursor: pointer; white-space: nowrap; }
+  .hrt-subtab.active { background: var(--ink); color: var(--bg); }
+  .hrt-panel { display: none; }
+  .hrt-panel.active { display: block; }
+  .hrt-card { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 20px 22px; margin-bottom: 14px; box-shadow: var(--shadow-soft); }
+  .hrt-card-title { font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 14px; }
+  .hrt-category { margin-top: 19px; padding-bottom: 6px; border-bottom: 1px solid var(--line); color: var(--rose-deep); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .16em; }
+  .hrt-question { padding: 13px 0 2px; }
+  .hrt-question-name { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+  .hrt-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .hrt-option { border: 1.5px solid var(--line); background: var(--bg); color: var(--ink-soft); border-radius: 10px; padding: 10px 5px; font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer; }
+  .hrt-option.active-good { background: #5F8C84; border-color: #5F8C84; color: white; }
+  .hrt-option.active-mid { background: #D9A441; border-color: #D9A441; color: white; }
+  .hrt-option.active-bad { background: #A83E30; border-color: #A83E30; color: white; }
+  .hrt-input, .hrt-textarea { width: 100%; background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 11px; padding: 12px 13px; font: inherit; outline: none; }
+  .hrt-input:focus, .hrt-textarea:focus { border-color: var(--rose-deep); }
+  .hrt-textarea { min-height: 78px; resize: vertical; }
+  .hrt-btn { width: 100%; border: 0; border-radius: 12px; padding: 14px 16px; background: var(--ink); color: var(--bg); font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; letter-spacing: .04em; }
+  .hrt-btn.secondary { background: var(--card); color: var(--ink-soft); border: 1px solid var(--line); }
+  .hrt-msg { text-align: center; min-height: 20px; margin: 8px 0 2px; font-size: 12px; font-weight: 600; color: var(--sage); }
+  .hrt-msg.error { color: #A83E30; }
+  .hrt-periods { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 14px; padding-bottom: 2px; }
+  .hrt-period { flex: 0 0 auto; border: 1px solid var(--line); background: var(--card); color: var(--ink-soft); border-radius: 999px; padding: 8px 13px; font: inherit; font-size: 11px; font-weight: 700; cursor: pointer; }
+  .hrt-period.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .hrt-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
+  .hrt-kpi { background: var(--card); border: 1px solid var(--line); border-radius: 17px; padding: 15px 8px; text-align: center; }
+  .hrt-kpi strong { display: block; font-family: 'Playfair Display', serif; font-size: 25px; line-height: 1; color: var(--rose-deep); }
+  .hrt-kpi span { display: block; color: var(--ink-muted); font-size: 9px; text-transform: uppercase; letter-spacing: .08em; margin-top: 6px; }
+  .hrt-chart-wrap { overflow: hidden; }
+  .hrt-chart { width: 100%; height: 160px; display: block; }
+  .hrt-chart-labels { display: flex; justify-content: space-between; color: var(--ink-muted); font-size: 10px; margin-top: 4px; }
+  .hrt-legend { display: flex; flex-wrap: wrap; gap: 12px; color: var(--ink-muted); font-size: 10px; margin: 8px 0 13px; }
+  .hrt-legend i { display: inline-block; width: 9px; height: 9px; border-radius: 3px; margin-right: 4px; }
+  .hrt-trend-scroll { overflow-x: auto; padding-bottom: 4px; }
+  .hrt-trend-row { margin-bottom: 13px; }
+  .hrt-trend-head { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+  .hrt-trend-head span:last-child { font-size: 11px; color: var(--ink-soft); }
+  .hrt-cells { display: grid; gap: 3px; }
+  .hrt-cell { height: 20px; border-radius: 4px; background: var(--line); }
+  .hrt-history-item, .hrt-lab-row { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; margin-bottom: 8px; }
+  .hrt-history-top, .hrt-lab-row { display: flex; align-items: center; gap: 10px; }
+  .hrt-history-top { justify-content: space-between; font-size: 12px; font-weight: 700; margin-bottom: 5px; }
+  .hrt-history-summary { font-size: 12px; color: var(--ink-soft); }
+  .hrt-history-note { font-family: 'Playfair Display', serif; font-style: italic; font-size: 12px; color: var(--ink-muted); margin-top: 5px; }
+  .hrt-delete { border: 0; background: transparent; color: var(--ink-muted); font: inherit; font-size: 11px; cursor: pointer; padding: 3px; }
+  .hrt-delete:hover { color: #A83E30; }
+  .hrt-lab-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .hrt-lab-row .date { width: 86px; color: var(--ink-muted); font-size: 12px; }
+  .hrt-lab-row .value { flex: 1; font-family: 'Playfair Display', serif; font-size: 21px; font-weight: 700; }
+  .hrt-lab-row .note { flex: 2; color: var(--ink-soft); font-size: 11px; }
+  .hrt-empty { text-align: center; padding: 28px 12px; color: var(--ink-muted); font-family: 'Playfair Display', serif; font-style: italic; }
+  @media (max-width: 640px) {
+    .hrt-title-card { align-items: flex-start; padding: 20px; }
+    .hrt-title-card h2 { font-size: 25px; }
+    .hrt-kpis { grid-template-columns: 1fr; gap: 7px; }
+    .hrt-kpi { display: flex; align-items: center; justify-content: space-between; text-align: left; padding: 12px 15px; }
+    .hrt-kpi strong { font-size: 22px; }
+    .hrt-kpi span { margin: 0; text-align: right; }
+    .hrt-card { padding: 17px 15px; }
+    .hrt-lab-grid { grid-template-columns: 1fr; }
+    .hrt-lab-row { flex-wrap: wrap; }
+    .hrt-lab-row .note { flex-basis: 100%; }
+  }
+
 </style>
 </head>
 <body>
@@ -890,7 +973,7 @@
     <button class="tab active" data-view="week">Неделя</button>
     <button class="tab" data-view="month">Месяц</button>
     <button class="tab" data-view="year">Год</button>
-    <button class="tab" data-view="goals">Цели</button>
+    <button class="tab" data-view="hrt">ЗГТ</button>
   </div>
 
   <!-- ====== WEEK VIEW ====== -->
@@ -1024,6 +1107,64 @@
     <div class="mood-strip">
       <h3>Настроения года <em>сколько каких</em></h3>
       <div class="mood-counters" id="year-mood-counters"></div>
+    </div>
+  </div>
+
+
+
+  <!-- ====== HRT VIEW ====== -->
+  <div class="view-content" id="view-hrt">
+    <div class="hrt-title-card">
+      <div>
+        <h2>Трекер <em>ЗГТ</em></h2>
+        <p>Дневник самочувствия, симптомов и анализов</p>
+      </div>
+      <div class="hrt-day-badge" id="hrt-day-badge">День 1</div>
+    </div>
+
+    <div class="hrt-subtabs">
+      <button class="hrt-subtab active" data-hrt-view="log">Отметить</button>
+      <button class="hrt-subtab" data-hrt-view="dynamics">Динамика</button>
+      <button class="hrt-subtab" data-hrt-view="lab">Эстрадиол</button>
+    </div>
+
+    <div class="hrt-panel active" id="hrt-panel-log">
+      <div class="hrt-card">
+        <div class="hrt-card-title">Дата</div>
+        <input class="hrt-input" id="hrt-date" type="date">
+      </div>
+      <div class="hrt-card">
+        <div class="hrt-card-title">Симптомы и состояние</div>
+        <div id="hrt-form"></div>
+      </div>
+      <div class="hrt-card">
+        <div class="hrt-card-title">Заметка</div>
+        <textarea class="hrt-textarea" id="hrt-note" placeholder="Соль, алкоголь, жара, стресс, смена дозировки…"></textarea>
+      </div>
+      <button class="hrt-btn" id="hrt-save-day">Сохранить день</button>
+      <div class="hrt-msg" id="hrt-message"></div>
+    </div>
+
+    <div class="hrt-panel" id="hrt-panel-dynamics">
+      <div class="hrt-periods" id="hrt-periods"></div>
+      <div class="hrt-kpis" id="hrt-kpis"></div>
+      <div id="hrt-dynamics-content"></div>
+      <button class="hrt-btn secondary" id="hrt-export">Скопировать всё для анализа</button>
+      <div class="hrt-msg" id="hrt-export-message"></div>
+    </div>
+
+    <div class="hrt-panel" id="hrt-panel-lab">
+      <div class="hrt-card">
+        <div class="hrt-card-title">Добавить результат</div>
+        <div class="hrt-lab-grid">
+          <input class="hrt-input" id="hrt-lab-date" type="date">
+          <input class="hrt-input" id="hrt-lab-value" type="number" step="0.01" placeholder="Эстрадиол, пг/мл">
+        </div>
+        <input class="hrt-input" id="hrt-lab-note" type="text" placeholder="Комментарий, например: на 1 пшике" style="margin-top:8px;">
+        <button class="hrt-btn" id="hrt-save-lab" style="margin-top:10px;">Добавить результат</button>
+        <div class="hrt-msg" id="hrt-lab-message"></div>
+      </div>
+      <div id="hrt-lab-content"></div>
     </div>
   </div>
 
@@ -1303,7 +1444,40 @@ const MONTHS = ['января','февраля','марта','апреля','м�
 const MONTHS_NOM = ['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь'];
 const SPHERE_LABELS = { health: 'Здоровье', relations: 'Отношения', work: 'Работа', finance: 'Финансы', creative: 'Творчество', learning: 'Развитие', rest: 'Отдых', home: 'Дом', other: 'Другое' };
 
-let state = { habits: [], tasks: {}, moods: {}, notes: {}, goals: [], projects: [] };
+const HRT_SYMPTOM_CATS = [
+  { cat: 'Гормональные', items: [
+    { id: 'privy', name: 'Приливы / жар', labels: ['нет','пару раз','часто'] },
+    { id: 'pot', name: 'Потливость', labels: ['нет','немного','мокрая'] },
+    { id: 'jajda', name: 'Жажда', labels: ['нет','есть','сильная'] },
+    { id: 'suhslis', name: 'Сухость рта / глаз', labels: ['нет','есть','сильная'] }
+  ]},
+  { cat: 'Мышцы и тело', items: [
+    { id: 'ikry', name: 'Каменные икры / судороги', labels: ['нет','тянет','как камень'] },
+    { id: 'mysh', name: 'Мышцы / рёбра / ломота', labels: ['нет','ноет','сильно'] },
+    { id: 'grud', name: 'Тяжесть в груди', labels: ['нет','немного','давит'] },
+    { id: 'serdce', name: 'Сердцебиение', labels: ['нет','пару раз','часто'] }
+  ]},
+  { cat: 'Кожа', items: [
+    { id: 'suhkoja', name: 'Сухость кожи (тело)', labels: ['нет','есть','сильная'] },
+    { id: 'plotn', name: 'Кожа лица (плотность)', labels: ['хорошая','так себе','рыхлая'] }
+  ]},
+  { cat: 'Голова', items: [
+    { id: 'trevoga', name: 'Тревожность', labels: ['нет','есть','накрывает'] },
+    { id: 'golova', name: 'Головная боль', labels: ['нет','есть','сильная'] }
+  ]}
+];
+const HRT_GOODS = [
+  { id: 'son', name: 'Сон', labels: ['плохо','средне','выспалась'] },
+  { id: 'energy', name: 'Энергия', labels: ['нет сил','средне','бодрая'] },
+  { id: 'nastr', name: 'Настроение', labels: ['плохое','ровное','радость'] }
+];
+const HRT_SYMPTOMS = HRT_SYMPTOM_CATS.flatMap(c => c.items);
+const HRT_ALL = [...HRT_SYMPTOMS, ...HRT_GOODS];
+const HRT_SYM_COLORS = ['#7D9660','#D9A441','#A83E30'];
+const HRT_GOOD_COLORS = ['#A83E30','#D9A441','#5F8C84'];
+
+
+let state = { habits: [], tasks: {}, moods: {}, notes: {}, goals: [], projects: [], zgtEntries: [], estradiolEntries: [] };
 let viewWeekStart = getMonday(new Date());
 let selectedDate = new Date();
 let viewMonth = new Date();
@@ -1313,6 +1487,19 @@ let currentSubtab = 'goals';
 let firstLoad = true;
 let saveTimer = null;
 let isApplyingRemote = false;
+
+let hrtSubtab = 'log';
+let hrtDate = fmt(new Date());
+let hrtDraft = {};
+let hrtNote = '';
+let hrtPeriod = '30';
+let hrtLabDate = fmt(new Date());
+let hrtLabValue = '';
+let hrtLabNote = '';
+let hrtMessage = '';
+let hrtMessageError = false;
+let hrtMessageTimer = null;
+
 
 let goalFilter = 'all';
 let goalsMode = 'active';
@@ -1358,9 +1545,10 @@ async function saveToCloud() {
     await setDoc(docRef, {
       habits: state.habits, tasks: state.tasks,
       moods: state.moods, notes: state.notes,
-      goals: state.goals || [], projects: state.projects || [],
+      zgtEntries: state.zgtEntries || [],
+      estradiolEntries: state.estradiolEntries || [],
       updatedAt: Date.now()
-    });
+    }, { merge: true });
     setSyncStatus('synced');
   } catch(e) {
     console.error('Save error:', e);
@@ -1377,6 +1565,9 @@ function applyRemote(data) {
   state.notes = data.notes || {};
   state.goals = data.goals || [];
   state.projects = data.projects || [];
+  state.zgtEntries = (data.zgtEntries || data.hrtEntries || []).slice().sort((a,b) => String(a.date).localeCompare(String(b.date)));
+  state.estradiolEntries = (data.estradiolEntries || data.labEntries || []).slice().sort((a,b) => String(a.date).localeCompare(String(b.date)));
+  loadHrtDate(hrtDate, false);
   isApplyingRemote = false;
   render();
   setSyncStatus('synced');
@@ -1393,7 +1584,7 @@ function initialSeed() {
       { id: uid(), name: 'Ведение бюджета', emoji: '💰', done: {} },
       { id: uid(), name: 'Сон до 23:00', emoji: '🌙', done: {} }
     ],
-    tasks: {}, moods: {}, notes: {}, goals: [], projects: [],
+    tasks: {}, moods: {}, notes: {}, goals: [], projects: [], zgtEntries: [], estradiolEntries: [],
     updatedAt: Date.now()
   };
 }
@@ -1451,6 +1642,7 @@ function render() {
   if (currentTab === 'week') renderWeekView();
   else if (currentTab === 'month') renderMonthView();
   else if (currentTab === 'year') renderYearView();
+  else if (currentTab === 'hrt') renderHrtView();
   else if (currentTab === 'goals') renderGoalsView();
 }
 
@@ -2303,6 +2495,399 @@ function attachProjectHandlers() {
     };
   });
 }
+
+
+
+// ====== HRT / ЗГТ ======
+function hrtFmtDate(dateStr) {
+  if (!dateStr) return '—';
+  const [y,m,d] = dateStr.split('-').map(Number);
+  const dt = new Date(y, (m || 1)-1, d || 1);
+  return `${dt.getDate()} ${MONTHS_SHORT[dt.getMonth()]} ${dt.getFullYear()}`;
+}
+
+function hrtWellnessScore(entry) {
+  let total = 0, count = 0;
+  HRT_SYMPTOMS.forEach(item => {
+    if (entry[item.id] !== undefined && entry[item.id] !== null) {
+      total += ((2 - Number(entry[item.id])) / 2) * 100;
+      count++;
+    }
+  });
+  HRT_GOODS.forEach(item => {
+    if (entry[item.id] !== undefined && entry[item.id] !== null) {
+      total += (Number(entry[item.id]) / 2) * 100;
+      count++;
+    }
+  });
+  return count ? Math.round(total / count) : null;
+}
+
+function hrtScoreColor(score) {
+  if (score === null || score === undefined) return 'var(--ink-muted)';
+  if (score >= 65) return '#5F8C84';
+  if (score >= 40) return '#C79020';
+  return '#A83E30';
+}
+
+function reindexHrtDays(entries) {
+  const sorted = entries.slice().sort((a,b) => String(a.date).localeCompare(String(b.date)));
+  if (!sorted.length) return sorted;
+  const [sy,sm,sd] = sorted[0].date.split('-').map(Number);
+  const start = new Date(sy, sm-1, sd);
+  return sorted.map(entry => {
+    const [y,m,d] = entry.date.split('-').map(Number);
+    const day = Math.max(1, Math.floor((new Date(y,m-1,d) - start) / 86400000) + 1);
+    return { ...entry, day };
+  });
+}
+
+function hrtDayNumber(dateStr) {
+  const entries = state.zgtEntries || [];
+  const firstDate = entries.length ? entries[0].date : dateStr;
+  if (!firstDate || !dateStr) return 1;
+  const [fy,fm,fd] = firstDate.split('-').map(Number);
+  const [y,m,d] = dateStr.split('-').map(Number);
+  return Math.max(1, Math.floor((new Date(y,m-1,d) - new Date(fy,fm-1,fd)) / 86400000) + 1);
+}
+
+function loadHrtDate(dateStr, shouldRender = true) {
+  hrtDate = dateStr || fmt(new Date());
+  const existing = (state.zgtEntries || []).find(e => e.date === hrtDate);
+  hrtDraft = {};
+  hrtNote = existing && existing.note ? existing.note : '';
+  if (existing) HRT_ALL.forEach(item => {
+    if (existing[item.id] !== undefined) hrtDraft[item.id] = Number(existing[item.id]);
+  });
+  if (shouldRender) renderHrtView();
+}
+
+function showHrtMessage(message, isError = false, target = 'main') {
+  hrtMessage = message;
+  hrtMessageError = isError;
+  const id = target === 'lab' ? 'hrt-lab-message' : target === 'export' ? 'hrt-export-message' : 'hrt-message';
+  const el = document.getElementById(id);
+  if (el) {
+    el.textContent = message;
+    el.classList.toggle('error', isError);
+  }
+  clearTimeout(hrtMessageTimer);
+  hrtMessageTimer = setTimeout(() => {
+    hrtMessage = '';
+    const node = document.getElementById(id);
+    if (node) node.textContent = '';
+  }, 2600);
+}
+
+function saveHrtDay() {
+  if (!hrtDate) return showHrtMessage('Выбери дату', true);
+  const entry = { date: hrtDate, day: hrtDayNumber(hrtDate), ...hrtDraft, note: hrtNote.trim() };
+  let entries = (state.zgtEntries || []).filter(e => e.date !== hrtDate);
+  entries.push(entry);
+  state.zgtEntries = reindexHrtDays(entries);
+  scheduleSave();
+  showHrtMessage('✓ День сохранён');
+  renderHrtView();
+}
+
+function deleteHrtDay(dateStr) {
+  if (!confirm(`Удалить запись за ${hrtFmtDate(dateStr)}?`)) return;
+  state.zgtEntries = reindexHrtDays((state.zgtEntries || []).filter(e => e.date !== dateStr));
+  if (hrtDate === dateStr) loadHrtDate(hrtDate, false);
+  scheduleSave();
+  renderHrtView();
+}
+
+function saveEstradiol() {
+  const value = Number(String(hrtLabValue).replace(',', '.'));
+  if (!hrtLabDate || !Number.isFinite(value)) return showHrtMessage('Укажи дату и значение', true, 'lab');
+  const entry = { date: hrtLabDate, val: value, note: hrtLabNote.trim() };
+  const rows = (state.estradiolEntries || []).filter(e => e.date !== hrtLabDate);
+  rows.push(entry);
+  state.estradiolEntries = rows.sort((a,b) => a.date.localeCompare(b.date));
+  hrtLabValue = '';
+  hrtLabNote = '';
+  scheduleSave();
+  showHrtMessage('✓ Анализ сохранён', false, 'lab');
+  renderHrtView();
+}
+
+function deleteEstradiol(dateStr) {
+  if (!confirm(`Удалить анализ за ${hrtFmtDate(dateStr)}?`)) return;
+  state.estradiolEntries = (state.estradiolEntries || []).filter(e => e.date !== dateStr);
+  scheduleSave();
+  renderHrtView();
+}
+
+function hrtPeriodEntries() {
+  const entries = state.zgtEntries || [];
+  if (hrtPeriod === 'all') return entries;
+  const days = Number(hrtPeriod);
+  if (!entries.length || !days) return entries;
+  const last = entries[entries.length - 1].date;
+  const [y,m,d] = last.split('-').map(Number);
+  const cutoff = new Date(y,m-1,d);
+  cutoff.setDate(cutoff.getDate() - days + 1);
+  const cutoffStr = fmt(cutoff);
+  return entries.filter(e => e.date >= cutoffStr);
+}
+
+function renderHrtLog() {
+  const form = document.getElementById('hrt-form');
+  if (!form) return;
+  const symptomHtml = HRT_SYMPTOM_CATS.map(cat => `
+    <div class="hrt-category">${cat.cat}</div>
+    ${cat.items.map(item => renderHrtQuestion(item, false)).join('')}
+  `).join('');
+  const goodsHtml = `<div class="hrt-category">Состояние</div>${HRT_GOODS.map(item => renderHrtQuestion(item, true)).join('')}`;
+  form.innerHTML = symptomHtml + goodsHtml;
+  const dateInput = document.getElementById('hrt-date');
+  const noteInput = document.getElementById('hrt-note');
+  if (dateInput) dateInput.value = hrtDate;
+  if (noteInput) noteInput.value = hrtNote;
+  const badge = document.getElementById('hrt-day-badge');
+  if (badge) badge.textContent = `День ${hrtDayNumber(hrtDate)}`;
+}
+
+function renderHrtQuestion(item, isGood) {
+  return `<div class="hrt-question">
+    <div class="hrt-question-name">${escapeHtml(item.name)}</div>
+    <div class="hrt-options">
+      ${item.labels.map((label, value) => {
+        const selected = Number(hrtDraft[item.id]) === value;
+        const activeClass = selected ? (isGood ? ['active-bad','active-mid','active-good'][value] : ['active-good','active-mid','active-bad'][value]) : '';
+        return `<button class="hrt-option ${activeClass}" data-hrt-id="${item.id}" data-hrt-value="${value}">${escapeHtml(label)}</button>`;
+      }).join('')}
+    </div>
+  </div>`;
+}
+
+function renderHrtDynamics() {
+  const periodDefs = [['7','Неделя'],['30','Месяц'],['90','Квартал'],['365','Год'],['all','Всё время']];
+  const periods = document.getElementById('hrt-periods');
+  periods.innerHTML = periodDefs.map(([id,label]) => `<button class="hrt-period ${hrtPeriod === id ? 'active' : ''}" data-hrt-period="${id}">${label}</button>`).join('');
+
+  const allEntries = state.zgtEntries || [];
+  const entries = hrtPeriodEntries();
+  const kpis = document.getElementById('hrt-kpis');
+  const content = document.getElementById('hrt-dynamics-content');
+  if (!allEntries.length) {
+    kpis.innerHTML = '';
+    content.innerHTML = '<div class="hrt-card hrt-empty">Пока нет данных. Отметь первый день во вкладке «Отметить».</div>';
+    return;
+  }
+
+  const lastEntry = allEntries[allEntries.length - 1];
+  const lastScore = hrtWellnessScore(lastEntry);
+  const scored = entries.map(e => ({ date: e.date, score: hrtWellnessScore(e) })).filter(e => e.score !== null);
+  const last3 = scored.slice(-3);
+  const prev3 = scored.slice(-6,-3);
+  const avg = arr => arr.length ? arr.reduce((sum,x) => sum + x.score, 0) / arr.length : null;
+  const a1 = avg(last3), a0 = avg(prev3);
+  let trend = '→ ровно', trendColor = 'var(--ink-soft)';
+  if (a1 !== null && a0 !== null) {
+    const delta = Math.round(a1 - a0);
+    if (delta > 2) { trend = `↑ ${delta}`; trendColor = '#5F8C84'; }
+    else if (delta < -2) { trend = `↓ ${Math.abs(delta)}`; trendColor = '#A83E30'; }
+  }
+  kpis.innerHTML = `
+    <div class="hrt-kpi"><strong>${allEntries.length}</strong><span>дней в дневнике</span></div>
+    <div class="hrt-kpi"><strong style="color:${hrtScoreColor(lastScore)}">${lastScore ?? '—'}</strong><span>индекс последнего дня</span></div>
+    <div class="hrt-kpi"><strong style="color:${trendColor}">${trend}</strong><span>тренд за 3 дня</span></div>`;
+
+  const wellness = buildHrtWellnessChart(scored);
+  const trendGroups = [...HRT_SYMPTOM_CATS, { cat: 'Состояние', items: HRT_GOODS, isGood: true }];
+  const periodLabel = periodDefs.find(x => x[0] === hrtPeriod)?.[1] || 'Месяц';
+  const trendHtml = trendGroups.map(group => `
+    <div class="hrt-category">${group.cat}</div>
+    ${(group.items || []).map(item => {
+      const latest = entries.length ? entries[entries.length - 1][item.id] : undefined;
+      const isGood = Boolean(group.isGood);
+      const cells = entries.map(e => {
+        const value = e[item.id];
+        const color = value === undefined ? 'var(--line)' : (isGood ? HRT_GOOD_COLORS[value] : HRT_SYM_COLORS[value]);
+        return `<div class="hrt-cell" style="background:${color}" title="${hrtFmtDate(e.date)}"></div>`;
+      }).join('');
+      return `<div class="hrt-trend-row">
+        <div class="hrt-trend-head"><span>${escapeHtml(item.name)}</span><span>${latest === undefined ? '—' : escapeHtml(item.labels[latest])}</span></div>
+        <div class="hrt-trend-scroll"><div class="hrt-cells" style="grid-template-columns:repeat(${Math.max(entries.length,1)},minmax(8px,1fr));min-width:${Math.max(300, entries.length * 12)}px">${cells}</div></div>
+      </div>`;
+    }).join('')}
+  `).join('');
+
+  const history = entries.slice().reverse().map(entry => {
+    const parts = HRT_SYMPTOMS.filter(item => Number(entry[item.id]) > 0)
+      .map(item => `${item.name}: ${item.labels[entry[item.id]]}`)
+      .concat(HRT_GOODS.filter(item => entry[item.id] !== undefined && Number(entry[item.id]) !== 1)
+        .map(item => `${item.name}: ${item.labels[entry[item.id]]}`));
+    const summary = parts.length ? parts.join(' · ') : 'всё спокойно';
+    return `<div class="hrt-history-item">
+      <div class="hrt-history-top"><span>${hrtFmtDate(entry.date)}</span><span style="color:var(--rose-deep)">День ${entry.day || '—'}</span></div>
+      <div class="hrt-history-summary">${escapeHtml(summary)}</div>
+      ${entry.note ? `<div class="hrt-history-note">${escapeHtml(entry.note)}</div>` : ''}
+      <div style="text-align:right;margin-top:4px"><button class="hrt-delete" data-hrt-delete="${entry.date}">удалить</button></div>
+    </div>`;
+  }).join('');
+
+  content.innerHTML = `
+    <div class="hrt-card hrt-chart-wrap">
+      <div class="hrt-card-title">Сводный индекс самочувствия · ${periodLabel}</div>
+      ${wellness}
+    </div>
+    <div class="hrt-card">
+      <div class="hrt-card-title">Симптомы по дням · ${periodLabel}</div>
+      <div class="hrt-legend"><span><i style="background:#7D9660"></i>нет / хорошо</span><span><i style="background:#D9A441"></i>есть / средне</span><span><i style="background:#A83E30"></i>сильно / плохо</span></div>
+      ${trendHtml}
+    </div>
+    <h2 class="section-title">История <em>${periodLabel.toLowerCase()}</em></h2>
+    ${history || '<div class="hrt-empty">Нет записей за выбранный период.</div>'}`;
+}
+
+function buildHrtWellnessChart(scored) {
+  if (!scored.length) return '<div class="hrt-empty">Недостаточно оценок для графика.</div>';
+  const width = 300, height = 110;
+  const step = scored.length > 1 ? width / (scored.length - 1) : 0;
+  const yOf = score => 102 - (score / 100) * 94;
+  const points = scored.map((x,i) => `${(scored.length > 1 ? i * step : width/2).toFixed(1)},${yOf(x.score).toFixed(1)}`).join(' ');
+  const dots = scored.map((x,i) => {
+    const cx = (scored.length > 1 ? i * step : width/2).toFixed(1);
+    const cy = yOf(x.score).toFixed(1);
+    return `<circle cx="${cx}" cy="${cy}" r="3.2" fill="${hrtScoreColor(x.score)}"></circle>`;
+  }).join('');
+  const y100 = yOf(100), y65 = yOf(65), y40 = yOf(40), y0 = yOf(0);
+  return `<svg class="hrt-chart" viewBox="0 0 300 110" preserveAspectRatio="none" aria-label="График самочувствия">
+    <rect x="0" y="${y100}" width="300" height="${y65-y100}" fill="rgba(95,140,132,.14)"></rect>
+    <rect x="0" y="${y65}" width="300" height="${y40-y65}" fill="rgba(217,164,65,.13)"></rect>
+    <rect x="0" y="${y40}" width="300" height="${y0-y40}" fill="rgba(168,62,48,.10)"></rect>
+    <polyline points="${points}" fill="none" stroke="var(--rose-deep)" stroke-width="2"></polyline>${dots}
+  </svg>
+  <div class="hrt-chart-labels"><span>${hrtFmtDate(scored[0].date)}</span><span>${hrtFmtDate(scored[scored.length-1].date)}</span></div>`;
+}
+
+function renderHrtLab() {
+  const dateInput = document.getElementById('hrt-lab-date');
+  const valueInput = document.getElementById('hrt-lab-value');
+  const noteInput = document.getElementById('hrt-lab-note');
+  if (dateInput) dateInput.value = hrtLabDate;
+  if (valueInput) valueInput.value = hrtLabValue;
+  if (noteInput) noteInput.value = hrtLabNote;
+
+  const entries = state.estradiolEntries || [];
+  const content = document.getElementById('hrt-lab-content');
+  if (!entries.length) {
+    content.innerHTML = '<div class="hrt-card hrt-empty">Пока нет анализов. Добавь первый результат.</div>';
+    return;
+  }
+  const max = Math.max(100, ...entries.map(e => Number(e.val) || 0)) * 1.08;
+  const width = 300, height = 110;
+  const step = entries.length > 1 ? width / (entries.length - 1) : 0;
+  const yOf = value => 102 - (value / max) * 92;
+  const points = entries.map((e,i) => `${(entries.length > 1 ? i*step : width/2).toFixed(1)},${yOf(Number(e.val)).toFixed(1)}`).join(' ');
+  const dots = entries.map((e,i) => `<circle cx="${(entries.length > 1 ? i*step : width/2).toFixed(1)}" cy="${yOf(Number(e.val)).toFixed(1)}" r="3.3" fill="var(--rose-deep)"></circle>`).join('');
+  const zoneTop = yOf(80), zoneBottom = yOf(40);
+  const rows = entries.slice().reverse().map(e => {
+    const value = Number(e.val);
+    const color = value < 40 ? '#A83E30' : value <= 80 ? '#5F8C84' : '#C79020';
+    return `<div class="hrt-lab-row">
+      <span class="date">${hrtFmtDate(e.date)}</span>
+      <span class="value" style="color:${color}">${value}</span>
+      <span class="note">${escapeHtml(e.note || '')}</span>
+      <button class="hrt-delete" data-lab-delete="${e.date}">удалить</button>
+    </div>`;
+  }).join('');
+  content.innerHTML = `<div class="hrt-card hrt-chart-wrap">
+    <div class="hrt-card-title">Динамика эстрадиола</div>
+    <svg class="hrt-chart" viewBox="0 0 300 110" preserveAspectRatio="none" aria-label="График эстрадиола">
+      <rect x="0" y="${zoneTop}" width="300" height="${Math.max(0, zoneBottom-zoneTop)}" fill="rgba(95,140,132,.16)"></rect>
+      <polyline points="${points}" fill="none" stroke="var(--rose-deep)" stroke-width="2"></polyline>${dots}
+    </svg>
+    <div class="hrt-chart-labels"><span>${hrtFmtDate(entries[0].date)}</span><span>${hrtFmtDate(entries[entries.length-1].date)}</span></div>
+    <div style="text-align:center;color:var(--ink-muted);font-size:10px;margin-top:8px">зелёная зона — ориентир 40–80 пг/мл из исходного трекера</div>
+  </div>${rows}`;
+}
+
+async function exportHrtData() {
+  const entries = state.zgtEntries || [];
+  const labs = state.estradiolEntries || [];
+  let out = 'ТРЕКЕР ЗГТ — дневник самочувствия\n\n';
+  if (labs.length) {
+    out += 'ЭСТРАДИОЛ:\n';
+    labs.forEach(e => { out += `  ${e.date}: ${e.val} пг/мл${e.note ? ` (${e.note})` : ''}\n`; });
+    out += '\n';
+  }
+  entries.forEach(entry => {
+    out += `${entry.date} (день ${entry.day || '—'}):\n`;
+    HRT_ALL.forEach(item => {
+      if (entry[item.id] !== undefined) out += `  ${item.name}: ${item.labels[entry[item.id]]}\n`;
+    });
+    if (entry.note) out += `  Заметка: ${entry.note}\n`;
+    out += '\n';
+  });
+  try {
+    await navigator.clipboard.writeText(out);
+    showHrtMessage('✓ Скопировано', false, 'export');
+  } catch (error) {
+    const blob = new Blob([out], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'zgt-tracker.txt';
+    link.click();
+    URL.revokeObjectURL(url);
+    showHrtMessage('Файл с данными создан', false, 'export');
+  }
+}
+
+function renderHrtView() {
+  document.querySelectorAll('.hrt-subtab').forEach(button => button.classList.toggle('active', button.dataset.hrtView === hrtSubtab));
+  document.querySelectorAll('.hrt-panel').forEach(panel => panel.classList.toggle('active', panel.id === `hrt-panel-${hrtSubtab}`));
+  const badge = document.getElementById('hrt-day-badge');
+  if (badge) badge.textContent = `День ${hrtDayNumber(hrtDate)}`;
+  if (hrtSubtab === 'log') renderHrtLog();
+  if (hrtSubtab === 'dynamics') renderHrtDynamics();
+  if (hrtSubtab === 'lab') renderHrtLab();
+}
+
+const hrtView = document.getElementById('view-hrt');
+if (hrtView) {
+  hrtView.addEventListener('click', event => {
+    const subtab = event.target.closest('[data-hrt-view]');
+    if (subtab) {
+      hrtSubtab = subtab.dataset.hrtView;
+      renderHrtView();
+      return;
+    }
+    const option = event.target.closest('[data-hrt-id][data-hrt-value]');
+    if (option) {
+      hrtDraft[option.dataset.hrtId] = Number(option.dataset.hrtValue);
+      renderHrtView();
+      return;
+    }
+    const period = event.target.closest('[data-hrt-period]');
+    if (period) {
+      hrtPeriod = period.dataset.hrtPeriod;
+      renderHrtDynamics();
+      return;
+    }
+    const delDay = event.target.closest('[data-hrt-delete]');
+    if (delDay) return deleteHrtDay(delDay.dataset.hrtDelete);
+    const delLab = event.target.closest('[data-lab-delete]');
+    if (delLab) return deleteEstradiol(delLab.dataset.labDelete);
+    if (event.target.closest('#hrt-save-day')) return saveHrtDay();
+    if (event.target.closest('#hrt-save-lab')) return saveEstradiol();
+    if (event.target.closest('#hrt-export')) return exportHrtData();
+  });
+  hrtView.addEventListener('input', event => {
+    if (event.target.id === 'hrt-note') hrtNote = event.target.value;
+    if (event.target.id === 'hrt-lab-date') hrtLabDate = event.target.value;
+    if (event.target.id === 'hrt-lab-value') hrtLabValue = event.target.value;
+    if (event.target.id === 'hrt-lab-note') hrtLabNote = event.target.value;
+  });
+  hrtView.addEventListener('change', event => {
+    if (event.target.id === 'hrt-date') loadHrtDate(event.target.value);
+  });
+}
+
 
 function calcHabitStreak(h) {
   if (!h.done) return 0;
